@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home"
+    >
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.home.HomeFragment"
+        android:label="moves"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.favorite.FavoriteFragment"
+        android:label="moves"
+        tools:layout="@layout/fragment_favorite"/>
+
+    <fragment
+        android:id="@+id/archives"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.archives.ArchivesFragment"
+        android:label="moves"
+        tools:layout="@layout/fragment_archives"/>
+
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.ProfileFragment"
+        android:label="moves"
+        tools:layout="@layout/fragment_profile">
+
+
+    </fragment>
+
+
+
+
+
+
+</navigation>

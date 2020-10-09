@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">Musicana</string>
+
+    //onpoarding activity
+    <string name="Skip">Skip</string>
+    <string name="next">Next</string>
+
+    //onboard fragment
+    <string name="text_1">Listen freely</string>
+    <string name="text_2">Musicana provides the latest world tunes and music</string>
+
+    //onboard fragment tow
+    <string name="text_1_tow">Enjoy without internet</string>
+    <string name="text_2_tow">Save and play music in internet off mode</string>
+
+    //onboard fragment three
+    <string name="text_1_three">Follow Up Close</string>
+    <string name="text_2_three">Follow the artists closest to your \n area</string>
+
+    //onboard fragment four
+    <string name="text_1_four">Big updates</string>
+    <string name="text_2_four">There are great features available within the app that you have not \n seen before.</string>
+    <string name="text_34567_four">By clicking on Get started button you accept Our terms and conditions and privacy policy of Musicana</string>
+    <string name="start">get Started</string>
+
+    //terms and condations
+    <string name="terms_condations">Terms and conditions</string>
+    <string name="text_terms_condations">text_terms_condations</string>
+
+
+    //privacy policy
+    <string name="privacy_policy">privacy policy</string>
+    <string name="text_privacy_policy">text_privacy_policy</string>
+
+    //login Activity
+    <string name="welcome">Welcome back!</string>
+    <string name="login_your_account">Please login to your account.</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="regester">REGISTER NOW</string>
+    <string name="forgot">Forgot?</string>
+
+    //regester Activity
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login_now">Login now?</string>
+
+    //forgot Password
+    <string name="send">Send</string>
+    <string name="forgot_password_title">Forgot Password</string>
+
+    //home fragment
+    <string name="home">Home</string>
+
+    //profile fragment
+    <string name="profile">Profile</string>
+
+    //archives
+    <string name="archives">Archives</string>
+
+    //favorite
+    <string name="favorite">Favorite</string>
+    <string name="toolbarTitle_home">Musicana</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="online">Online</string>
+    <string name="map">Map</string>
+</resources>
