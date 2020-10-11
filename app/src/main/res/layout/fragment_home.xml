@@ -4,18 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
+    android:background="#12003A"
     tools:context=".feature.bottomNavigationViewFragment.home.HomeFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="@dimen/_200sdp"
-
         android:layout_height="wrap_content"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabTextColor="@color/textColor_or_w">
+        app:tabIndicator="@drawable/ic_tab_indicator"
+        app:tabIndicatorColor="@color/textColor_or_w"
+        app:tabGravity="fill"
+        app:tabTextColor="@color/textColor_or_w"
+        app:tabIndicatorFullWidth="false"
+
+        >
 
 
         <com.google.android.material.tabs.TabItem
@@ -43,10 +47,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        toptoB-->
+    <FrameLayout
+        android:id="@+id/home_contener"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tablayout"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
