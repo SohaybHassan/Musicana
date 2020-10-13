@@ -1,16 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#16053D"
-    tools:context=".feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment">
+    android:fillViewport="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/online"
-        android:textColor="@color/textColorWhite" />
+        android:layout_height="wrap_content"
+        android:background="#16053D"
+        tools:context=".feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/tv_channels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:text="@string/channels"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:text="@string/more"
+            android:textColor="@color/textColor_or_w2"
+            android:textSize="@dimen/_12sdp"
+           app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_channels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_channels"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_rv_channels" />
+
+        <TextView
+            android:id="@+id/tv_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:text="@string/music"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView_channels" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_music"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_rv_music" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

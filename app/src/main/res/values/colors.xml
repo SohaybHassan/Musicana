@@ -6,6 +6,7 @@
     <color name="appBackground">#16053D</color>
     <color name="textColorWhite">#fff</color>
     <color name="textColor_or_w">#F7705F</color>
+    <color name="textColor_or_w2">#97F7705F</color>
     <color name="dotsunselected">#707070</color>
     <color name="tab_top_bottom">#12003A</color>
     <color name="tab_contener">#16053D</color>
