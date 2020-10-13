@@ -67,4 +67,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="online">Online</string>
     <string name="map">Map</string>
+    <string name="musec_name">Dirty Computers</string>
+    <string name="type_musec">Joe Perez</string>
 </resources>
