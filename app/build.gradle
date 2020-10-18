@@ -50,4 +50,8 @@ dependencies {
 
     //circle_image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //google map
+
+
 }
