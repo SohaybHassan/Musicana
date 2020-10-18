@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-        Log.d("android_id", "onCreate: "+ android_id);
+        Log.d("android_id", "onCreate: " + android_id);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(binding.bottomNavigation, navHostFragment.getNavController());
@@ -75,12 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.cardInclude.profileImage.setOnClickListener(viewww -> {
+
+        });
     }
 
-    public String getIMEI(Activity activity) {
-        TelephonyManager telephonyManager = (TelephonyManager) activity
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
-    }
 
 }
