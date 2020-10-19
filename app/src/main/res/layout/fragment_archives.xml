@@ -7,11 +7,11 @@
     tools:context=".feature.bottomNavigationViewFragment.archives.ArchivesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_archives"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_22sdp"
-        android:text="@string/archives" />
+
+        />
 
 </FrameLayout>
