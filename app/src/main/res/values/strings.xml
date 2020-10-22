@@ -76,5 +76,8 @@
 
     //map
     <string name="map_id">3974c19c9f72b475</string>
+    <string name="map_custom_info_title">Dirty Computers</string>
+    <string name="map_custom_info_name">Joe Perez</string>
+    <string name="map_custom_info_location">Location</string>
 
 </resources>

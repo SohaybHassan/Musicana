@@ -16,5 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        map:mapId="@string/map_id" />
+        map:mapId="@string/map_id"
+        map:cameraZoom="4"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
