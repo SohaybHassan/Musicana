@@ -79,5 +79,33 @@
     <string name="map_custom_info_title">Dirty Computers</string>
     <string name="map_custom_info_name">Joe Perez</string>
     <string name="map_custom_info_location">Location</string>
+    <string name="settings">Setting</string>
+    <string name="profile_user_name">Sammeer Kream</string>
+    <string name="profile_Entry_Permit">Entry Permit</string>
+    <string name="profile_Mood">Mood</string>
+    <string name="profile_Language">"Language "</string>
+    <string name="profile_Addition_Screen">Addition Screen</string>
+    <string name="profile_Privacy_Policy">Privacy Policy</string>
+    <string name="profile_Terms_Conditions">Terms And Conditions</string>
+    <string name="profile_Version">Version</string>
+    <string name="profile_Current_Version">Current Version</string>
+    <string name="profile_Version_number">1.00</string>
+    <string name="profile_Automatic_Updates">Automatic Updates</string>
+    <string name="profile_Logoff">Logoff</string>
+    <string name="label1">label1</string>
+    <string name="label2">label2</string>
+    <string name="label3">label3</string>
+    <string name="save">Save</string>
+    <string name="profile_sheet_title">profile sheet title</string>
+    <string name="EntryPermit">Entry Permit</string>
+    <string name="RunningBackground">Running In Background</string>
+    <string name="EntryPermitAudioFiles">Entry Permit Audio Files</string>
+    <string name="Location">"Location "</string>
+    <string name="Mood">Mood</string>
+    <string name="DarkMood">Dark Mood</string>
+    <string name="MoodMoon">Mood Moon</string>
+    <string name="Arabic">Arabic</string>
+    <string name="English">English</string>
+    <string name="Language">Language</string>
 
 </resources>

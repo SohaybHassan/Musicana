@@ -1,17 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
+    android:fillViewport="true"
     tools:context=".feature.bottomNavigationViewFragment.profile.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="@dimen/_22sdp"
-        android:textColor="@color/textColorWhite"
-        android:text="@string/profile" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBackground">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_25sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_25sdp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_user_image"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:src="@drawable/image_music_play"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profile_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_user_name"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_user_image"
+            app:layout_constraintStart_toEndOf="@+id/profile_user_image"
+            app:layout_constraintTop_toTopOf="@+id/profile_user_image" />
+
+        <ImageView
+            android:id="@+id/profile_user_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_user_name"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_user_name"
+            app:tint="@color/textColor_or_w" />
+
+        <TextView
+            android:id="@+id/profile_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:fontFamily="@font/opensansbold"
+            android:text="@string/settings"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_user_image" />
+
+        <TextView
+            android:id="@+id/profile_Entry_Permit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Entry_Permit"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_settings" />
+
+        <ImageView
+            android:id="@+id/profile_Entry_Permit_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Entry_Permit"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Entry_Permit"
+            app:tint="@color/textColor_or_w" />
+
+
+        <TextView
+            android:id="@+id/profile_Mood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Mood"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Entry_Permit" />
+
+        <ImageView
+            android:id="@+id/profile_Mood_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Mood"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Mood"
+            app:tint="@color/textColor_or_w" />
+
+        <TextView
+            android:id="@+id/profile_Language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Language"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Mood" />
+
+        <ImageView
+            android:id="@+id/profile_Language_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Language"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Language"
+            app:tint="@color/textColor_or_w" />
+
+        <TextView
+            android:id="@+id/profile_Addition_Screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Addition_Screen"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Language" />
+
+        <Switch
+            android:id="@+id/profile_Addition_Screen_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:thumbTint="@color/textColorWhite"
+            android:trackTint="@color/switch_green"
+            android:trackTintMode="src_over"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Addition_Screen"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Addition_Screen" />
+
+        <View
+            android:id="@+id/border1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Addition_Screen" />
+
+
+        <TextView
+            android:id="@+id/profile_Privacy_Policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Privacy_Policy"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/border1" />
+
+        <ImageView
+            android:id="@+id/profile_Privacy_Policy_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Privacy_Policy"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Privacy_Policy"
+            app:tint="@color/textColor_or_w" />
+
+        <TextView
+            android:id="@+id/profile_Terms_Conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Terms_Conditions"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Privacy_Policy" />
+
+        <ImageView
+            android:id="@+id/profile_Terms_Conditions_arrow"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_next_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Terms_Conditions"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Terms_Conditions"
+            app:tint="@color/textColor_or_w" />
+
+        <View
+            android:id="@+id/border2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Terms_Conditions" />
+
+
+        <TextView
+            android:id="@+id/profile_Version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Version"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/border2" />
+
+        <TextView
+            android:id="@+id/profile_Current_Version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Current_Version"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Version" />
+
+
+        <TextView
+            android:id="@+id/profile_Version_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Version_number"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Current_Version"
+            app:layout_constraintStart_toEndOf="@+id/profile_Current_Version"
+            app:layout_constraintTop_toTopOf="@+id/profile_Current_Version" />
+
+        <TextView
+            android:id="@+id/profile_Automatic_Updates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Automatic_Updates"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Current_Version" />
+
+        <Switch
+            android:id="@+id/profile_Automatic_Updates_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:thumbTint="@color/textColorWhite"
+            android:trackTint="@color/switch_green"
+            android:trackTintMode="src_over"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Automatic_Updates"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Automatic_Updates" />
+
+
+        <TextView
+            android:id="@+id/profile_Logoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/profile_Logoff"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_14sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/profile_Automatic_Updates" />
+
+        <ImageView
+            android:id="@+id/profile_Logoff_icon"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_logoff"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_Logoff"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/profile_Logoff"
+            app:tint="@color/textColor_or_w" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

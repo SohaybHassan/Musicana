@@ -34,10 +34,11 @@
 
 
     </fragment>
-
-
-
-
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
 
 </navigation>

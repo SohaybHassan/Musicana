@@ -22,9 +22,11 @@ import com.google.android.libraries.maps.model.LatLng;
 import com.google.android.libraries.maps.model.Marker;
 import com.google.android.libraries.maps.model.MarkerOptions;
 import com.prography.musicana.R;
+import com.prography.musicana.databinding.FragmentMapBinding;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private FragmentMapBinding binding;
     private GoogleMap mMap;
 
     public static MapFragment newInstance() {
@@ -40,12 +42,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View mView = inflater.inflate(R.layout.fragment_map, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
         mapFragment.getMapAsync(this);
-        return mView;
+
+        return binding.getRoot();
     }
 
     @Override
