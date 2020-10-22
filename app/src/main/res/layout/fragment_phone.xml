@@ -6,11 +6,12 @@
     android:background="#16053D"
     tools:context=".feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/rv_phone_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Phone Fragment"
-        android:textColor="@color/textColorWhite" />
+        />
 
 </FrameLayout>
