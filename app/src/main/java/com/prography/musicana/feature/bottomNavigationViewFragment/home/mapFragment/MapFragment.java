@@ -1,5 +1,9 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.mapFragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +22,7 @@ import com.google.android.libraries.maps.GoogleMap;
 import com.google.android.libraries.maps.OnMapReadyCallback;
 import com.google.android.libraries.maps.SupportMapFragment;
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory;
+import com.google.android.libraries.maps.model.CameraPosition;
 import com.google.android.libraries.maps.model.LatLng;
 import com.google.android.libraries.maps.model.Marker;
 import com.google.android.libraries.maps.model.MarkerOptions;
@@ -71,8 +76,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.addMarker(markerOptions2);
 
         mMap.setOnMarkerClickListener(marker -> {
-            Toast.makeText(getActivity(), "gggg", Toast.LENGTH_SHORT).show();
-            marker.showInfoWindow();
+            marker.hideInfoWindow();
+
+            Animator animator = (Animator) AnimatorInflater.
+                    loadAnimator(getActivity(), R.animator.map_marker_animation);
+
+            animator.setTarget(marker);
+            animator.start();
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    marker.showInfoWindow();
+                    Toast.makeText(getActivity(), "ggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             return false;
         });
 
@@ -80,6 +99,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getActivity(), "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
             System.out.println("wejdan is so mad");
         });
+
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
             // Use default InfoWindow frame
@@ -105,6 +125,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
 
         });
+
 //        LatLng latLng = new LatLng(-34, 151);
 //        MarkerOptions markerOptions2 = new MarkerOptions()
 //                .position(latLng)
