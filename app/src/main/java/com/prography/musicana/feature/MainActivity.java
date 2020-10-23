@@ -11,6 +11,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.provider.Settings.Secure;
 import android.Manifest;
 import android.app.Activity;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                         binding.tvTitle.setVisibility(View.VISIBLE);
                         binding.tvTitle2.setVisibility(View.GONE);
-                        binding.tvTitle.setText("Home");
+                        binding.tvTitle.setText("Musicana");
                         binding.imgCatagory.setVisibility(View.VISIBLE);
                         break;
                     case R.id.favorite:
@@ -101,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         binding.cardInclude.profileImage.setOnClickListener(viewww -> {
 
+        });
+
+        binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
+        binding.cardInclude.imStopStart.setOnClickListener(view -> {
+            Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, R.animator.my_animation);
+            animator.setTarget(binding.cardInclude.profileImage);
+            animator.start();
         });
     }
 
