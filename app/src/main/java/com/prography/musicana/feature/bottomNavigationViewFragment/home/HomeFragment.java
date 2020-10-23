@@ -3,6 +3,7 @@ package com.prography.musicana.feature.bottomNavigationViewFragment.home;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.prography.musicana.feature.MainActivity;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.mapFragment.MapFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
 
 
 public class HomeFragment extends Fragment {
@@ -67,6 +69,17 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent search = new Intent(getContext(), SearchActivity.class);
+                startActivity(search);
+
+
+
 
             }
         });

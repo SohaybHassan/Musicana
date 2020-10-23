@@ -42,6 +42,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/colas_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_card"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="@id/download"
+                app:layout_constraintEnd_toStartOf="@id/download"
+                app:layout_constraintTop_toTopOf="@id/download"/>
 
             <TextView
                 android:id="@+id/name_musec"

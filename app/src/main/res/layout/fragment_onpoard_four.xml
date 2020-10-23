@@ -12,7 +12,7 @@
         android:id="@+id/img_onpoard_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:src="@drawable/image_onpoard_four"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:text="@string/text_1_four"
         android:textColor="@color/textColor_or_w"
         android:textSize="@dimen/_18sdp"

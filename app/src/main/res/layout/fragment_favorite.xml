@@ -8,6 +8,8 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
        android:id="@+id/rv_favorite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

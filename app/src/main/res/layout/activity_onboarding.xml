@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_13sdp"
-        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
         android:drawableEnd="@drawable/ic_next_arrow_right"
         android:drawablePadding="@dimen/_6sdp"
         android:fontFamily="@font/opensansbold"
@@ -51,24 +51,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_26sdp"
         android:layout_marginEnd="@dimen/_26sdp"
-        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_marginBottom="@dimen/_40sdp"
         android:background="@drawable/btn_onpoard_four_shape"
         android:fontFamily="@font/opensansbold"
         android:text="@string/start"
         android:textColor="@color/textColorWhite"
         android:textSize="@dimen/_13sdp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dotsIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.mazenrashed.dotsindicator.DotsIndicator
         android:id="@+id/dotsIndicator"
-
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
         app:dot_height="12dp"
         app:dot_width="12dp"
         app:dots_count="4"
@@ -79,6 +78,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_next"
         app:selected_dot_resource="@drawable/ic_doits"
         app:selected_dot_scale_factor="1.6"
         app:unselected_dot_resource="@drawable/ic_dots_nuselected" />
