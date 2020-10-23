@@ -26,8 +26,9 @@ import android.widget.Toast;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
     private ActivityMainBinding binding;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,34 +44,56 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.bottomNavigation, navHostFragment.getNavController());
 
 
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 switch (destination.getId()) {
                     case R.id.home:
+
+                        binding.toolbar.setVisibility(View.VISIBLE);
+                        binding.cardInclude.getRoot().setVisibility(View.VISIBLE);
+
                         binding.tvTitle.setVisibility(View.VISIBLE);
                         binding.tvTitle2.setVisibility(View.GONE);
                         binding.tvTitle.setText("Home");
                         binding.imgCatagory.setVisibility(View.VISIBLE);
                         break;
                     case R.id.favorite:
+
+                        binding.toolbar.setVisibility(View.VISIBLE);
+                        binding.cardInclude.getRoot().setVisibility(View.VISIBLE);
+
                         binding.tvTitle2.setText("Favorite");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
                         binding.imgCatagory.setVisibility(View.GONE);
                         break;
                     case R.id.archives:
+
+                        binding.toolbar.setVisibility(View.VISIBLE);
+                        binding.cardInclude.getRoot().setVisibility(View.VISIBLE);
+
                         binding.tvTitle2.setText("Archives");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
                         binding.imgCatagory.setVisibility(View.GONE);
                         break;
                     case R.id.profile:
+
+                        binding.toolbar.setVisibility(View.VISIBLE);
+                        binding.cardInclude.getRoot().setVisibility(View.GONE);
+
                         binding.tvTitle2.setText("Profile");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
                         binding.imgCatagory.setVisibility(View.GONE);
+                        break;
+                    case R.id.editProfileFragment:
+
+                        binding.toolbar.setVisibility(View.GONE);
+                        binding.cardInclude.getRoot().setVisibility(View.GONE);
+
                         break;
                 }
             }
@@ -82,4 +105,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onFragmentInteraction(int id) {
+        switch (id){
+            case 0:
+                navController.popBackStack();
+                break;
+            case R.id.editProfileFragment:
+                navController.navigate(R.id.editProfileFragment);
+                break;
+        }
+    }
 }

@@ -70,6 +70,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .anchor(0.5f, 0.5f);
         mMap.addMarker(markerOptions2);
 
+        mMap.setOnMarkerClickListener(marker -> {
+            Toast.makeText(getActivity(), "gggg", Toast.LENGTH_SHORT).show();
+            marker.showInfoWindow();
+            return false;
+        });
+
         mMap.setOnInfoWindowClickListener(marker -> {
             Toast.makeText(getActivity(), "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
             System.out.println("wejdan is so mad");
