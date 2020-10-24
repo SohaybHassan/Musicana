@@ -59,52 +59,77 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //marker 1
         LatLng latLngObj = new LatLng(31.283598, 34.252791);
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLngObj)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker_default))
                 .anchor(0.5f, 0.5f);
-        mMap.addMarker(markerOptions);
+        Marker marker1 = mMap.addMarker(markerOptions);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngObj));
 
+        //marker 2
         LatLng latLngObj2 = new LatLng(40.283598, 28.252791);
         MarkerOptions markerOptions2 = new MarkerOptions()
                 .position(latLngObj2)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker_default))
                 .anchor(0.5f, 0.5f);
-        mMap.addMarker(markerOptions2);
+        Marker marker2 = mMap.addMarker(markerOptions2);
 
+        // marker listener
         mMap.setOnMarkerClickListener(marker -> {
+
             marker.hideInfoWindow();
+            Toast.makeText(getActivity(), marker.isInfoWindowShown()+"", Toast.LENGTH_SHORT).show();
+
+//            if (marker.equals(marker1))
+//                Toast.makeText(getActivity(), "marker 1", Toast.LENGTH_SHORT).show();
+//            else if (marker.equals(marker2))
+//                Toast.makeText(getActivity(), "marker 2", Toast.LENGTH_SHORT).show();
+//            else
+//                Toast.makeText(getActivity(), "none", Toast.LENGTH_SHORT).show();
 
             Animator animator = (Animator) AnimatorInflater.
                     loadAnimator(getActivity(), R.animator.map_marker_animation);
 
             animator.setTarget(marker);
             animator.start();
+
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    marker.showInfoWindow();
-                    Toast.makeText(getActivity(), "ggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
+
+                    marker.hideInfoWindow();
+                    Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
                 }
             });
 
             return false;
         });
 
+        //info window listener
         mMap.setOnInfoWindowClickListener(marker -> {
-            Toast.makeText(getActivity(), "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "gggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
             System.out.println("wejdan is so mad");
+            marker.hideInfoWindow();
         });
 
+        // custom widow info
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
             // Use default InfoWindow frame
             @Override
             public View getInfoWindow(Marker marker) {
+                return getLayoutInflater().inflate(R.layout.map_custom_info, null);
+            }
+
+            // Defines the contents of the InfoWindow
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                // Getting view from the layout file info_window_layout
                 View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
 
                 TextView title = v.findViewById(R.id.map_custom_info_title);
@@ -115,22 +140,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 return v;
             }
 
-            // Defines the contents of the InfoWindow
-            @Override
-            public View getInfoContents(Marker marker) {
-
-                // Getting view from the layout file info_window_layout
-                View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
-                return v;
-            }
-
         });
-
-//        LatLng latLng = new LatLng(-34, 151);
-//        MarkerOptions markerOptions2 = new MarkerOptions()
-//                .position(latLng)
-//                .title("wejdan");
-//        mMap.addMarker(markerOptions2);
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 }
