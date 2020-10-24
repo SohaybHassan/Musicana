@@ -81,6 +81,7 @@
 
 
     <ImageView
+        android:id="@+id/wejdan"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:paddingTop="@dimen/_6sdp"

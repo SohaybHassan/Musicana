@@ -4,8 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -61,13 +68,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        View mCustomMarkerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marker_custom, null);
         //marker 1
         LatLng latLngObj = new LatLng(31.283598, 34.252791);
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLngObj)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker_default))
+                .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(mCustomMarkerView, R.drawable.niki)))
                 .anchor(0.5f, 0.5f);
-        Marker marker1 = mMap.addMarker(markerOptions);
+        mMap.addMarker(markerOptions);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngObj));
 
@@ -75,9 +83,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         LatLng latLngObj2 = new LatLng(40.283598, 28.252791);
         MarkerOptions markerOptions2 = new MarkerOptions()
                 .position(latLngObj2)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker_default))
+                .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(mCustomMarkerView, R.drawable.niki)))
                 .anchor(0.5f, 0.5f);
-        Marker marker2 = mMap.addMarker(markerOptions2);
+        mMap.addMarker(markerOptions2);
 
         // custom widow info
         mMap.setInfoWindowAdapter(this);
@@ -90,41 +98,55 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     }
 
+    private Bitmap getMarkerBitmapFromView(View view, @DrawableRes int resId) {
+        ImageView mMarkerImageView = view.findViewById(R.id.image_music);
+        mMarkerImageView.setImageResource(resId);
+        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        Drawable drawable = view.getBackground();
+        if (drawable != null)
+            drawable.draw(canvas);
+        view.draw(canvas);
+        return returnedBitmap;
+    }
 
     // custom widow info
     @Nullable
     @Override
     public View getInfoWindow(@NonNull Marker marker) {
-        View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
+        View view = getLayoutInflater().inflate(R.layout.map_custom_info, null);
 
-        TextView title = v.findViewById(R.id.map_custom_info_title);
-        TextView name = v.findViewById(R.id.map_custom_info_name);
-        TextView location = v.findViewById(R.id.map_custom_info_location);
-        title.setText("wejdan murad");
+        TextView title = view.findViewById(R.id.map_custom_info_title);
+        TextView name = view.findViewById(R.id.map_custom_info_name);
+        TextView location = view.findViewById(R.id.map_custom_info_location);
+        title.setText("title");
+        name.setText("name");
+        location.setText("location");
 
-        return v;
+        return view;
     }
 
     @Nullable
     @Override
     public View getInfoContents(@NonNull Marker marker) {
-        View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
-        return v;
+        View view = getLayoutInflater().inflate(R.layout.map_custom_info, null);
+        return view;
     }
 
     //info window listener
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(getActivity(), "gggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
-        marker.hideInfoWindow();
+        Toast.makeText(getActivity(), "info window clicked", Toast.LENGTH_SHORT).show();
     }
 
     // marker listener
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-        Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
-
         Animator animator = (Animator) AnimatorInflater.
                 loadAnimator(getActivity(), R.animator.map_marker_animation);
 
@@ -135,12 +157,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-
                 marker.showInfoWindow();
-                Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
             }
         });
 
         return true;
     }
+
+
 }
