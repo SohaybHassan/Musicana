@@ -6,6 +6,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -29,7 +31,7 @@ import com.google.android.libraries.maps.model.MarkerOptions;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentMapBinding;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener {
 
     private FragmentMapBinding binding;
     private GoogleMap mMap;
@@ -77,69 +79,68 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .anchor(0.5f, 0.5f);
         Marker marker2 = mMap.addMarker(markerOptions2);
 
-        // marker listener
-        mMap.setOnMarkerClickListener(marker -> {
-
-            marker.hideInfoWindow();
-            Toast.makeText(getActivity(), marker.isInfoWindowShown()+"", Toast.LENGTH_SHORT).show();
-
-//            if (marker.equals(marker1))
-//                Toast.makeText(getActivity(), "marker 1", Toast.LENGTH_SHORT).show();
-//            else if (marker.equals(marker2))
-//                Toast.makeText(getActivity(), "marker 2", Toast.LENGTH_SHORT).show();
-//            else
-//                Toast.makeText(getActivity(), "none", Toast.LENGTH_SHORT).show();
-
-            Animator animator = (Animator) AnimatorInflater.
-                    loadAnimator(getActivity(), R.animator.map_marker_animation);
-
-            animator.setTarget(marker);
-            animator.start();
-
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-
-                    marker.hideInfoWindow();
-                    Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            return false;
-        });
+        // custom widow info
+        mMap.setInfoWindowAdapter(this);
 
         //info window listener
-        mMap.setOnInfoWindowClickListener(marker -> {
-            Toast.makeText(getActivity(), "gggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
-            System.out.println("wejdan is so mad");
-            marker.hideInfoWindow();
+        mMap.setOnInfoWindowClickListener(this);
+
+        // marker listener
+        mMap.setOnMarkerClickListener(this);
+
+    }
+
+
+    // custom widow info
+    @Nullable
+    @Override
+    public View getInfoWindow(@NonNull Marker marker) {
+        View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
+
+        TextView title = v.findViewById(R.id.map_custom_info_title);
+        TextView name = v.findViewById(R.id.map_custom_info_name);
+        TextView location = v.findViewById(R.id.map_custom_info_location);
+        title.setText("wejdan murad");
+
+        return v;
+    }
+
+    @Nullable
+    @Override
+    public View getInfoContents(@NonNull Marker marker) {
+        View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
+        return v;
+    }
+
+    //info window listener
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(getActivity(), "gggggggggggggggggggggg", Toast.LENGTH_SHORT).show();
+        marker.hideInfoWindow();
+    }
+
+    // marker listener
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
+
+        Animator animator = (Animator) AnimatorInflater.
+                loadAnimator(getActivity(), R.animator.map_marker_animation);
+
+        animator.setTarget(marker);
+        animator.start();
+
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                marker.showInfoWindow();
+                Toast.makeText(getActivity(), marker.isInfoWindowShown() + "", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // custom widow info
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            // Use default InfoWindow frame
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return getLayoutInflater().inflate(R.layout.map_custom_info, null);
-            }
-
-            // Defines the contents of the InfoWindow
-            @Override
-            public View getInfoContents(Marker marker) {
-
-                // Getting view from the layout file info_window_layout
-                View v = getLayoutInflater().inflate(R.layout.map_custom_info, null);
-
-                TextView title = v.findViewById(R.id.map_custom_info_title);
-                TextView name = v.findViewById(R.id.map_custom_info_name);
-                TextView location = v.findViewById(R.id.map_custom_info_location);
-                title.setText("wejdan murad");
-
-                return v;
-            }
-
-        });
+        return true;
     }
 }
