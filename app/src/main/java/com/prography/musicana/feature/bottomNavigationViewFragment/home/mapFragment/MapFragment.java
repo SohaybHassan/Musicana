@@ -134,8 +134,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Nullable
     @Override
     public View getInfoContents(@NonNull Marker marker) {
-        View view = getLayoutInflater().inflate(R.layout.map_custom_info, null);
-        return view;
+        return null;
     }
 
     //info window listener
