@@ -102,10 +102,12 @@
     <string name="EntryPermitAudioFiles">Entry Permit Audio Files</string>
     <string name="Location">"Location "</string>
     <string name="Mood">Mood</string>
-    <string name="DarkMood">Dark Mood</string>
-    <string name="MoodMoon">Mood Moon</string>
+    <string name="DarkMode">Dark Mode</string>
+    <string name="MoonMode">Moon Mode</string>
+    <string name="LightMode">Light Mode</string>
     <string name="Arabic">Arabic</string>
     <string name="English">English</string>
     <string name="Language">Language</string>
+    <string name="mode">mode</string>
 
 </resources>

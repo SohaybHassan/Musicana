@@ -53,15 +53,15 @@ public class ProfileCustomBottomSheet {
         Switch aSwitch2 = v.findViewById(R.id.label2_switch);
         Switch aSwitch3 = v.findViewById(R.id.label3_switch);
 
-        aSwitch1.setOnClickListener(v1 -> {
-            mListener.onSwitchClicked(2, true);
+        aSwitch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mListener.onSwitchClicked(1, true, aSwitch1, aSwitch2, aSwitch3);
         });
         aSwitch2.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mListener.onSwitchClicked(2, isChecked);
+            mListener.onSwitchClicked(2, isChecked, aSwitch1, aSwitch2, aSwitch3);
         });
 
         aSwitch3.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mListener.onSwitchClicked(3, isChecked);
+            mListener.onSwitchClicked(3, isChecked, aSwitch1, aSwitch2, aSwitch3);
         });
 
         if (!lbl3visible) {
@@ -73,7 +73,7 @@ public class ProfileCustomBottomSheet {
     }
 
     public interface BottomSheetListener {
-        void onSwitchClicked(int id, boolean checked);
+        void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3);
     }
 
 }

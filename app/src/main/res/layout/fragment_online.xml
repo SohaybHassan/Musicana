@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#16053D"
+        android:background="@color/appBackground"
         tools:context=".feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment">
 
         <!-- TODO: Update blank fragment layout -->

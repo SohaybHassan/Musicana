@@ -2,11 +2,11 @@ package com.prography.musicana.feature.bottomNavigationViewFragment.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,11 +16,14 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.feature.OnFragmentInteractionListener;
 import com.prography.musicana.feature.onboard.PrivacyPolicyActivity;
 import com.prography.musicana.feature.onboard.TermsConditionsActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class ProfileFragment extends Fragment {
@@ -52,7 +55,7 @@ public class ProfileFragment extends Fragment {
             //2
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked) {
+                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);
@@ -77,7 +80,11 @@ public class ProfileFragment extends Fragment {
             //3
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked) {
+                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
+                    SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
+                    modeEditor.putInt(AppConstants.Mode, id);
+                    modeEditor.apply();
+                    modeEditor.commit();
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);
@@ -85,21 +92,24 @@ public class ProfileFragment extends Fragment {
                         case 2:
                             System.out.println("switch 2 is " + checked);
                             break;
+                        case 3:
+                            System.out.println("switch 3 is " + checked);
+                            break;
                     }
                     System.out.println("switch" + id + " is " + checked);
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Mood),
-                    getResources().getString(R.string.DarkMood),
-                    getResources().getString(R.string.MoodMoon),
-                    null,
-                    false);
+                    getResources().getString(R.string.DarkMode),
+                    getResources().getString(R.string.MoonMode),
+                    getResources().getString(R.string.LightMode),
+                    true);
         });
         binding.profileLanguageArrow.setOnClickListener(v -> {
             //4
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked) {
+                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);

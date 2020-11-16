@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
@@ -14,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Notification;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings.Secure;
@@ -21,7 +23,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
+import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityMainBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
 import com.prography.musicana.utils.SWStaticMethods;
@@ -40,6 +44,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        switch (SharedPreferencesHelper.getMode(this)) {
+            case AppConstants.DarkMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case AppConstants.MoonMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED);
+                break;
+            case AppConstants.LightMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
 
         //divise ID
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);

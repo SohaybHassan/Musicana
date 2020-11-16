@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F7705F</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="appBackground">#FFFFFF</color>
+    <color name="textColorWhite">#000</color>
+    <color name="textColor_or_w">#F7705F</color>
+    <color name="textColor_or_w2">#97F7705F</color>
+    <color name="dotsunselected">#707070</color>
+    <color name="tab_top_bottom">#FFFFFF</color>
+    <color name="tab_contener">#FFFFFF</color>
+    <color name="switch_green">#4CD964</color>
+</resources>
