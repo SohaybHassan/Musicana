@@ -43,6 +43,19 @@
             android:layout_gravity="end|center"
             android:layout_marginEnd="@dimen/_14sdp"
             android:src="@drawable/ic_catagory" />
+
+
+        <ImageView
+            android:id="@+id/img_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_search"
+
+            app:layout_constraintBottom_toBottomOf="@id/tablayout"
+            android:layout_gravity="end|center"
+           />
+
     </androidx.appcompat.widget.Toolbar>
 
 

@@ -58,4 +58,10 @@ dependencies {
     implementation 'com.google.auto.value:auto-value-annotations:1.6.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
+
+
 }

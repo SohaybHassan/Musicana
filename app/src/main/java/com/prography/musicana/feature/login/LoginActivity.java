@@ -12,6 +12,7 @@ import com.prography.musicana.databinding.ActivityLoginBinding;
 import com.prography.musicana.feature.MainActivity;
 import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
 import com.prography.musicana.feature.regester.RegesterActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -25,15 +26,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
         binding.btnLogin.setOnClickListener(view -> {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+           // startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            SWStaticMethods.intentWithoutData(LoginActivity.this,MainActivity.class);
         });
 
         binding.tvRegesterNow.setOnClickListener(view -> {
-            startActivity(new Intent(LoginActivity.this, RegesterActivity.class));
+            //startActivity(new Intent(LoginActivity.this, RegesterActivity.class));
+            SWStaticMethods.intentWithoutData(LoginActivity.this,RegesterActivity.class);
         });
 
         binding.tvForgotPassword.setOnClickListener(view->{
-            startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+           // startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            SWStaticMethods.intentWithoutData(LoginActivity.this, ForgotPasswordActivity.class);
         });
     }
 }

@@ -2,44 +2,48 @@ package com.prography.musicana.feature;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.Notification;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.provider.Settings.Secure;
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.os.Binder;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.ActivityMainBinding;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+import static com.prography.musicana.utils.MusicaApp.CHANNEL_ID;
+
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private ActivityMainBinding binding;
     private NavController navController;
+    private NotificationManagerCompat notificationManagerCompat;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        notificationManagerCompat = NotificationManagerCompat.from(this);
 
-
+        //divise ID
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+
         Log.d("android_id", "onCreate: " + android_id);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -105,6 +109,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         });
 
+        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SWStaticMethods.intentWithoutData(
+                        MainActivity.this, SearchActivity.class);
+
+
+            }
+        });
         binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
         binding.cardInclude.imStopStart.setOnClickListener(view -> {
             Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, R.animator.my_animation);
@@ -116,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void onFragmentInteraction(int id) {
-        switch (id){
+        switch (id) {
             case 0:
                 navController.popBackStack();
                 break;
@@ -124,5 +137,40 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 navController.navigate(R.id.editProfileFragment);
                 break;
         }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cretamyCustemNotification();
+    }
+
+    public void cretamyCustemNotification() {
+
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle("Track title")
+                .setContentText("Artist - Album")
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.image_music_play))
+                .addAction(R.drawable.ic_repeat, "rebet", null)
+                .addAction(R.drawable.ic_backe_music, "back", null)
+                .addAction(R.drawable.ic_start_stop, "start", null)
+                .addAction(R.drawable.ic_naext_music, "next", null)
+                .addAction(R.drawable.ic_favofite, "like", null)
+
+
+                .setColor(getResources().getColor(R.color.tab_top_bottom, null))
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(1, 2, 3)
+                )
+                .setSubText("sub Text")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+        notificationManagerCompat.notify(1, notification);
+
+//Token	getMediaSession
     }
 }

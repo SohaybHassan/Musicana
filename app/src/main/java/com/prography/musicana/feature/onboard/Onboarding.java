@@ -14,6 +14,7 @@ import com.prography.musicana.R;
 import com.prography.musicana.databinding.ActivityOnboardingBinding;
 import com.prography.musicana.feature.MainActivity;
 import com.prography.musicana.feature.login.LoginActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
 public class Onboarding extends AppCompatActivity {
     private int conter = 1;
@@ -60,7 +61,8 @@ public class Onboarding extends AppCompatActivity {
         });
 
         binding.btnStart.setOnClickListener(view2 -> {
-            startActivity(new Intent(Onboarding.this, LoginActivity.class));
+
+            SWStaticMethods.intentWithoutData(Onboarding.this,LoginActivity.class);
             finish();
         });
     }

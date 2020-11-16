@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.prography.musicana">
 
-    
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".utils.MusicaApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,12 +44,16 @@
                 android:value=".feature.onboard.Onboarding" />
         </activity>
         <activity android:name=".feature.onboard.Onboarding" />
-        <activity android:name=".feature.MainActivity"></activity>
-        <activity android:name=".feature.SplashActivity">
+        <activity android:name=".feature.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".feature.SplashActivity">
+
+
         </activity>
     </application>
 

@@ -9,7 +9,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/tab_top_bottom"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,15 +39,6 @@
             android:text="@string/map" />
     </com.google.android.material.tabs.TabLayout>
 
-    <ImageView
-        android:id="@+id/img_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/tablayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 

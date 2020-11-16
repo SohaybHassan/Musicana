@@ -1,17 +1,13 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +15,21 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentHomeBinding;
-import com.prography.musicana.feature.MainActivity;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.mapFragment.MapFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
 
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
+
         return binding.getRoot();
 
 
@@ -72,17 +69,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent search = new Intent(getContext(), SearchActivity.class);
-                startActivity(search);
 
-
-
-
-            }
-        });
     }
 
 
