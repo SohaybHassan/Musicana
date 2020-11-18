@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
+import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.feature.OnFragmentInteractionListener;
 import com.prography.musicana.feature.onboard.PrivacyPolicyActivity;
@@ -71,9 +73,9 @@ public class ProfileFragment extends Fragment {
                 }
             });
             sheet.openDialog(getResources().getString(R.string.EntryPermit),
-                    getResources().getString(R.string.RunningBackground),
-                    getResources().getString(R.string.EntryPermitAudioFiles),
-                    getResources().getString(R.string.Location),
+                    null, getResources().getString(R.string.RunningBackground),
+                    null, getResources().getString(R.string.EntryPermitAudioFiles),
+                    null, getResources().getString(R.string.Location),
                     true);
         });
         binding.profileMoodArrow.setOnClickListener(v -> {
@@ -82,28 +84,43 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
                     SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
-                    modeEditor.putInt(AppConstants.Mode, id);
-                    modeEditor.apply();
-                    modeEditor.commit();
+
                     switch (id) {
                         case 1:
-                            System.out.println("switch 1 is " + checked);
+                            s1.setChecked(checked);
+                            s2.setChecked(!checked);
+                            if (checked) {
+                                modeEditor.putInt(AppConstants.Mode, 1);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            }else{
+                                modeEditor.putInt(AppConstants.Mode, 2);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            }
+                            modeEditor.apply();
+                            modeEditor.commit();
                             break;
                         case 2:
-                            System.out.println("switch 2 is " + checked);
-                            break;
-                        case 3:
-                            System.out.println("switch 3 is " + checked);
+                            s1.setChecked(!checked);
+                            s2.setChecked(checked);
+                            if (checked) {
+                                modeEditor.putInt(AppConstants.Mode, 2);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            }else{
+                                modeEditor.putInt(AppConstants.Mode, 1);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            }
+                            modeEditor.apply();
+                            modeEditor.commit();
                             break;
                     }
-                    System.out.println("switch" + id + " is " + checked);
+
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Mood),
-                    getResources().getString(R.string.DarkMode),
-                    getResources().getString(R.string.MoonMode),
-                    getResources().getString(R.string.LightMode),
-                    true);
+                    SharedPreferencesHelper.getMode(getContext())==1,getResources().getString(R.string.DarkMode),
+                    SharedPreferencesHelper.getMode(getContext())==2, getResources().getString(R.string.MoonMode),
+                    null,null,
+                    false);
         });
         binding.profileLanguageArrow.setOnClickListener(v -> {
             //4
@@ -122,9 +139,9 @@ public class ProfileFragment extends Fragment {
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Language),
-                    getResources().getString(R.string.English),
-                    getResources().getString(R.string.Arabic),
-                    null,
+                    null, getResources().getString(R.string.English),
+                    null, getResources().getString(R.string.Arabic),
+                    null, null,
                     false);
         });
 

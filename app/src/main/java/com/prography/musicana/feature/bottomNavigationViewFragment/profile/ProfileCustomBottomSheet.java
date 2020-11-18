@@ -33,7 +33,7 @@ public class ProfileCustomBottomSheet {
 
     }
 
-    public void openDialog(String ttl, String lbl1, String lbl2, String lbl3, boolean lbl3visible) {
+    public void openDialog(String ttl, Boolean isChecked1, String lbl1, Boolean isChecked2, String lbl2, Boolean isChecked3, String lbl3, boolean lbl3visible) {
 
         View v = LayoutInflater.from(application).inflate(R.layout.profie_custom_bottom_sheet, null);
         mDialog = new BottomSheetDialog(application);
@@ -52,6 +52,13 @@ public class ProfileCustomBottomSheet {
         Switch aSwitch1 = v.findViewById(R.id.label1_switch);
         Switch aSwitch2 = v.findViewById(R.id.label2_switch);
         Switch aSwitch3 = v.findViewById(R.id.label3_switch);
+
+        if (isChecked1 != null)
+            aSwitch1.setChecked(isChecked1);
+        if (isChecked2 != null)
+            aSwitch2.setChecked(isChecked2);
+        if (isChecked3 != null)
+            aSwitch3.setChecked(isChecked3);
 
         aSwitch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onSwitchClicked(1, true, aSwitch1, aSwitch2, aSwitch3);
