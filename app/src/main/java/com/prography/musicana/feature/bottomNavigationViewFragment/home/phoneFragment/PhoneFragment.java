@@ -1,6 +1,7 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentPhoneBinding;
 import com.prography.musicana.feature.ListItemClick;
+import com.prography.musicana.feature.OnFragmentInteractionListener;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter.PhoneFragmentAdapter;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
@@ -170,7 +172,14 @@ public class PhoneFragment extends Fragment {
     }
 
 
-
-
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof ListItemClick) {
+            listener = (ListItemClick) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 }

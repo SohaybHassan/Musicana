@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             animator.start();
         });
 
-        setTextstartAndEndTime(startTime, endTime, binding.cardInclude.startTime, binding.cardInclude.end);
+
 
 
     }
@@ -202,23 +202,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void itemClick(MediaPlayer mediaPlayer, ArrayList<PhoneModelFragmentList> items) {
-        if (mediaPlayer != null && items != null){
-            endTime = mediaPlayer.getDuration();
-            startTime = mediaPlayer.getCurrentPosition();
-        }else{
-            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
-        }
+
+        setTextstartAndEndTime(mediaPlayer.getCurrentPosition(), mediaPlayer.getDuration(), binding.cardInclude.startTime, binding.cardInclude.end);
+
+        Toast.makeText(this, startTime + " _ " + endTime, Toast.LENGTH_SHORT).show();
+
 
     }
 
 
-    public void setTextstartAndEndTime(double start, double End, TextView tvStart, TextView tvEnd) {
+    public void setTextstartAndEndTime(int start, int End, TextView tvStart, TextView tvEnd) {
 
-        tvEnd.setText(String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes((long) End),
+        tvEnd.setText(String.format("%d  %d ", TimeUnit.MILLISECONDS.toMinutes((long) End),
                 TimeUnit.MILLISECONDS.toSeconds((long) End),
                 TimeUnit.MILLISECONDS.toMinutes((long) End)));
 
-        tvStart.setText(String.format("%d min, %d sec",
+        tvStart.setText(String.format("%d , %d ",
                 TimeUnit.MILLISECONDS.toMinutes((long) start),
                 TimeUnit.MILLISECONDS.toSeconds((long) start) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
