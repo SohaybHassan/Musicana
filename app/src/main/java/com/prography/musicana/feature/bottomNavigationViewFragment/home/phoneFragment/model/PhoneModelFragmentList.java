@@ -2,11 +2,21 @@ package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFr
 
 public class PhoneModelFragmentList {
     private String name;
-    private String Alpom;
+    private String alpom;
+    private int id;
 
-    public PhoneModelFragmentList(String name, String alpom) {
+    public PhoneModelFragmentList(int id, String name, String alpom) {
         this.name = name;
-        Alpom = alpom;
+        this.alpom = alpom;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -18,10 +28,10 @@ public class PhoneModelFragmentList {
     }
 
     public String getAlpom() {
-        return Alpom;
+        return alpom;
     }
 
     public void setAlpom(String alpom) {
-        Alpom = alpom;
+        alpom = alpom;
     }
 }
