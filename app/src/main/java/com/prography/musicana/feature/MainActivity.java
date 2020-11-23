@@ -17,25 +17,34 @@ import android.animation.AnimatorInflater;
 import android.app.Notification;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.provider.Settings.Secure;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityMainBinding;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
 import com.prography.musicana.utils.SWStaticMethods;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import static com.prography.musicana.utils.MusicaApp.CHANNEL_ID;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, ListItemClick {
     private ActivityMainBinding binding;
     private NavController navController;
     private NotificationManagerCompat notificationManagerCompat;
+    private double endTime;
+    private double startTime;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -137,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             animator.setTarget(binding.cardInclude.profileImage);
             animator.start();
         });
+
+        setTextstartAndEndTime(startTime, endTime, binding.cardInclude.startTime, binding.cardInclude.end);
+
+
     }
 
 
@@ -186,4 +199,31 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
 //Token	getMediaSession
     }
+
+    @Override
+    public void itemClick(MediaPlayer mediaPlayer, ArrayList<PhoneModelFragmentList> items) {
+        if (mediaPlayer != null && items != null){
+            endTime = mediaPlayer.getDuration();
+            startTime = mediaPlayer.getCurrentPosition();
+        }else{
+            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    public void setTextstartAndEndTime(double start, double End, TextView tvStart, TextView tvEnd) {
+
+        tvEnd.setText(String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes((long) End),
+                TimeUnit.MILLISECONDS.toSeconds((long) End),
+                TimeUnit.MILLISECONDS.toMinutes((long) End)));
+
+        tvStart.setText(String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes((long) start),
+                TimeUnit.MILLISECONDS.toSeconds((long) start) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+                                start)))
+        );
+    }
+
 }
