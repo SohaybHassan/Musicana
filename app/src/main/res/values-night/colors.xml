@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#F7705F</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#F7705F</color>
     <color name="appBackground">#000000</color>
     <color name="textColorWhite">#fff</color>
     <color name="textColor_or_w">#F7705F</color>
