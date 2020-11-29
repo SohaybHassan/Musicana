@@ -84,10 +84,9 @@ public class PhoneFragment extends Fragment {
         binding.rvPhoneFragment.setAdapter(new PhoneFragmentAdapter(items, new PhoneFragmentAdapter.ClickItems() {
             @Override
             public void onClickItem(int position) {
-                Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
                 musicService.setSong(position);
                 musicService.playSong();
-
+                Log.d("mediaPlayer", "onClickItem: fragment  ");
                 listener.itemClick(mediaPlayer, items);
             }
         }));
@@ -97,18 +96,23 @@ public class PhoneFragment extends Fragment {
 
     }
 
-    public void listAllSong() {
+    public void listAllSong()
+    {
         Cursor cursor;
         Uri allsongUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+       // String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+        Log.d(TAG, "listAllSong: "+allsongUri.toString());
         if (isSdPresent()) {
-            cursor = getActivity().getContentResolver().query(allsongUri, null, null, null, null);
+            cursor = getContext().getContentResolver().query(allsongUri, null, null, null, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
+
                         String songName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
                         int songId = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
                         String albumname = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+
+                        Log.d(TAG, "listAllSong: " + songName + "_####### _" + songId + "_############### _" + albumname);
                         try {
                             mediaPlayer.addTimedTextSource(getContext(), allsongUri, ".mp3");
                         } catch (IOException e) {
@@ -116,7 +120,7 @@ public class PhoneFragment extends Fragment {
                             e.printStackTrace();
                         }
                         items.add(new PhoneModelFragmentList(songId, songName, albumname));
-                        Log.d(TAG, "listAllSong: " + songName + "_####### _" + songId + "_############### _" + albumname);
+
                     } while (cursor.moveToNext());
                 }
                 cursor.close();
@@ -156,11 +160,6 @@ public class PhoneFragment extends Fragment {
             getActivity().bindService(playIntent, serviceConnection, ContextThemeWrapper.BIND_AUTO_CREATE);
             getActivity().startService(playIntent);
         }
-    }
-
-
-    public void songPicked(View view) {
-
     }
 
 

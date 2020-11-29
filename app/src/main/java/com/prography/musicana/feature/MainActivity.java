@@ -15,10 +15,16 @@ import androidx.navigation.ui.NavigationUI;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Notification;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.provider.Settings.Secure;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +36,10 @@ import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityMainBinding;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
+import com.prography.musicana.feature.onboard.Onboarding;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
@@ -46,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private double endTime;
     private double startTime;
 
+
+    private MediaPlayer mainMediaPlayer;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         notificationManagerCompat = NotificationManagerCompat.from(this);
+        mainMediaPlayer = new MediaPlayer();
 
         switch (SharedPreferencesHelper.getMode(this)) {
             case AppConstants.DarkMode:
@@ -144,13 +156,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             }
         });
         binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
-        binding.cardInclude.imStopStart.setOnClickListener(view -> {
-            Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, R.animator.my_animation);
-            animator.setTarget(binding.cardInclude.profileImage);
-            animator.start();
-        });
-
-
+//        binding.cardInclude.imStopStart.setOnClickListener(view -> {
+//
+//            mainMediaPlayer.release();
+//            mainMediaPlayer = null;
+//            Log.d("TAG", "onCreate: click; ");
+//            // Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, R.animator.my_animation);
+//            //animator.setTarget(binding.cardInclude.profileImage);
+//            //animator.start();
+//        });
 
 
     }
@@ -203,29 +217,24 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 //Token	getMediaSession
     }
 
+
     @Override
     public void itemClick(MediaPlayer mediaPlayer, ArrayList<PhoneModelFragmentList> items) {
+        mainMediaPlayer = mediaPlayer;
 
-        setTextstartAndEndTime(mediaPlayer.getCurrentPosition(), mediaPlayer.getDuration(), binding.cardInclude.startTime, binding.cardInclude.end);
-
-        Toast.makeText(this, startTime + " _ " + endTime, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, MusicService.EndTime(), Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("TAG", " time Endt : " + MusicService.EndTime());
+                Log.d("TAG", " time Endt : " + MusicService.startTime());
+                binding.cardInclude.start.setText(MusicService.startTime());
+                binding.cardInclude.end.setText(MusicService.EndTime());
+            }
+        }, 100);
 
 
     }
 
-
-    public void setTextstartAndEndTime(int start, int End, TextView tvStart, TextView tvEnd) {
-
-        tvEnd.setText(String.format("%d  %d ", TimeUnit.MILLISECONDS.toMinutes((long) End),
-                TimeUnit.MILLISECONDS.toSeconds((long) End),
-                TimeUnit.MILLISECONDS.toMinutes((long) End)));
-
-        tvStart.setText(String.format("%d , %d ",
-                TimeUnit.MILLISECONDS.toMinutes((long) start),
-                TimeUnit.MILLISECONDS.toSeconds((long) start) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-                                start)))
-        );
-    }
 
 }

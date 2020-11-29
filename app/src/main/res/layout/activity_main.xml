@@ -86,6 +86,7 @@
         <include
             android:id="@+id/card_include"
             layout="@layout/card_run_music"
+            android:elevation="@dimen/_2sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

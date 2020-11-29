@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".utils.MusicaApp"
@@ -57,7 +57,12 @@
 
         </activity>
 
-        <service android:name=".feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService"/>
+        <service android:name=".feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+
+        </service>
     </application>
 
 </manifest>
