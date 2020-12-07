@@ -36,9 +36,7 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
         PhoneModelFragmentList phoneModelFragmentList = item.get(position);
         holder.name.setText(phoneModelFragmentList.getName());
         holder.alpom.setText(phoneModelFragmentList.getAlpom());
-        int musicNumber = position + 1;
-        holder.number_music.setText(musicNumber + "");
-        holder.bind(clickItems, position);
+        holder.bind(clickItems, position, phoneModelFragmentList);
     }
 
     @Override
@@ -47,21 +45,21 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView name, alpom, number_music;
+        private TextView name, alpom;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_musec);
             alpom = itemView.findViewById(R.id.type_musec);
-            number_music = itemView.findViewById(R.id.number_music);
+
 
         }
 
-        public void bind(ClickItems listener, int position) {
+        public void bind(ClickItems listener, int position, PhoneModelFragmentList phoneModel) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClickItem(position);
+                    listener.onClickItem(position, phoneModel);
                 }
             });
         }
@@ -70,6 +68,6 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
     }
 
     public interface ClickItems {
-        void onClickItem(int position);
+        void onClickItem(int position, PhoneModelFragmentList phoneModel);
     }
 }

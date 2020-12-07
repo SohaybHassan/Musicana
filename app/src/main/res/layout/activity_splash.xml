@@ -68,4 +68,5 @@
 <!--        android:adjustViewBounds="true"-->
 <!--        android:scaleType="fitXY"-->
 <!--        android:layout_height="match_parent" />-->
+
 </FrameLayout>

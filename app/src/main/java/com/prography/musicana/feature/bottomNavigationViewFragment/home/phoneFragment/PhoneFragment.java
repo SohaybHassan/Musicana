@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentPhoneBinding;
@@ -49,13 +49,11 @@ public class PhoneFragment extends Fragment {
     private String[] STAR = {"*"};
     private ArrayList<PhoneModelFragmentList> items;
     MediaPlayer mediaPlayer;
-    private double startTime;
-    private double endTime;
     private ListItemClick listener;
     //
     private MusicService musicService;
     private Intent playIntent;
-    private boolean musicBound = false;
+    private boolean musicBound;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,11 +81,11 @@ public class PhoneFragment extends Fragment {
         binding.rvPhoneFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvPhoneFragment.setAdapter(new PhoneFragmentAdapter(items, new PhoneFragmentAdapter.ClickItems() {
             @Override
-            public void onClickItem(int position) {
+            public void onClickItem(int position,PhoneModelFragmentList phoneModel) {
                 musicService.setSong(position);
-                musicService.playSong();
+                musicService.playSong(getContext());
                 Log.d("mediaPlayer", "onClickItem: fragment  ");
-                listener.itemClick(mediaPlayer, items);
+                listener.itemClick(items,position,phoneModel);
             }
         }));
 
@@ -96,14 +94,14 @@ public class PhoneFragment extends Fragment {
 
     }
 
-    public void listAllSong()
-    {
+    public void listAllSong() {
         Cursor cursor;
         Uri allsongUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-       // String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-        Log.d(TAG, "listAllSong: "+allsongUri.toString());
+         String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+         String [] STAR={"*"};
+        Log.d(TAG, "listAllSong: " + allsongUri.toString());
         if (isSdPresent()) {
-            cursor = getContext().getContentResolver().query(allsongUri, null, null, null, null);
+            cursor = getContext().getContentResolver().query(allsongUri,null , selection, null, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
@@ -142,8 +140,6 @@ public class PhoneFragment extends Fragment {
             musicService = binder.getService();
             musicService.setList(items);
             musicBound = true;
-
-
         }
 
         @Override
@@ -181,4 +177,7 @@ public class PhoneFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+
+
 }

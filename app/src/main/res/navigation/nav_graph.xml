@@ -20,7 +20,7 @@
         tools:layout="@layout/fragment_favorite"/>
 
     <fragment
-        android:id="@+id/archives"
+        android:id="@+id/download"
         android:name="com.prography.musicana.feature.bottomNavigationViewFragment.archives.ArchivesFragment"
         android:label="moves"
         tools:layout="@layout/fragment_archives"/>

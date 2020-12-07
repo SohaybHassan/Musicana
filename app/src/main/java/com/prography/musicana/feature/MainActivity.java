@@ -14,7 +14,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -29,6 +31,7 @@ import android.provider.Settings.Secure;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,8 +54,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private ActivityMainBinding binding;
     private NavController navController;
     private NotificationManagerCompat notificationManagerCompat;
-    private double endTime;
     private double startTime;
+    private Handler myHandler;
+    private int myNewPosition;
 
 
     private MediaPlayer mainMediaPlayer;
@@ -65,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         setContentView(binding.getRoot());
         notificationManagerCompat = NotificationManagerCompat.from(this);
         mainMediaPlayer = new MediaPlayer();
-
         switch (SharedPreferencesHelper.getMode(this)) {
             case AppConstants.DarkMode:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
         Log.d("android_id", "onCreate: " + android_id);
+
+        myHandler = new Handler();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(binding.bottomNavigation, navHostFragment.getNavController());
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle.setVisibility(View.VISIBLE);
                         binding.tvTitle2.setVisibility(View.GONE);
                         binding.tvTitle.setText("Musicana");
-                        binding.imgCatagory.setVisibility(View.VISIBLE);
+
                         break;
                     case R.id.favorite:
 
@@ -110,17 +115,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle2.setText("Favorite");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-                        binding.imgCatagory.setVisibility(View.GONE);
+
                         break;
-                    case R.id.archives:
+                    case R.id.download:
 
                         binding.toolbar.setVisibility(View.VISIBLE);
                         binding.cardInclude.getRoot().setVisibility(View.VISIBLE);
 
-                        binding.tvTitle2.setText("Archives");
+                        binding.tvTitle2.setText("download");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-                        binding.imgCatagory.setVisibility(View.GONE);
+
                         break;
                     case R.id.profile:
 
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle2.setText("Profile");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-                        binding.imgCatagory.setVisibility(View.GONE);
+
                         break;
                     case R.id.editProfileFragment:
 
@@ -142,9 +147,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             }
         });
 
-        binding.cardInclude.profileImage.setOnClickListener(viewww -> {
-
-        });
 
         binding.imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,17 +158,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             }
         });
         binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
-//        binding.cardInclude.imStopStart.setOnClickListener(view -> {
-//
-//            mainMediaPlayer.release();
-//            mainMediaPlayer = null;
-//            Log.d("TAG", "onCreate: click; ");
-//            // Animator animator = AnimatorInflater.loadAnimator(MainActivity.this, R.animator.my_animation);
-//            //animator.setTarget(binding.cardInclude.profileImage);
-//            //animator.start();
-//        });
-
-
     }
 
 
@@ -183,12 +174,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("TAG", "onPause: ");
         cretamyCustemNotification();
     }
+
 
     public void cretamyCustemNotification() {
 
@@ -219,22 +211,93 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
 
     @Override
-    public void itemClick(MediaPlayer mediaPlayer, ArrayList<PhoneModelFragmentList> items) {
-        mainMediaPlayer = mediaPlayer;
-
-        Toast.makeText(this, MusicService.EndTime(), Toast.LENGTH_SHORT).show();
+    public void itemClick(ArrayList<PhoneModelFragmentList> items, final int position, PhoneModelFragmentList phoneModel) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("TAG", " time Endt : " + MusicService.EndTime());
-                Log.d("TAG", " time Endt : " + MusicService.startTime());
+                myNewPosition = MusicService.getSongPosn();
+                mainMediaPlayer = MusicService.getMyMediaPlayer();
+                binding.cardInclude.progressBar.setMax(MusicService.getDuration());
+                binding.contenerCard.setVisibility(View.VISIBLE);
                 binding.cardInclude.start.setText(MusicService.startTime());
                 binding.cardInclude.end.setText(MusicService.EndTime());
+                binding.cardInclude.progressBar.setProgress(MusicService.getCurrentPosition());
+                myHandler.postDelayed(UpdateSongTime, 100);
+                binding.cardInclude.progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (mainMediaPlayer != null && fromUser) {
+                            mainMediaPlayer.seekTo(progress);
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+                binding.cardInclude.imNextMusic.setOnClickListener(v -> {
+                    if (myNewPosition == items.size() - 1) {
+                        Log.d("TAG", "onClick: " + myNewPosition);
+                    } else {
+                        myNewPosition = myNewPosition + 1;
+                        MusicService.setSong(myNewPosition);
+
+                        MusicService.playSong(MainActivity.this);
+                    }
+
+                });
+                binding.cardInclude.preImage.setOnClickListener(v -> {
+
+                    if (myNewPosition == 0) {
+                        Log.d("TAG", "onClick: " + myNewPosition);
+                        return;
+                    } else {
+                        myNewPosition = myNewPosition - 1;
+
+
+                        MusicService.setSong(myNewPosition);
+
+                        MusicService.playSong(MainActivity.this);
+                    }
+
+                });
+                binding.cardInclude.cardStartStop.setOnClickListener(v -> {
+
+                    if (mainMediaPlayer.isPlaying()) {
+                        Log.d("TAG", "onClick:  play");
+                        mainMediaPlayer.pause();
+                    } else {
+                        Log.d("TAG", "onClick:  stop");
+                        mainMediaPlayer.start();
+
+                    }
+
+                });
+                binding.cardInclude.nameMusec.setText(phoneModel.getName());
+                binding.cardInclude.nameMusec.setSelected(true);
+                binding.cardInclude.typeMusec.setText(phoneModel.getAlpom());
+                binding.cardInclude.typeMusec.setSelected(true);
             }
         }, 100);
-
-
     }
+
+    private Runnable UpdateSongTime = new Runnable() {
+        public void run() {
+            startTime = mainMediaPlayer.getCurrentPosition();
+            binding.cardInclude.start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
+            );
+
+            binding.cardInclude.progressBar.setProgress((int) startTime);
+            myHandler.postDelayed(this, 100);
+        }
+    };
 
 
 }

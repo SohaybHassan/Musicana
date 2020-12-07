@@ -7,5 +7,5 @@ import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFra
 import java.util.ArrayList;
 
 public interface ListItemClick {
-        void itemClick(MediaPlayer mediaPlayer, ArrayList<PhoneModelFragmentList> items);
+        void itemClick( ArrayList<PhoneModelFragmentList> items ,int position ,PhoneModelFragmentList phoneModel);
     }
