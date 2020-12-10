@@ -9,11 +9,17 @@ public class MusicaApp extends Application {
     public static final String CHANNEL_ID = "MUSIC_ID";
     public static final String CHANNEL_NAME = "MUSIC";
     public static final String CHANNEL_DESCRIPTION = " to run your music";
+    private static MusicaApp instans;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instans = this;
         createChannel();
+    }
+
+    public static MusicaApp getIstant() {
+        return instans;
     }
 
     public void createChannel() {

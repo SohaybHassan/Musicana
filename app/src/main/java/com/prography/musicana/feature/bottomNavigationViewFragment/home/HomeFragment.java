@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new OnlineFragment()).commit();
 
         binding.tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

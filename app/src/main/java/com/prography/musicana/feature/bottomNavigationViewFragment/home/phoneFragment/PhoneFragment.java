@@ -33,6 +33,7 @@ import com.prography.musicana.feature.OnFragmentInteractionListener;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter.PhoneFragmentAdapter;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
+import com.prography.musicana.utils.SWStaticMethods;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class PhoneFragment extends Fragment {
 
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             musicService = binder.getService();
-            musicService.setList(items);
+            SWStaticMethods.setLsit(items);
             musicBound = true;
         }
 

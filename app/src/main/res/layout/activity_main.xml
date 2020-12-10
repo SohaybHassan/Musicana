@@ -37,8 +37,6 @@
             android:visibility="gone" />
 
 
-
-
         <ImageView
             android:id="@+id/img_search"
             android:layout_width="wrap_content"
@@ -87,6 +85,21 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/re_run_music_bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:clickable="true"
+        android:elevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/bottom_sheet_main" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

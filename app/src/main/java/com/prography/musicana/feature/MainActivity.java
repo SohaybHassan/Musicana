@@ -11,6 +11,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -69,17 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         setContentView(binding.getRoot());
         notificationManagerCompat = NotificationManagerCompat.from(this);
         mainMediaPlayer = new MediaPlayer();
-        switch (SharedPreferencesHelper.getMode(this)) {
-            case AppConstants.DarkMode:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-            case AppConstants.MoonMode:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                break;
-            case AppConstants.LightMode:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
-        }
+        changMode();
 
         //divise ID
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
@@ -210,13 +204,42 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
 
+    public void runMusic() {
+        binding.reRunMusicBottomSheet.setAdapter(new MainAdapter(SWStaticMethods.getList(), new MainAdapter.ListItemClick() {
+            @Override
+            public void itemViewClick(int position) {
+                Log.d("TAG", "itemViewClick: "+position);
+            }
+
+            @Override
+            public void start_stop_music(int position) {
+                SWStaticMethods.stopAndStartMusic(mainMediaPlayer);
+            }
+
+            @Override
+            public void repet(int position) {
+                Log.d("TAG", "repet: "+position);
+            }
+
+            @Override
+            public void menu(int position) {
+                Log.d("TAG", "menu: "+position);
+            }
+        }));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        SnapHelper snapHelper=new PagerSnapHelper();
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        snapHelper.attachToRecyclerView(binding.reRunMusicBottomSheet);
+        binding.reRunMusicBottomSheet.setLayoutManager(linearLayoutManager);
+    }
+
     @Override
     public void itemClick(ArrayList<PhoneModelFragmentList> items, final int position, PhoneModelFragmentList phoneModel) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 myNewPosition = MusicService.getSongPosn();
-                mainMediaPlayer = MusicService.getMyMediaPlayer();
+                mainMediaPlayer = SWStaticMethods.getMediaPlayer();
                 binding.cardInclude.progressBar.setMax(MusicService.getDuration());
                 binding.contenerCard.setVisibility(View.VISIBLE);
                 binding.cardInclude.start.setText(MusicService.startTime());
@@ -242,41 +265,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     }
                 });
                 binding.cardInclude.imNextMusic.setOnClickListener(v -> {
-                    if (myNewPosition == items.size() - 1) {
-                        Log.d("TAG", "onClick: " + myNewPosition);
-                    } else {
-                        myNewPosition = myNewPosition + 1;
-                        MusicService.setSong(myNewPosition);
-
-                        MusicService.playSong(MainActivity.this);
-                    }
+                    SWStaticMethods.NextMusic(++myNewPosition, items);
 
                 });
                 binding.cardInclude.preImage.setOnClickListener(v -> {
-
-                    if (myNewPosition == 0) {
-                        Log.d("TAG", "onClick: " + myNewPosition);
-                        return;
-                    } else {
-                        myNewPosition = myNewPosition - 1;
-
-
-                        MusicService.setSong(myNewPosition);
-
-                        MusicService.playSong(MainActivity.this);
-                    }
-
+                    SWStaticMethods.backMusic(--myNewPosition);
                 });
                 binding.cardInclude.cardStartStop.setOnClickListener(v -> {
-
-                    if (mainMediaPlayer.isPlaying()) {
-                        Log.d("TAG", "onClick:  play");
-                        mainMediaPlayer.pause();
-                    } else {
-                        Log.d("TAG", "onClick:  stop");
-                        mainMediaPlayer.start();
-
-                    }
+                    SWStaticMethods.stopAndStartMusic(mainMediaPlayer);
 
                 });
                 binding.cardInclude.nameMusec.setText(phoneModel.getName());
@@ -293,11 +289,24 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             binding.cardInclude.start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
             );
-
             binding.cardInclude.progressBar.setProgress((int) startTime);
             myHandler.postDelayed(this, 100);
         }
     };
 
+
+    public void changMode() {
+        switch (SharedPreferencesHelper.getMode(this)) {
+            case AppConstants.DarkMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case AppConstants.MoonMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case AppConstants.LightMode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
+    }
 
 }

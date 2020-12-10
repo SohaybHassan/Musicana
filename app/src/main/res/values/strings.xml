@@ -109,5 +109,7 @@
     <string name="English">English</string>
     <string name="Language">Language</string>
     <string name="mode">mode</string>
+    <string name="music_name">Music Name</string>
+    <string name="music_alpom">Ausic Alpom</string>
 
 </resources>

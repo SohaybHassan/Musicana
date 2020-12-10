@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.prography.musicana.utils.SWStaticMethods;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -120,14 +122,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         mediaPlayer.setOnErrorListener(this);
     }
 
-    public void setList(ArrayList<PhoneModelFragmentList> theSongs) {
-        songList = theSongs;
-    }
 
-    public static ArrayList<PhoneModelFragmentList> getListSong() {
 
-        return songList;
-    }
+
 
 
     public class MusicBinder extends Binder {
@@ -141,6 +138,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public static void playSong(Context context) {
 
         mediaPlayer.reset();
+        songList=SWStaticMethods.getList();
         //get Song
         PhoneModelFragmentList song = songList.get(songPosn);
         //get is
@@ -164,11 +162,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public static void setSong(int songIndex) {
         Log.d("TAG", "setSong: " + songIndex);
         songPosn = songIndex;
-        Log.d("TAG", "setSong: " + songIndex);
-    }
 
-    public static ArrayList<PhoneModelFragmentList> getSongList() {
-        return songList;
     }
 
     public static int getSongPosn() {
