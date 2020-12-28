@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.regester.RegesterActivity">
+    tools:context=".feature.regester.view.RegesterActivity">
 
 
     <TextView
@@ -86,28 +86,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ed_password" />
 
-    <EditText
+    <TextView
         android:id="@+id/ed_country"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
+        android:hint="@string/country"
+        android:clickable="false"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ed_confirm_password" />
 
-    <EditText
+    <TextView
         android:id="@+id/ed_gender"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
+        android:hint="@string/gender"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ed_country" />

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+    tools:context=".feature.channels.ChannelsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ToolbarColoredBackArrow">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/opensansbold"
+            android:text="@string/channels"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_16sdp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/my_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/textColor_or_w"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_channels"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_view"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/items_channels_activity" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.onboard.OnboardFragment">
+    tools:context=".feature.onboard.view.OnboardFragment">
 
 
     <ImageView
         android:id="@+id/img_onpoard_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_270sdp"
         android:layout_marginTop="@dimen/_104sdp"
         android:src="@drawable/image_onpoard_one"
 
@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_onpoard_one" />
 
     <TextView
+        android:id="@+id/detels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        android:gravity="center"

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.prography.musicana.feature.CreateMediaPlayer;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
     private static MediaPlayer mediaPlayer;
+    private static CreateMediaPlayer createMediaPlayer;
     private static ArrayList<PhoneModelFragmentList> songList;
     private static int songPosn;
     static String startTime;
@@ -109,7 +111,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = new MediaPlayer();
+        createMediaPlayer = CreateMediaPlayer.getInstance();
+        mediaPlayer = createMediaPlayer.getMediaPlayer();
         initMusicPlayer();
     }
 
@@ -123,10 +126,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
 
-
-
-
-
     public class MusicBinder extends Binder {
 
         public MusicService getService() {
@@ -136,11 +135,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     public static void playSong(Context context) {
-
         mediaPlayer.reset();
-        songList=SWStaticMethods.getList();
+        songList = createMediaPlayer.getLsi();
         //get Song
         PhoneModelFragmentList song = songList.get(songPosn);
+        Log.d("TAG", "playSong: " + songPosn);
         //get is
         long carrSong = song.getId();
         //set uri

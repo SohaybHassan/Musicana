@@ -66,7 +66,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="online">Online</string>
-    <string name="map">Map</string>
+    <string name="playlist">PlayList</string>
     <string name="musec_name">Dirty Computers</string>
     <string name="type_musec">Joe Perez</string>
     <string name="channels">Channels</string>
@@ -111,5 +111,12 @@
     <string name="mode">mode</string>
     <string name="music_name">Music Name</string>
     <string name="music_alpom">Ausic Alpom</string>
+    <string name="Powered">Powered Py Prography</string>
+    <string name="country">country</string>
+    <string name="gender">gender</string>
+    <string name="Title">Title</string>
+    <string name="genger">Gender</string>
+    <string name="addList">Add to Play List</string>
+    <string name="playLixstName">Play List Nmae</string>
 
 </resources>

@@ -10,5 +10,10 @@
     <color name="dotsunselected">#707070</color>
     <color name="tab_top_bottom">#000000</color>
     <color name="tab_contener">#000000</color>
-    <color name="switch_green">#4CD964</color>
+
+    <color name="serch_channel_data">#A4000000</color>
+
+    <color name="disable_forground_grey">#42221f1f</color>
+    <color name="disable_thumb_grey">#1c000000</color>
+    <color name="enable_thumb_green">#46bdbf</color>
 </resources>

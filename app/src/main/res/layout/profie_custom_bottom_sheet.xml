@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/bottom_sheet_container"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="@dimen/_25sdp"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:paddingBottom="@dimen/_25sdp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
@@ -39,69 +39,72 @@
         android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
         android:fontFamily="@font/opensans_regular"
         android:text="@string/label1"
-        android:layout_marginTop="@dimen/_30sdp"
         android:textColor="@color/textColor_or_w"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/profile_sheet_title" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/label1_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:thumbTint="@color/textColorWhite"
-        android:trackTint="@color/switch_green"
         android:trackTintMode="src_over"
+        android:checked="false"
+        android:theme="@style/SCBSwitch"
         app:layout_constraintBottom_toBottomOf="@+id/label1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintTop_toTopOf="@+id/label1" />
+        app:layout_constraintTop_toTopOf="@+id/label1"
+      />
 
     <TextView
         android:id="@+id/label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/opensans_regular"
         android:text="@string/label2"
         android:textColor="@color/textColor_or_w"
         android:textSize="@dimen/_14sdp"
-        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/label1" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/label2_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:thumbTint="@color/textColorWhite"
-        android:trackTint="@color/switch_green"
+        android:checked="false"
+        android:theme="@style/SCBSwitch"
         android:trackTintMode="src_over"
         app:layout_constraintBottom_toBottomOf="@+id/label2"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintTop_toTopOf="@+id/label2" />
+        app:layout_constraintTop_toTopOf="@+id/label2"
+         />
 
     <TextView
         android:id="@+id/label3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/opensans_regular"
         android:text="@string/label3"
         android:textColor="@color/textColor_or_w"
         android:textSize="@dimen/_14sdp"
-        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/label2" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/label3_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:thumbTint="@color/textColorWhite"
-        android:trackTint="@color/switch_green"
+        android:checked="false"
+        android:theme="@style/SCBSwitch"
         android:trackTintMode="src_over"
         app:layout_constraintBottom_toBottomOf="@+id/label3"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintTop_toTopOf="@+id/label3" />
+        app:layout_constraintTop_toTopOf="@+id/label3"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,37 +16,29 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.provider.Settings.Secure;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.custem.SWInterface.ListItemClick;
+import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
 import com.prography.musicana.databinding.ActivityMainBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
-import com.prography.musicana.feature.onboard.Onboarding;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
@@ -61,9 +53,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private double startTime;
     private Handler myHandler;
     private int myNewPosition;
-
-
+    private ArrayList<PhoneModelFragmentList> items;
+    private Intent playIntent;
     private MediaPlayer mainMediaPlayer;
+    private MusicService musicService;
+    private MainAdapter mainAdapter;
+    private CreateMediaPlayer createMediaPlayer;
+
+    //rv_items need
+    private TextView mStart, mEnd;
+    SeekBar mSeekBar;
+    ImageView mImageView;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -72,12 +73,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         notificationManagerCompat = NotificationManagerCompat.from(this);
-        mainMediaPlayer = new MediaPlayer();
+        createMediaPlayer = CreateMediaPlayer.getInstance();
+        mainMediaPlayer = createMediaPlayer.getMediaPlayer();
+        items = createMediaPlayer.getLsi();
         changMode();
+        runMusic();
 
         //divise ID
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-
         Log.d("android_id", "onCreate: " + android_id);
 
         myHandler = new Handler();
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle.setVisibility(View.VISIBLE);
                         binding.tvTitle2.setVisibility(View.GONE);
                         binding.tvTitle.setText("Musicana");
-
+                        binding.imgSearch.setVisibility(View.VISIBLE);
                         break;
                     case R.id.favorite:
 
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle2.setText("Favorite");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-
+                        binding.imgSearch.setVisibility(View.VISIBLE);
                         break;
                     case R.id.download:
 
@@ -119,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle2.setText("download");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-
+                        binding.imgSearch.setVisibility(View.VISIBLE);
                         break;
                     case R.id.profile:
 
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         binding.tvTitle2.setText("Profile");
                         binding.tvTitle.setVisibility(View.GONE);
                         binding.tvTitle2.setVisibility(View.VISIBLE);
-
+                        binding.imgSearch.setVisibility(View.GONE);
                         break;
                     case R.id.editProfileFragment:
 
@@ -142,15 +145,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         });
 
 
-        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SWStaticMethods.intentWithoutData(
-                        MainActivity.this, SearchActivity.class);
-
-
-            }
-        });
+        binding.imgSearch.setOnClickListener(view -> SWStaticMethods.intentWithoutData(
+                MainActivity.this, SearchActivity.class));
         binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
     }
 
@@ -165,14 +161,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 navController.navigate(R.id.editProfileFragment);
                 break;
         }
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("TAG", "onPause: ");
-        cretamyCustemNotification();
     }
 
 
@@ -203,32 +191,70 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 //Token	getMediaSession
     }
 
-
     public void runMusic() {
-        binding.reRunMusicBottomSheet.setAdapter(new MainAdapter(SWStaticMethods.getList(), new MainAdapter.ListItemClick() {
+        mainAdapter = new MainAdapter(new MainAdapter.ListItemClick() {
             @Override
             public void itemViewClick(int position) {
-                Log.d("TAG", "itemViewClick: "+position);
+                Log.d("TAG", "itemViewClick: " + position);
             }
 
             @Override
-            public void start_stop_music(int position) {
-                SWStaticMethods.stopAndStartMusic(mainMediaPlayer);
+            public void start_stop_music(int position, int isPlaying, TextView tv_start, TextView tv_end, SeekBar seekBar, ImageView start) {
+                mStart = tv_start;
+                mEnd = tv_end;
+                mSeekBar = seekBar;
+                mImageView = start;
+                if (isPlaying == 0) {
+                    musicService.setSong(mainAdapter.getPosition());
+                    musicService.playSong(MainActivity.this);
+                    inti(tv_end, tv_start, seekBar);
+                } else if (isPlaying == 1) {
+                    createMediaPlayer.stopAndStartMusic(mainMediaPlayer);
+                }
             }
 
             @Override
-            public void repet(int position) {
-                Log.d("TAG", "repet: "+position);
+            public void repet(int position, int cont) {
+
+                Log.d("TAG", "repet: " + position);
             }
 
             @Override
             public void menu(int position) {
-                Log.d("TAG", "menu: "+position);
+                Log.d("TAG", "menu: " + position);
             }
-        }));
+
+        });
+        items = createMediaPlayer.getLsi();
+        mainAdapter.items = items;
+        binding.reRunMusicBottomSheet.setAdapter(mainAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        SnapHelper snapHelper=new PagerSnapHelper();
+        SnapHelper snapHelper = new PagerSnapHelper();
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        linearLayoutManager.getInitialPrefetchItemCount();
+        binding.reRunMusicBottomSheet.computeHorizontalScrollOffset();
+
+
+        binding.reRunMusicBottomSheet.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+                if (createMediaPlayer.getMediaPlayer() != null) {
+                    if (createMediaPlayer.getMediaPlayer().isPlaying()) {
+                        musicService.setSong(recyclerView.computeHorizontalScrollOffset() / 1000);
+                        musicService.playSong(MainActivity.this);
+                        mImageView = mainAdapter.getImage();
+                        mImageView.setImageResource(R.drawable.ic_start_stop);
+
+                    }
+
+                }
+
+            }
+        });
+
         snapHelper.attachToRecyclerView(binding.reRunMusicBottomSheet);
         binding.reRunMusicBottomSheet.setLayoutManager(linearLayoutManager);
     }
@@ -239,9 +265,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void run() {
                 myNewPosition = MusicService.getSongPosn();
-                mainMediaPlayer = SWStaticMethods.getMediaPlayer();
+                mainMediaPlayer = createMediaPlayer.getMediaPlayer();
                 binding.cardInclude.progressBar.setMax(MusicService.getDuration());
-                binding.contenerCard.setVisibility(View.VISIBLE);
+                //    binding.contenerCard.setVisibility(View.VISIBLE);
                 binding.cardInclude.start.setText(MusicService.startTime());
                 binding.cardInclude.end.setText(MusicService.EndTime());
                 binding.cardInclude.progressBar.setProgress(MusicService.getCurrentPosition());
@@ -265,14 +291,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     }
                 });
                 binding.cardInclude.imNextMusic.setOnClickListener(v -> {
-                    SWStaticMethods.NextMusic(++myNewPosition, items);
+                    createMediaPlayer.NextMusic(++myNewPosition, items);
 
                 });
                 binding.cardInclude.preImage.setOnClickListener(v -> {
-                    SWStaticMethods.backMusic(--myNewPosition);
+                    createMediaPlayer.backMusic(--myNewPosition);
                 });
                 binding.cardInclude.cardStartStop.setOnClickListener(v -> {
-                    SWStaticMethods.stopAndStartMusic(mainMediaPlayer);
+                    createMediaPlayer.stopAndStartMusic(mainMediaPlayer);
 
                 });
                 binding.cardInclude.nameMusec.setText(phoneModel.getName());
@@ -285,12 +311,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private Runnable UpdateSongTime = new Runnable() {
         public void run() {
-            startTime = mainMediaPlayer.getCurrentPosition();
-            binding.cardInclude.start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
-            );
-            binding.cardInclude.progressBar.setProgress((int) startTime);
-            myHandler.postDelayed(this, 100);
+
         }
     };
 
@@ -303,10 +324,59 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             case AppConstants.MoonMode:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
-            case AppConstants.LightMode:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
+
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (playIntent == null) {
+            playIntent = new Intent(this, MusicService.class);
+            //  getActivity().bindService(playIntent, serviceConnection, ContextThemeWrapper.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
+    }
+
+    public void updataSeekpar(TextView tv_start, SeekBar seekBar) {
+        startTime = mainMediaPlayer.getCurrentPosition();
+        tv_start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime))));
+        seekBar.setProgress((int) startTime);
+    }
+
+    public void inti(TextView tv_end, TextView tv_start, SeekBar seekBar) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Log.d("TAG", "getDuration: " + MusicService.EndTime());
+                tv_end.setText(MusicService.EndTime());
+                Log.d("TAG", "start_stop_music: " + MusicService.startTime());
+                tv_start.setText(MusicService.startTime());
+                seekBar.setMax(MusicService.getDuration());
+                seekBar.setProgress(mainMediaPlayer.getCurrentPosition());
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (mainMediaPlayer != null && fromUser) {
+                            mainMediaPlayer.seekTo(progress);
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+                updataSeekpar(tv_start, seekBar);
+                myHandler.postDelayed(this, 100);
+            }
+        }, 100);
+    }
 }

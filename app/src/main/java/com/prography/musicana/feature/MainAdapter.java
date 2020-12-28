@@ -1,7 +1,5 @@
 package com.prography.musicana.feature;
 
-import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,42 +7,53 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.prography.musicana.R;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
+import com.prography.musicana.custem.SWInterface.ListItemClick;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
-import com.prography.musicana.feature.onboard.Onboarding;
-import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> implements ListItemClick {
-    private ArrayList<PhoneModelFragmentList> items;
+    public ArrayList<PhoneModelFragmentList> items = new ArrayList<>();
     private ListItemClick listener;
-    private Handler handler;
+    private int mPosition;
+    private CreateMediaPlayer createMediaPlayer;
+    ImageView imageView;
 
-    public MainAdapter(ArrayList<PhoneModelFragmentList> items, ListItemClick listener) {
-        this.items = items;
+
+    public MainAdapter(ListItemClick listener) {
         this.listener = listener;
+        createMediaPlayer = CreateMediaPlayer.getInstance();
     }
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_sheet_main, parent, false);
-        handler = new Handler();
+
         return new MyHolder(root);
     }
 
+
     @Override
+
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+        PhoneModelFragmentList phoneModelFragmentList = items.get(position);
+        holder.name_musec.setText(phoneModelFragmentList.getName());
+        holder.name_musec.setSelected(true);
+        mPosition = position;
         holder.bind(position, listener);
-        nextPage(holder.seekBar, holder.start, holder.end);
+        setImage(holder.start_stop);
+
+    }
+
+
+    public int getPosition() {
+        return mPosition;
     }
 
     @Override
@@ -52,17 +61,30 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
         return items.size();
     }
 
+    public void setList(ArrayList<PhoneModelFragmentList> items) {
+        this.items = items;
+    }
+
     @Override
     public void itemClick(ArrayList<PhoneModelFragmentList> items, int position, PhoneModelFragmentList phoneModel) {
 
     }
 
+    public void setImage(ImageView image) {
+        imageView = image;
+    }
+
+    public ImageView getImage() {
+        return imageView;
+    }
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
         private ImageView start_stop, repet, menu;
         private SeekBar seekBar;
-        TextView start, end;
+        private TextView tvStart, tvEnd, name_musec;
+        private int count = 0;
+        private int count2 = 0;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,83 +92,71 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
             repet = itemView.findViewById(R.id.pre_image_main);
             menu = itemView.findViewById(R.id.menu_List_main);
             seekBar = itemView.findViewById(R.id.seekBar);
-            start = itemView.findViewById(R.id.start);
-            end = itemView.findViewById(R.id.end);
+            tvStart = itemView.findViewById(R.id.start);
+            tvEnd = itemView.findViewById(R.id.end);
+            name_musec = itemView.findViewById(R.id.name_musec);
         }
 
         public void bind(int position, ListItemClick listener) {
             itemView.setOnClickListener(v ->
             {
                 listener.itemViewClick(position);
-
             });
             start_stop.setOnClickListener(v -> {
-                listener.start_stop_music(position);
 
+                switch (count) {
+                    case 0:
+                        Log.d("TAG", "bind: " + count);
+                        start_stop.setImageResource(R.drawable.ic_start_stop);
+                        listener.start_stop_music(position, 0, tvStart, tvEnd, seekBar, start_stop);
+                        ++count;
+                        Log.d("TAG", "bind: " + count);
+                        break;
+                    case 1:
+                        Log.d("TAG", "bind: " + count);
+                        start_stop.setImageResource(R.drawable.ic_play);
+                        listener.start_stop_music(position, 1, tvStart, tvEnd, seekBar, start_stop);
+                        count--;
+                        Log.d("TAG", "bind: " + count);
+                        break;
+                }
             });
             repet.setOnClickListener(v -> {
-                listener.repet(position);
-
+                switch (count2) {
+                    case 0:
+                        repet.setImageResource(R.drawable.ic_replas0);
+                        listener.repet(position, 0);
+                        ++count2;
+                        Log.d("TAG", "bind: " + count);
+                        break;
+                    case 1:
+                        repet.setImageResource(R.drawable.ic_repet2);
+                        listener.repet(position, 1);
+                        count2++;
+                        Log.d("TAG", "bind: " + count);
+                        break;
+                    case 2:
+                        repet.setImageResource(R.drawable.ic_repeat);
+                        listener.repet(position, 2);
+                        count2 = 0;
+                        Log.d("TAG", "bind: " + count);
+                        break;
+                }
             });
             menu.setOnClickListener(v -> {
                 listener.menu(position);
             });
-
-
         }
     }
 
     public interface ListItemClick {
         void itemViewClick(int position);
 
-        void start_stop_music(int position);
+        void start_stop_music(int position, int isplay, TextView start, TextView end, SeekBar seekBar, ImageView imagView);
 
-        void repet(int position);
+        void repet(int position, int connt);
 
         void menu(int position);
-    }
-
-
-    public void nextPage(SeekBar seekBar, TextView start, TextView end) {
-        Thread background = new Thread() {
-            public void run() {
-                try {
-                    // Thread will sleep for 5 seconds
-                    sleep(100);
-
-                    // After 5 seconds redirect to another intent
-                    end.setText(MusicService.getDuration());
-                    seekBar.setMax(MusicService.getDuration());
-                    Log.d("TAG", "run: " +(MusicService.getDuration()+":::"+MusicService.getCurrentPosition()));
-                    seekBar.setProgress(MusicService.getCurrentPosition());
-                    handler.postDelayed(SWStaticMethods.updateSeekPar(seekBar, handler, start), 100);
-                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                        @Override
-                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                            if (SWStaticMethods.getMediaPlayer() != null && fromUser) {
-                                SWStaticMethods.getMediaPlayer().seekTo(progress);
-                            }
-                        }
-
-                        @Override
-                        public void onStartTrackingTouch(SeekBar seekBar) {
-
-                        }
-
-                        @Override
-                        public void onStopTrackingTouch(SeekBar seekBar) {
-
-                        }
-                    });
-
-
-                } catch (Exception e) {
-                }
-            }
-        };
-        // start thread
-        background.start();
-
     }
 
 

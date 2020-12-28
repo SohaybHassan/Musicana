@@ -1,5 +1,6 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentOnlineBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.adapter.ChannelsAdapter;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.adapter.MusicAdapter;
+import com.prography.musicana.feature.channels.ChannelsActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
 
 public class OnlineFragment extends Fragment {
@@ -44,5 +47,13 @@ public class OnlineFragment extends Fragment {
         binding.recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recyclerViewMusic.setAdapter(new MusicAdapter());
 
+
+        binding.tvMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SWStaticMethods.intentWithoutDataAndFinish(getActivity(), ChannelsActivity.class);
+            }
+        });
     }
 }

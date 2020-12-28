@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -49,15 +50,18 @@ public class ProfileCustomBottomSheet {
         label2.setText(lbl2);
         label3.setText(lbl3);
 
-        Switch aSwitch1 = v.findViewById(R.id.label1_switch);
-        Switch aSwitch2 = v.findViewById(R.id.label2_switch);
-        Switch aSwitch3 = v.findViewById(R.id.label3_switch);
+        SwitchCompat aSwitch1 = v.findViewById(R.id.label1_switch);
+        SwitchCompat aSwitch2 = v.findViewById(R.id.label2_switch);
+        SwitchCompat aSwitch3 = v.findViewById(R.id.label3_switch);
 
         aSwitch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onSwitchClicked(1, true, aSwitch1, aSwitch2, aSwitch3);
+
+
         });
         aSwitch2.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onSwitchClicked(2, isChecked, aSwitch1, aSwitch2, aSwitch3);
+
         });
 
         aSwitch3.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -72,8 +76,17 @@ public class ProfileCustomBottomSheet {
         mDialog.show();
     }
 
+
+    public void SwitchButton(boolean isChecked) {
+        if (isChecked) {
+
+        } else {
+
+        }
+    }
+
     public interface BottomSheetListener {
-        void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3);
+        void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3);
     }
 
 }

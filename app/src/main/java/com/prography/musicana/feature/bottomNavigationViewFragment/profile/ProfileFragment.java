@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,9 +20,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentProfileBinding;
-import com.prography.musicana.feature.OnFragmentInteractionListener;
-import com.prography.musicana.feature.onboard.PrivacyPolicyActivity;
-import com.prography.musicana.feature.onboard.TermsConditionsActivity;
+import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
+import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
+import com.prography.musicana.feature.onboard.view.TermsConditionsActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -51,11 +52,11 @@ public class ProfileFragment extends Fragment {
         });
 
         ////*************/////
-        binding.profileEntryPermitArrow.setOnClickListener(v -> {
+        binding.profileEntryPermit.setOnClickListener(v -> {
             //2
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
+                public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);
@@ -73,14 +74,14 @@ public class ProfileFragment extends Fragment {
             sheet.openDialog(getResources().getString(R.string.EntryPermit),
                     getResources().getString(R.string.RunningBackground),
                     getResources().getString(R.string.EntryPermitAudioFiles),
-                    getResources().getString(R.string.Location),
-                    true);
+                    null,
+                    false);
         });
-        binding.profileMoodArrow.setOnClickListener(v -> {
+        binding.profileMood.setOnClickListener(v -> {
             //3
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
+                public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
                     SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
                     modeEditor.putInt(AppConstants.Mode, id);
                     modeEditor.apply();
@@ -102,14 +103,14 @@ public class ProfileFragment extends Fragment {
             sheet.openDialog(getResources().getString(R.string.Mood),
                     getResources().getString(R.string.DarkMode),
                     getResources().getString(R.string.MoonMode),
-                    getResources().getString(R.string.LightMode),
-                    true);
+                    null,
+                    false);
         });
-        binding.profileLanguageArrow.setOnClickListener(v -> {
+        binding.profileLanguage.setOnClickListener(v -> {
             //4
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
-                public void onSwitchClicked(int id, boolean checked, Switch s1, Switch s2, Switch s3) {
+                public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);
@@ -139,11 +140,11 @@ public class ProfileFragment extends Fragment {
         });
 
         ////***********////
-        binding.profilePrivacyPolicyArrow.setOnClickListener(v -> {
+        binding.profilePrivacyPolicy.setOnClickListener(v -> {
             //5
             startActivity(new Intent(getActivity(), PrivacyPolicyActivity.class));
         });
-        binding.profileTermsConditionsArrow.setOnClickListener(v -> {
+        binding.profileTermsConditions.setOnClickListener(v -> {
             //6
             startActivity(new Intent(getActivity(), TermsConditionsActivity.class));
         });

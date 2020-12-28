@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.onboard.OnboardFragment">
+    tools:context=".feature.onboard.view.OnboardFragment">
 
 
     <ImageView
         android:id="@+id/img_onpoard_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_260sdp"
         android:layout_marginTop="@dimen/_104sdp"
         android:src="@drawable/image_onpoard_three"
 
@@ -24,28 +24,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_40sdp"
         android:text="@string/text_1_three"
         android:textColor="@color/textColor_or_w"
         android:textSize="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_40sdp"
         app:layout_constraintEnd_toEndOf="@id/img_onpoard_one"
         app:layout_constraintStart_toStartOf="@id/img_onpoard_one"
         app:layout_constraintTop_toBottomOf="@id/img_onpoard_one" />
 
     <TextView
+        android:id="@+id/det"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:gravity="center"
         android:text="@string/text_2_three"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
         android:textColor="@color/textColorWhite"
         android:textSize="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/txt_1"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

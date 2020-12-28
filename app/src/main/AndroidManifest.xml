@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".utils.MusicaApp"
@@ -14,46 +15,56 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".feature.bottomNavigationViewFragment.home.search.SearchActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".feature.channelsdata.ChannelsDataActivity"
+            android:parentActivityName=".feature.channels.ChannelsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.channels.ChannelsActivity" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_map_api_key" />
-
-        <activity
-            android:name=".feature.forgotPassword.ForgotPasswordActivity"
-            android:parentActivityName=".feature.login.LoginActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.login.LoginActivity" />
-        </activity>
-        <activity android:name=".feature.regester.RegesterActivity" />
-        <activity android:name=".feature.login.LoginActivity" />
-        <activity
-            android:name=".feature.onboard.PrivacyPolicyActivity"
-            android:parentActivityName=".feature.onboard.Onboarding">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.onboard.Onboarding" />
-        </activity>
-        <activity
-            android:name=".feature.onboard.TermsConditionsActivity"
-            android:parentActivityName=".feature.onboard.Onboarding">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.onboard.Onboarding" />
-        </activity>
-        <activity android:name=".feature.onboard.Onboarding" />
-        <activity android:name=".feature.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".feature.channels.ChannelsActivity"
+            android:parentActivityName=".feature.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.MainActivity" />
+        </activity>
+        <activity android:name=".feature.bottomNavigationViewFragment.home.search.SearchActivity"></activity>
+        <activity
+            android:name=".feature.forgotPassword.ForgotPasswordActivity"
+            android:parentActivityName=".feature.login.view.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.login.view.LoginActivity" />
+        </activity>
+        <activity android:name=".feature.regester.view.RegesterActivity" />
+        <activity android:name=".feature.login.view.LoginActivity" />
+        <activity
+            android:name=".feature.onboard.view.PrivacyPolicyActivity"
+            android:parentActivityName=".feature.onboard.view.Onboarding">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.onboard.view.Onboarding" />
+        </activity>
+        <activity
+            android:name=".feature.onboard.view.TermsConditionsActivity"
+            android:parentActivityName=".feature.onboard.view.Onboarding">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.onboard.view.Onboarding" />
+        </activity>
+        <activity android:name=".feature.onboard.view.Onboarding" />
+        <activity android:name=".feature.MainActivity"></activity>
         <activity android:name=".feature.SplashActivity">
-
 
         </activity>
 
@@ -61,7 +72,6 @@
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
-
         </service>
     </application>
 

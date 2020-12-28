@@ -11,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentEditProfileBinding;
-import com.prography.musicana.feature.OnFragmentInteractionListener;
+import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
 
 public class EditProfileFragment extends Fragment {
 

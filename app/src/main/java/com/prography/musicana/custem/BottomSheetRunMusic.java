@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.R;
 import com.prography.musicana.custem.bottomSeetAdapter.ListMusicProfileAdapter;
+import com.prography.musicana.feature.CreateMediaPlayer;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 import com.prography.musicana.utils.MusicaApp;
@@ -29,6 +30,7 @@ public class BottomSheetRunMusic {
 
     private BottomSheetDialog mDialog;
     private bottomSheetSearsh mListener;
+    private CreateMediaPlayer createMediaPlayer;
 
 
     private TextView musicName, musicAlpom, startTime, endtTime;
@@ -40,6 +42,7 @@ public class BottomSheetRunMusic {
     public BottomSheetRunMusic(BottomSheetDialog dialog, bottomSheetSearsh listener) {
         this.mListener = listener;
         this.mDialog = dialog;
+        createMediaPlayer = CreateMediaPlayer.getInstance();
     }
 
 
@@ -67,9 +70,9 @@ public class BottomSheetRunMusic {
     }
 
     public void onClickimage() {
-        im_next.setOnClickListener(v -> SWStaticMethods.NextMusic(SWStaticMethods.getPosition(), SWStaticMethods.getList()));
-        im_back.setOnClickListener(v -> SWStaticMethods.backMusic(SWStaticMethods.getPosition()));
-        im_startStop.setOnClickListener(v -> SWStaticMethods.stopAndStartMusic(SWStaticMethods.getMediaPlayer()));
+        im_next.setOnClickListener(v -> createMediaPlayer.NextMusic(createMediaPlayer.getPosition(), createMediaPlayer.getLsi()));
+        im_back.setOnClickListener(v -> createMediaPlayer.backMusic(createMediaPlayer.getPosition()));
+        im_startStop.setOnClickListener(v -> createMediaPlayer.stopAndStartMusic(createMediaPlayer.getMediaPlayer()));
     }
 
     public void findView(View view) {
@@ -116,20 +119,20 @@ public class BottomSheetRunMusic {
 
 
     public void nextMusic() {
-        int position = SWStaticMethods.getPosition();
-        ArrayList<?> items = SWStaticMethods.getList();
-        SWStaticMethods.NextMusic(++position, items);
+        int position = createMediaPlayer.getPosition();
+        ArrayList<PhoneModelFragmentList> items = createMediaPlayer.getLsi();
+        createMediaPlayer.NextMusic(++position, items);
     }
 
 
-    public static void backMusic() {
-        int position = SWStaticMethods.getPosition();
-        SWStaticMethods.backMusic(position);
+    public  void backMusic() {
+        int position = createMediaPlayer.getPosition();
+       createMediaPlayer .backMusic(position);
 
     }
 
-    public static void StopStartMusic() {
-        SWStaticMethods.stopAndStartMusic(SWStaticMethods.getMediaPlayer());
+    public  void StopStartMusic() {
+        createMediaPlayer.stopAndStartMusic(createMediaPlayer.getMediaPlayer());
     }
 
 

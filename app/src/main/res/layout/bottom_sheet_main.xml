@@ -55,7 +55,7 @@
                 android:id="@+id/start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0:33"
+                android:text="0:00"
                 android:textColor="@color/textColor_or_w"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toTopOf="@id/seekBar"
@@ -65,7 +65,7 @@
                 android:id="@+id/end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3:57"
+                android:text="0:00"
                 android:textColor="@color/textColor_or_w"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toTopOf="@id/seekBar"
@@ -77,7 +77,7 @@
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:progress="20"
+                android:progress="0"
                 android:progressTint="@color/textColor_or_w"
                 app:layout_constraintStart_toStartOf="@id/name_musec"
                 app:layout_constraintTop_toBottomOf="@id/name_musec" />
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_16sdp"
-                android:src="@drawable/ic_start_stop"
+                android:src="@drawable/ic_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

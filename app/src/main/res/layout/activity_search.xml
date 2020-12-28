@@ -8,13 +8,13 @@
     tools:context=".feature.bottomNavigationViewFragment.home.search.SearchActivity">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="@color/tab_top_bottom"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,7 +28,6 @@
             android:textSize="@dimen/_20sdp" />
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <EditText
         android:id="@+id/ed_search"
