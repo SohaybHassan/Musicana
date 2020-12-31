@@ -1,5 +1,6 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,24 +48,24 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
 
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView name, alpom;
-        ImageView imageView;
+        ImageView imageView, image_more;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_musec);
             alpom = itemView.findViewById(R.id.type_musec);
-            imageView=itemView.findViewById(R.id.image_music);
-
+            imageView = itemView.findViewById(R.id.image_music);
+            image_more = itemView.findViewById(R.id.image_more);
 
         }
 
         public void bind(ClickItems listener, int position, PhoneModelFragmentList phoneModel) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClickItem(position, phoneModel);
-                }
+            itemView.setOnClickListener(v -> listener.onClickItem(position, phoneModel));
+
+            image_more.setOnClickListener(v -> {
+                listener.onClickMore(phoneModel);
             });
+
         }
 
 
@@ -72,6 +73,8 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
 
     public interface ClickItems {
         void onClickItem(int position, PhoneModelFragmentList phoneModel);
+
+        void onClickMore(PhoneModelFragmentList phoneMusic);
     }
 
 

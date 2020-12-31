@@ -118,5 +118,12 @@
     <string name="genger">Gender</string>
     <string name="addList">Add to Play List</string>
     <string name="playLixstName">Play List Nmae</string>
+    <string name="addToPlayList">Add To Play List</string>
+    <string name="downlod">Downlod</string>
+    <string name="share">Share</string>
+    <string name="addTofavorite">Add To Favorite</string>
+    <string name="new_play_list">New PLay List</string>
+    <string name="play_list_name">Play List Name</string>
+    <string name="OK">OK</string>
 
 </resources>

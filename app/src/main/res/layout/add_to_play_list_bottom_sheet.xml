@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground">
+
+    <View
+        android:id="@+id/view_new_list"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/bottom_sheet_more_view_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_new_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="@string/new_play_list"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_new_list" />
+
+
+    <View
+        android:id="@+id/view_new_list2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/textColorWhite"
+        app:layout_constraintEnd_toEndOf="@id/tv_new_list"
+        app:layout_constraintStart_toStartOf="@id/tv_new_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_new_list" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_all_my_play_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_new_list2"
+        app:layout_constraintStart_toStartOf="@id/view_new_list2"
+        app:layout_constraintTop_toBottomOf="@id/view_new_list2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground">
+
+
+    <View
+        android:id="@+id/view_bottom_sheet"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/bottom_sheet_more_view_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_add_to_play_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:drawableStart="@drawable/ic_add"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="@string/addToPlayList"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_bottom_sheet" />
+
+    <TextView
+        android:id="@+id/tv_downlode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_download"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="@string/downlod"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="@id/tv_add_to_play_list"
+        app:layout_constraintStart_toStartOf="@id/tv_add_to_play_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_to_play_list" />
+
+    <TextView
+        android:id="@+id/tv_share"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_share"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="@string/share"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="@id/tv_downlode"
+        app:layout_constraintStart_toStartOf="@id/tv_downlode"
+        app:layout_constraintTop_toBottomOf="@id/tv_downlode" />
+
+    <TextView
+        android:id="@+id/tv_add_to_favorite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_favorite"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="@string/addTofavorite"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="@id/tv_share"
+        app:layout_constraintStart_toStartOf="@id/tv_share"
+        app:layout_constraintTop_toBottomOf="@id/tv_share" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

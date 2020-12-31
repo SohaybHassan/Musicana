@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
@@ -57,8 +58,11 @@ public class ProfileFragment extends Fragment {
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
                 public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
+                    SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
+
                     switch (id) {
                         case 1:
+
                             System.out.println("switch 1 is " + checked);
                             break;
                         case 2:
@@ -83,21 +87,36 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
                     SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
-                    modeEditor.putInt(AppConstants.Mode, id);
-                    modeEditor.apply();
-                    modeEditor.commit();
                     switch (id) {
                         case 1:
-                            System.out.println("switch 1 is " + checked);
+                            s1.setChecked(checked);
+                            s2.setChecked(!checked);
+                            if (checked){
+                                modeEditor.putInt(AppConstants.Mode,1);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            }else {
+                                modeEditor.putInt(AppConstants.Mode, 2);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            }
+                            modeEditor.apply();
+                            modeEditor.commit();
+
                             break;
                         case 2:
-                            System.out.println("switch 2 is " + checked);
+                            s1.setChecked(!checked);
+                            s2.setChecked(checked);
+                            if (checked) {
+                                modeEditor.putInt(AppConstants.Mode, 2);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            }else{
+                                modeEditor.putInt(AppConstants.Mode, 1);
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            }
+                            modeEditor.apply();
+                            modeEditor.commit();
                             break;
-                        case 3:
-                            System.out.println("switch 3 is " + checked);
-                            break;
+
                     }
-                    System.out.println("switch" + id + " is " + checked);
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Mood),

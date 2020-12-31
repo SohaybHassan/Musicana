@@ -24,12 +24,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".feature.channels.ChannelsActivity" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".feature.channels.ChannelsActivity"
@@ -63,7 +57,13 @@
                 android:value=".feature.onboard.view.Onboarding" />
         </activity>
         <activity android:name=".feature.onboard.view.Onboarding" />
-        <activity android:name=".feature.MainActivity"></activity>
+        <activity android:name=".feature.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".feature.SplashActivity">
 
         </activity>
