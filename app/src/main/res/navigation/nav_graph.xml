@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.ProfileFragment"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileFragment"
         android:label="moves"
         tools:layout="@layout/fragment_profile">
 
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.EditProfileFragment"
+        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
 

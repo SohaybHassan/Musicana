@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.login.model;
+package com.prography.musicana.feature.regester.model.verification;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Message {
+public class Response {
 
     @SerializedName("data")
     @Expose
@@ -11,7 +11,6 @@ public class Message {
     @SerializedName("settings")
     @Expose
     private Settings settings;
-    private final static long serialVersionUID = 3425010191723731240L;
 
     public Data getData() {
         return data;

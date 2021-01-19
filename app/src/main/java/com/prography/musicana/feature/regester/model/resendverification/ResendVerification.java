@@ -1,26 +1,25 @@
-package com.prography.musicana.feature.regester.model;
+package com.prography.musicana.feature.regester.model.resendverification;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegesterModel {
+public class ResendVerification {
 
     @SerializedName("response")
     @Expose
-    private String response;
+    private Response response;
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
 
-    public String getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 

@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.JsonObject;
 import com.prography.musicana.feature.regester.model.RegesterModel;
 import com.prography.musicana.feature.regester.model.gender.RequesBody;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
+import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,9 +24,11 @@ import retrofit2.Response;
 public class RegesterPresenter {
     public static final String TAG = RegesterPresenter.class.getSimpleName();
     private NetworkInit networkInit;
-    MutableLiveData<RegesterModel> newUserModelMutableLiveData;
-    MutableLiveData<RequesBody> requesBodyMutableLiveData;
-    MutableLiveData<com.prography.musicana.feature.regester.model.country.RequesBody> requesBodycountryMutableLiveData;
+    private MutableLiveData<RegesterModel> newUserModelMutableLiveData;
+    private MutableLiveData<RequesBody> requesBodyMutableLiveData;
+    private MutableLiveData<com.prography.musicana.feature.regester.model.country.RequesBody> requesBodycountryMutableLiveData;
+    private MutableLiveData<VerificationRespone> verificationResponeMutableLiveData;
+    private MutableLiveData<ResendVerification> resendVerificationMutableLiveData;
     private static RegesterPresenter instance;
 
     public RegesterPresenter() {
@@ -32,7 +36,8 @@ public class RegesterPresenter {
         newUserModelMutableLiveData = new MutableLiveData<>();
         requesBodyMutableLiveData = new MutableLiveData<>();
         requesBodycountryMutableLiveData = new MutableLiveData<>();
-
+        verificationResponeMutableLiveData = new MutableLiveData<>();
+        resendVerificationMutableLiveData = new MutableLiveData<>();
     }
 
     public static RegesterPresenter getInstance() {
@@ -43,25 +48,63 @@ public class RegesterPresenter {
     }
 
 
+    public LiveData<ResendVerification> resendVerificationLiveData(String email) {
+        networkInit.getRetrofitApis().resendVerificationCode(email).enqueue(new Callback<ResendVerification>() {
+            @Override
+            public void onResponse(@NotNull Call<ResendVerification> call, @NotNull Response<ResendVerification> response) {
+                if (response.isSuccessful()) {
+                    resendVerificationMutableLiveData.setValue(response.body());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
+                } else {
+                    resendVerificationMutableLiveData.setValue(null);
+                    Log.d(TAG, "onResponse:  some thing rounge -_-");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResendVerification> call, @NotNull Throwable t) {
+                resendVerificationMutableLiveData.setValue(null);
+                Log.d(TAG, "onResponse:  some thing rounge -_-" + t.getMessage());
+            }
+        });
+
+        return resendVerificationMutableLiveData;
+    }
+
+    public LiveData<VerificationRespone> verification(String verify_code, String password, String email, String device
+            , String uuis, String devicename) {
+
+        networkInit.getRetrofitApis().verificationCode(verify_code, password, email, device, uuis, devicename).enqueue(new Callback<VerificationRespone>() {
+            @Override
+            public void onResponse(@NotNull Call<VerificationRespone> call, @NotNull Response<VerificationRespone> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getEmail());
+                    verificationResponeMutableLiveData.setValue(response.body());
+                } else {
+                    Log.d(TAG, "onResponse:  name data");
+                    verificationResponeMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<VerificationRespone> call, @NotNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                verificationResponeMutableLiveData.setValue(null);
+            }
+        });
+        return verificationResponeMutableLiveData;
+    }
+
+
     public LiveData<RegesterModel> newUser(String firdName, String lastName, String phone, String email
             , String password, String country, String gender) {
 
-        JsonObject req = new JsonObject();
-        req.addProperty("firstname", firdName);
-        req.addProperty("lastname", lastName);
-        req.addProperty("phone", phone);
-        req.addProperty("email", email);
-        req.addProperty("password", password);
-        req.addProperty("country", country);
-        req.addProperty("gender", gender);
-        RequestBody requestBody = RequestBody.create(String.valueOf(req), MediaType.parse("application/json"));
-
-        networkInit.getRetrofitApis().newUser(requestBody).enqueue(new Callback<RegesterModel>() {
+        networkInit.getRetrofitApis().newUser(firdName, lastName, phone, email, password, country, gender).enqueue(new Callback<RegesterModel>() {
             @Override
             public void onResponse(@NotNull Call<RegesterModel> call, @NotNull Response<RegesterModel> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse());
                     newUserModelMutableLiveData.setValue(response.body());
                 } else {
                     Log.d(TAG, "onResponse: " + " new data");

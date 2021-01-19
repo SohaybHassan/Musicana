@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.bottomNavigationViewFragment.profile;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,18 +10,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
+import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileCustomBottomSheet;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
 import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
 import com.prography.musicana.feature.onboard.view.TermsConditionsActivity;
 
@@ -33,6 +38,8 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private BottomSheetDialog sheetDialog;
     private OnFragmentInteractionListener mListener;
+    private ProfileViewModel profileViewModel;
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +47,10 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         sheetDialog = new BottomSheetDialog(getActivity());
+        profileViewModel = new ViewModelProvider(getActivity()).get(ProfileViewModel.class);
+        sharedPreferencesHelper = new SharedPreferencesHelper();
         return binding.getRoot();
+
     }
 
     @Override
@@ -91,10 +101,10 @@ public class ProfileFragment extends Fragment {
                         case 1:
                             s1.setChecked(checked);
                             s2.setChecked(!checked);
-                            if (checked){
-                                modeEditor.putInt(AppConstants.Mode,1);
+                            if (checked) {
+                                modeEditor.putInt(AppConstants.Mode, 1);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            }else {
+                            } else {
                                 modeEditor.putInt(AppConstants.Mode, 2);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                             }
@@ -108,7 +118,7 @@ public class ProfileFragment extends Fragment {
                             if (checked) {
                                 modeEditor.putInt(AppConstants.Mode, 2);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            }else{
+                            } else {
                                 modeEditor.putInt(AppConstants.Mode, 1);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                             }
@@ -179,7 +189,7 @@ public class ProfileFragment extends Fragment {
         });
 
         //////********///
-        binding.profileLogoffIcon.setOnClickListener(v -> {
+        binding.profileLogoff.setOnClickListener(v -> {
             //log off
             Toast.makeText(getActivity(), "log off", Toast.LENGTH_SHORT).show();
         });
@@ -194,6 +204,21 @@ public class ProfileFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+
+    public void logoutRequest() {
+        profileViewModel.logout().observe(getActivity(), new Observer<Logout>() {
+            @Override
+            public void onChanged(Logout logout) {
+                if (logout != null) {
+                    Toast.makeText(getActivity(), "logout done", Toast.LENGTH_SHORT).show();
+                    sharedPreferencesHelper.clerData();
+                } else {
+
+                }
+            }
+        });
     }
 
 }

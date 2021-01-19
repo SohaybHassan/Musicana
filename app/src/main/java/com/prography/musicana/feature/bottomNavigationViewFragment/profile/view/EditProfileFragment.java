@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.bottomNavigationViewFragment.profile;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.view;
 
 import android.content.Context;
 import android.os.Bundle;

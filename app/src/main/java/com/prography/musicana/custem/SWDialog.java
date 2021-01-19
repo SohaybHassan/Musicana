@@ -3,6 +3,7 @@ package com.prography.musicana.custem;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,8 @@ public class SWDialog extends DialogFragment {
 
         View root = requireActivity().getLayoutInflater().inflate(R.layout.sw_add_to_play_list_dialog, null);
         init(root);
-        clicked(playList_name.getText().toString());
+
+        clicked(playList_name);
         builder.setCanceledOnTouchOutside(false);
         builder.setContentView(root);
         return builder;
@@ -47,15 +49,16 @@ public class SWDialog extends DialogFragment {
 
         btn_ok = root.findViewById(R.id.btn_OK);
         playList_name = root.findViewById(R.id.playList_name);
+        Log.d("TAG", "init: "+playList_name.getText().toString());
     }
 
-    public void clicked(String text) {
+    public void clicked(EditText text) {
 
-        btn_ok.setOnClickListener(view -> dilogclicked.OK(text));
+        btn_ok.setOnClickListener(view -> dilogclicked.OK(playList_name));
     }
 
     public interface Dilogclicked {
 
-        void OK(String platListName);
+        void OK(EditText platListName);
     }
 }

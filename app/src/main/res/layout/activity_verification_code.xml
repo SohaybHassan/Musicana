@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.forgotPassword.ForgotPasswordActivity">
+    tools:context=".feature.regester.view.VerificationCode">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -32,42 +32,55 @@
         android:id="@+id/image_logo_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_91sdp"
+        android:layout_marginTop="@dimen/_100sdp"
         android:src="@drawable/app_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/ed_email"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_83sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_logo_login" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
+    <com.chaos.view.PinView
+        android:id="@+id/pin_view"
+        style="@style/PinWidget.PinView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:cursorVisible="true"
+        android:inputType="text"
+        android:itemBackground="@android:color/transparent"
+        android:textColor="@color/textColor_or_w"
+        app:cursorColor="@color/textColor_or_w"
+        app:hideLineWhenFilled="true"
+        app:itemCount="6"
+        app:itemHeight="@dimen/_40sdp"
+        app:itemRadius="@dimen/_5sdp"
+        app:itemWidth="@dimen/_40sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_logo_login"
+        app:lineColor="@color/textColor_or_w"
+        app:lineWidth="@dimen/_1sdp" />
+
+    <!--    android:indeterminateTint="#fff"-->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_75sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:elevation="@dimen/_5sdp"/>
+        android:layout_marginBottom="@dimen/_75sdp"
+
+        android:elevation="@dimen/_5sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
-        android:id="@+id/btn_re_send"
+        android:id="@+id/btn_verifie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_25sdp"
@@ -82,5 +95,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_resend_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:fontFamily="@font/opensansbold"
+        android:text="@string/resendcode"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="@id/btn_verifie"
+        app:layout_constraintStart_toStartOf="@id/btn_verifie"
+        app:layout_constraintTop_toBottomOf="@id/btn_verifie" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

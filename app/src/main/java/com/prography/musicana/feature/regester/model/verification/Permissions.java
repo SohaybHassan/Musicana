@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.login.model;
+package com.prography.musicana.feature.regester.model.verification;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

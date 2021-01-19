@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.feature.regester.model.RegesterModel;
 import com.prography.musicana.feature.regester.model.gender.RequesBody;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
+import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
 import com.prography.musicana.feature.regester.presenter.RegesterPresenter;
 
 public class RegesterViewModel extends AndroidViewModel {
@@ -25,11 +27,20 @@ public class RegesterViewModel extends AndroidViewModel {
 
     }
 
+    public LiveData<VerificationRespone> verificationResponeLiveData(String verify_code, String password, String email, String device
+            , String uuis, String devicename) {
+        return regesterPresenter.verification(verify_code, password, email, device, uuis, devicename);
+    }
+
     public LiveData<com.prography.musicana.feature.regester.model.country.RequesBody> getCountry() {
         return regesterPresenter.getCountry();
     }
 
     public LiveData<RequesBody> getGender() {
         return regesterPresenter.getGender();
+    }
+
+    public LiveData<ResendVerification> resendVerificationLiveData(String email) {
+        return regesterPresenter.resendVerificationLiveData(email);
     }
 }

@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,15 +16,27 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.R;
 import com.prography.musicana.custem.BottomSheetListView;
 import com.prography.musicana.databinding.ActivityRegesterBinding;
+import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.regester.model.RegesterModel;
 import com.prography.musicana.feature.regester.model.country.RequesBody;
 import com.prography.musicana.feature.regester.viewModel.RegesterViewModel;
+import com.prography.musicana.utils.SWStaticMethods;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RegesterActivity extends AppCompatActivity {
     public static final String TAG = RegesterActivity.class.getSimpleName();
@@ -42,30 +58,38 @@ public class RegesterActivity extends AppCompatActivity {
         gendername = new ArrayList<>();
 
 
+
+
+
         regesterViewModel = new ViewModelProvider(this).get(RegesterViewModel.class);
-        name = binding.edName.getText().toString();
-        phone = binding.edPhone.getText().toString();
-        email = binding.edEmail.getText().toString();
-        password = binding.edPassword.getText().toString();
-        confarmPassword = binding.edConfirmPassword.getText().toString();
-        country = binding.edCountry.getText().toString();
-        gender = binding.edGender.getText().toString();
+
+
+        binding.btnRegester.setOnClickListener(v -> {
+
+            name = binding.edName.getText().toString();
+            phone = binding.edPhone.getText().toString();
+            email = binding.edEmail.getText().toString();
+            password = binding.edPassword.getText().toString();
+            confarmPassword = binding.edConfirmPassword.getText().toString();
+            country = binding.edCountry.getText().toString();
+            gender = binding.edGender.getText().toString();
+
+
+            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email)
+                    && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(cont_id) && !TextUtils.isEmpty(gender)) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.btnRegester.setVisibility(View.GONE);
+                regesterReques(name, phone, email, password, cont_id, gender);
+            } else {
+                Toast.makeText(this, "plese enter All felied", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
 
         binding.tvLoginNow.setOnClickListener(view -> {
-            regesterViewModel.newUser("Sohaib", "Hassan", "0597847916", "ghost199716@gmail.com", "123456789", cont_id, binding.edGender.getText().toString()).observe(this, new Observer<RegesterModel>() {
-                @Override
-                public void onChanged(RegesterModel regesterModel) {
-                    if (regesterModel != null) {
-                        Log.d(TAG, "onChanged: " + regesterModel.getResponse().getMessage());
-
-                    } else {
-                        Toast.makeText(RegesterActivity.this, "no tata", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            // startActivity(new Intent(RegesterActivity.this, LoginActivity.class));
+            // androidnetwork();
+            startActivity(new Intent(RegesterActivity.this, LoginActivity.class));
         });
 
         regesterViewModel.getCountry().observe(this, new Observer<RequesBody>() {
@@ -74,7 +98,6 @@ public class RegesterActivity extends AppCompatActivity {
                 if (requesBody != null) {
                     Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().get(0).getName());
                     for (int i = 0; i < requesBody.getResponse().getData().size(); i++) {
-                        Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().get(i).getName());
                         contryName.add(requesBody.getResponse().getData().get(i).getName());
                         contryId.add(requesBody.getResponse().getData().get(i).getId());
                     }
@@ -83,8 +106,6 @@ public class RegesterActivity extends AppCompatActivity {
                 }
             }
         });
-        Log.d(TAG, "onChanged: " + contryName.size());
-        Log.d(TAG, "onChanged: " + contryId.size());
         regesterViewModel.getGender().observe(this, new Observer<com.prography.musicana.feature.regester.model.gender.RequesBody>() {
             @Override
             public void onChanged(com.prography.musicana.feature.regester.model.gender.RequesBody requesBody) {
@@ -99,7 +120,6 @@ public class RegesterActivity extends AppCompatActivity {
                 }
             }
         });
-
         binding.edCountry.setOnClickListener(v -> {
             BottomSheetDialog dialog = new BottomSheetDialog(this);
             dialog.setContentView(R.layout.list_bottom_sheet);
@@ -147,6 +167,76 @@ public class RegesterActivity extends AppCompatActivity {
             dialog.show();
 
 
+        });
+    }
+
+    public void androidnetwork() {
+        AndroidNetworking.initialize(this);
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .addNetworkInterceptor(httpLoggingInterceptor)
+                .build();
+        AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
+
+
+        AndroidNetworking.setParserFactory(new JacksonParserFactory());
+
+        //
+        AndroidNetworking.post("https://try.musicaa.app/api/v1/user/register")
+                .addBodyParameter("firstname", "ahmed")
+                .addBodyParameter("lastname", "salheia")
+                .addBodyParameter("phone", "0597847916")
+                .addBodyParameter("email", "ahmedalaa.as2001@gmail.com")
+                .addBodyParameter("password", "123456789")
+                .addBodyParameter("country", "PS")
+                .addBodyParameter("gender", "male")
+                .setTag("test")
+                .addHeaders("Accept-Language", "en")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            Log.d(TAG, "onResponse:  الامور تمام ");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        Log.d(TAG, "onResponse:  الامور مش تمام " + error.getErrorBody());
+                        Log.d(TAG, "onResponse:  الامور مش تمام " + error.getErrorDetail());
+                        Log.d(TAG, "onResponse:  الامور مش تمام " + error.getResponse());
+                        Log.d(TAG, "onResponse:  الامور مش تمام " + error.getErrorCode());
+                    }
+                });
+    }
+
+
+    public void regesterReques(String firdName, String phone, String email
+            , String password, String country, String gender) {
+
+        regesterViewModel.newUser(firdName, "Hassan", phone, email, password, country, gender).observe(this, new Observer<RegesterModel>() {
+            @Override
+            public void onChanged(RegesterModel regesterModel) {
+                if (regesterModel != null) {
+                    binding.btnRegester.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onChanged: " + regesterModel.getResponse());
+                    Bundle bundle=new Bundle();
+                    bundle.putString("password",password);
+                    bundle.putString("email",email);
+
+                    SWStaticMethods.intentWithData(RegesterActivity.this, VerificationCode.class,bundle);
+                } else {
+                    binding.btnRegester.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onChanged: no data");
+                }
+            }
         });
     }
 

@@ -114,6 +114,20 @@
         app:layout_constraintTop_toBottomOf="@id/ed_country" />
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_75sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:elevation="@dimen/_5sdp"/>
+
+
+
     <Button
         android:id="@+id/btn_regester"
         android:layout_width="match_parent"

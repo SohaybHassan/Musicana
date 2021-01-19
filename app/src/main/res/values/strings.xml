@@ -125,5 +125,6 @@
     <string name="new_play_list">New PLay List</string>
     <string name="play_list_name">Play List Name</string>
     <string name="OK">OK</string>
+    <string name="resendcode">ResendCode!</string>
 
 </resources>

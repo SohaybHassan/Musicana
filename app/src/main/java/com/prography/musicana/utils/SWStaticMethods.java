@@ -35,7 +35,6 @@ public class SWStaticMethods {
 
     public static void intentWithData(Activity firstActivity, Class<?> call, Bundle bundle) {
         Intent intentWithData = new Intent(firstActivity, call);
-
         intentWithData.putExtra("data", bundle);
         firstActivity.startActivity(intentWithData);
         firstActivity.finish();

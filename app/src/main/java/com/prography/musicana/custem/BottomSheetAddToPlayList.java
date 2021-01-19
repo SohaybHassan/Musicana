@@ -3,12 +3,16 @@ package com.prography.musicana.custem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.R;
+
+import java.util.ArrayList;
 
 public class BottomSheetAddToPlayList {
 
@@ -16,16 +20,18 @@ public class BottomSheetAddToPlayList {
     private BottomSheetDialog mDialog;
     private BottomSheetAddToPlayList.BottomSheetAddToPlayListMethode mListener;
 
+    private EditText editText;
 
     private TextView tv_add_to_play_list;
     private RecyclerView recyclerView;
+    ArrayList<String> myListItem;
 
 
     public BottomSheetAddToPlayList(Context context, BottomSheetDialog dialog, BottomSheetAddToPlayList.BottomSheetAddToPlayListMethode listener) {
         this.application = context;
         this.mListener = listener;
         this.mDialog = dialog;
-
+        myListItem = new ArrayList<>();
     }
 
 
@@ -55,6 +61,19 @@ public class BottomSheetAddToPlayList {
 
     }
 
+    public void createRV() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(application));
+
+    }
+
+
+    public void setTextView(EditText tv_name) {
+        this.editText = tv_name;
+    }
+
+    public EditText getEditText() {
+        return editText;
+    }
 
     public interface BottomSheetAddToPlayListMethode {
 

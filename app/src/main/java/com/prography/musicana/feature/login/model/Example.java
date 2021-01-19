@@ -3,7 +3,7 @@ package com.prography.musicana.feature.login.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DataLogin {
+public class Example {
 
     @SerializedName("response")
     @Expose
@@ -14,7 +14,6 @@ public class DataLogin {
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -8231478074487592462L;
 
     public Response getResponse() {
         return response;

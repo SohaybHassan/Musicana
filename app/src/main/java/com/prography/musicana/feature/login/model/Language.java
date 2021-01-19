@@ -11,7 +11,6 @@ public class Language {
     @SerializedName("name")
     @Expose
     private String name;
-    private final static long serialVersionUID = 2421602890026018266L;
 
     public String getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.bottomNavigationViewFragment.profile;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -5,17 +5,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Response {
 
-    @SerializedName("message")
+    @SerializedName("data")
     @Expose
-    private Message message;
-    private final static long serialVersionUID = -8868860173677751506L;
+    private Data data;
+    @SerializedName("settings")
+    @Expose
+    private Settings settings;
 
-    public Message getMessage() {
-        return message;
+    public Data getData() {
+        return data;
     }
 
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
 }

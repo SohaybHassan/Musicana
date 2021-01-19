@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.feature.login.model.DataLogin;
+import com.prography.musicana.feature.login.model.Example;
 import com.prography.musicana.feature.login.presenter.LoginPresenter;
 
 public class LoginViewmodel extends AndroidViewModel {
@@ -19,8 +19,8 @@ public class LoginViewmodel extends AndroidViewModel {
     }
 
 
-    public LiveData<DataLogin> login(String email, String pass) {
-        return loginPresenter.login(email, pass);
+    public LiveData<Example> login(String email, String pass,String device,String uuid,String deviceName) {
+        return loginPresenter.login(email,pass,device,uuid,deviceName);
     }
 
 

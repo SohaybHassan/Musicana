@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
 
+import com.prography.musicana.SharedPreferencesHelper;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -24,15 +26,16 @@ public class NetworkInit {
     private ApiPartLink apiPartLink;
     private static NetworkInit instance;
     private static boolean myConnection;
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     public NetworkInit(Boolean isLogin) {
-
+        sharedPreferencesHelper=new SharedPreferencesHelper();
         Interceptor interceptor;
         if (isLogin) {
             interceptor = chain -> {
                 Request.Builder builder = chain.request().newBuilder()
                         .addHeader(HEADER_ACCEPT_LANGUAGE, ACCEPT_LANGUAGE)
-                        .addHeader(TOKEN, "");
+                        .addHeader(TOKEN, sharedPreferencesHelper.getToken());
                 return chain.proceed(builder.build());
             };
         } else {

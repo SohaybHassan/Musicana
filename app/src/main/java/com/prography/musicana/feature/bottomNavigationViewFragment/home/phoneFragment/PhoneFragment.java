@@ -26,10 +26,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.custem.BottomSheetAddToPlayList;
 import com.prography.musicana.custem.BottomSheetMore;
 import com.prography.musicana.custem.SWDialog;
+import com.prography.musicana.custem.SWInterface.PlayListName;
 import com.prography.musicana.databinding.FragmentPhoneBinding;
 import com.prography.musicana.feature.CreateMediaPlayer;
 import com.prography.musicana.custem.SWInterface.ListItemClick;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.playListFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter.PhoneFragmentAdapter;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.AddToList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 
@@ -40,7 +43,6 @@ public class PhoneFragment extends Fragment {
 
     public static final String TAG = PhoneFragment.class.getSimpleName();
     private FragmentPhoneBinding binding;
-    private String[] STAR = {"*"};
     private ArrayList<PhoneModelFragmentList> items;
     MediaPlayer mediaPlayer;
     private ListItemClick listener;
@@ -52,16 +54,20 @@ public class PhoneFragment extends Fragment {
     private BottomSheetMore bottomSheetMore;
     private BottomSheetDialog bottomSheetDialog;
     private BottomSheetAddToPlayList bottomSheetAddToPlayList;
-private SWDialog swDialog;
+    private SWDialog swDialog;
+    ArrayList<String> addItem;
+    private playListFragment playListFragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPhoneBinding.inflate(getLayoutInflater());
-
+        playListFragment = new playListFragment();
         mediaPlayer = new MediaPlayer();
         createMediaPlayer = CreateMediaPlayer.getInstance();
         items = createMediaPlayer.getLsi();
         bottomSheetDialog = new BottomSheetDialog(getContext());
+        addItem = new ArrayList<>();
         return binding.getRoot();
     }
 
@@ -85,20 +91,16 @@ private SWDialog swDialog;
                     @Override
                     public void addtoplayList() {
                         Log.d(TAG, "addtoplayList: ");
-                        bottomSheetAddToPlayList = new BottomSheetAddToPlayList(getContext(), bottomSheetDialog, new BottomSheetAddToPlayList.BottomSheetAddToPlayListMethode() {
-                            @Override
-                            public void addtoplayList() {
-                                Log.d(TAG, "addtoplayList: ");
-                                swDialog=new SWDialog(new SWDialog.Dilogclicked() {
-                                    @Override
-                                    public void OK(String LsitName) {
-                                        Log.d(TAG, "OK: ");
-
-                                        swDialog.dismiss();
-                                    }
-                                });
-                                swDialog.show(getParentFragmentManager(), "hi thir");
-                            }
+                        bottomSheetAddToPlayList = new BottomSheetAddToPlayList(getContext(), bottomSheetDialog, () -> {
+                            swDialog = new SWDialog(lsitName -> {
+                                addItem.add(lsitName.getText().toString());
+                                Log.d(TAG, "addtoplayList: " + addItem.size());
+                                AddToList addToList = AddToList.getInstance();
+                                addToList.setAdditem(addItem);
+                                Toast.makeText(getContext(), " تم إضافة PLay List", Toast.LENGTH_SHORT).show();
+                                swDialog.dismiss();
+                            });
+                            swDialog.show(getParentFragmentManager(), "hi thir");
                         });
                         bottomSheetAddToPlayList.openDialog();
 
