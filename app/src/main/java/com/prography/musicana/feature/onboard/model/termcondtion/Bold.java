@@ -11,7 +11,6 @@ public class Bold {
     @SerializedName("end")
     @Expose
     private String end;
-    private final static long serialVersionUID = 6814089131110575854L;
 
     public String getStart() {
         return start;

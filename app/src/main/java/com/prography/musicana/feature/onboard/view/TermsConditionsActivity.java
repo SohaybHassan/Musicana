@@ -2,18 +2,15 @@ package com.prography.musicana.feature.onboard.view;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.prography.musicana.R;
 import com.prography.musicana.databinding.ActivityTermsConditionsBinding;
-import com.prography.musicana.feature.onboard.model.termcondtion.GenerlClass;
+import com.prography.musicana.feature.onboard.model.termcondtion.TermsAndConditions;
 import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
 
 public class TermsConditionsActivity extends AppCompatActivity {
@@ -35,12 +32,12 @@ public class TermsConditionsActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
-        onPoardingViewmodel.gettermandCondtion().observe(this, new Observer<GenerlClass>() {
+        onPoardingViewmodel.gettermandCondtion().observe(this, new Observer<TermsAndConditions>() {
             @Override
-            public void onChanged(GenerlClass generlClass) {
+            public void onChanged(TermsAndConditions generlClass) {
                 if (generlClass != null) {
                     Log.d("TAG", "onChanged: " + "we ahve a data");
-                    String data = generlClass.getResponse().getData().getData();
+                    String data = generlClass.getResponse().getData().getTerms().getData();
                     binding.tvTextData.setText(data);
                 }
             }

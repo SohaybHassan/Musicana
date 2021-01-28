@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.regester.model;
+package com.prography.musicana.feature.onboard.model.privacypolicy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegesterModel {
+public class DataPoalycey {
 
     @SerializedName("response")
     @Expose
@@ -14,7 +14,6 @@ public class RegesterModel {
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
 
     public Response getResponse() {
         return response;

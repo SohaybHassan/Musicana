@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.onboard.model.termcondtion;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GenerlClass {
+public class ProfileData {
 
     @SerializedName("response")
     @Expose
@@ -11,10 +11,9 @@ public class GenerlClass {
     @SerializedName("status")
     @Expose
     private boolean status;
-    @SerializedName("Content-Language")
+    @SerializedName("language")
     @Expose
-    private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
+    private String language;
 
     public Response getResponse() {
         return response;
@@ -32,12 +31,12 @@ public class GenerlClass {
         this.status = status;
     }
 
-    public String getContentLanguage() {
-        return contentLanguage;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setContentLanguage(String contentLanguage) {
-        this.contentLanguage = contentLanguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
 }

@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentOnboardTowBinding;
-import com.prography.musicana.feature.onboard.model.SendDtatToActivity;
+import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 
 
 public class OnboardTowFragment extends Fragment {

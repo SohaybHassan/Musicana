@@ -19,6 +19,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
 import com.prography.musicana.feature.MainActivity;
 import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
@@ -36,12 +37,23 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private ActivityLoginBinding binding;
     private LoginViewmodel loginViewmodel;
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sharedPreferencesHelper = new SharedPreferencesHelper();
+
+
+
+        if (sharedPreferencesHelper.getToken().equals(null) ) {
+            Log.d(TAG, "onCreate:  token null");
+        } else {
+            Log.d(TAG, sharedPreferencesHelper.getToken());
+        }
 
 
         String str = Build.VERSION.RELEASE;
@@ -52,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String model = android.os.Build.MODEL;
         Log.d(TAG, "1997 android :" + model);
+
 
 //        TelephonyManager tManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 //        tManager.getDeviceId();

@@ -11,7 +11,6 @@ public class Underline {
     @SerializedName("end")
     @Expose
     private String end;
-    private final static long serialVersionUID = 3343212403579728595L;
 
     public String getStart() {
         return start;

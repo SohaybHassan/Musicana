@@ -48,6 +48,7 @@
         <activity android:name=".feature.regester.view.RegesterActivity" />
         <activity android:name=".feature.login.view.LoginActivity">
 
+
         </activity>
         <activity
             android:name=".feature.onboard.view.PrivacyPolicyActivity"
@@ -64,15 +65,17 @@
                 android:value=".feature.onboard.view.Onboarding" />
         </activity>
         <activity android:name=".feature.onboard.view.Onboarding" />
-        <activity android:name=".feature.MainActivity">
+        <activity android:name=".feature.MainActivity"></activity>
+        <activity android:name=".feature.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
-        <activity android:name=".feature.SplashActivity"></activity>
 
         <service android:name=".feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService">
             <intent-filter>

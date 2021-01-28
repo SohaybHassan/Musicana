@@ -25,7 +25,7 @@ public class LoginPresenter {
     private MutableLiveData<Example> loginMutableLiveData;
 
     public LoginPresenter() {
-        networkInit = NetworkInit.getInstance(false);
+        networkInit = NetworkInit.getInstance(true);
         loginMutableLiveData = new MutableLiveData<>();
     }
 

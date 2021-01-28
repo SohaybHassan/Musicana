@@ -6,10 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.feature.onboard.model.DataPoalycey;
-import com.prography.musicana.feature.onboard.model.OnPordingData;
-import com.prography.musicana.feature.onboard.model.OnpordingModel;
-import com.prography.musicana.feature.onboard.model.termcondtion.GenerlClass;
+import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
+import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
+import com.prography.musicana.feature.onboard.model.termcondtion.TermsAndConditions;
 import com.prography.musicana.feature.onboard.presenter.OnpordingPresenter;
 
 public class OnPoardingViewmodel extends AndroidViewModel {
@@ -30,7 +29,7 @@ public class OnPoardingViewmodel extends AndroidViewModel {
         return onpordingPresenter.getprivacypolicy();
     }
 
-    public LiveData<GenerlClass> gettermandCondtion() {
+    public LiveData<TermsAndConditions> gettermandCondtion() {
         return onpordingPresenter.getermsAndConditions();
     }
 }

@@ -1,10 +1,9 @@
-package com.prography.musicana.feature.onboard.model;
+package com.prography.musicana.feature.onboard.model.onPording;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OnPordingData {
-
+public class Onboarding {
 
     @SerializedName("id")
     @Expose
@@ -21,7 +20,6 @@ public class OnPordingData {
     @SerializedName("lastModified")
     @Expose
     private String lastModified;
-    private final static long serialVersionUID = 6369075816936798095L;
 
     public String getId() {
         return id;
@@ -62,6 +60,5 @@ public class OnPordingData {
     public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
     }
-
 
 }

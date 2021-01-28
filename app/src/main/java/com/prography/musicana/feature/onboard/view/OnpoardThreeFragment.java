@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.prography.musicana.R;
-import com.prography.musicana.databinding.FragmentOnpoardFourBinding;
 import com.prography.musicana.databinding.FragmentOnpoardThreeBinding;
-import com.prography.musicana.feature.onboard.model.SendDtatToActivity;
+import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 
 
 public class OnpoardThreeFragment extends Fragment {

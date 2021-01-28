@@ -257,7 +257,6 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:drawableEnd="@drawable/ic_logoff"
             android:fontFamily="@font/opensans_regular"
-
             android:text="@string/profile_Logoff"
             android:textColor="@color/textColor_or_w"
             android:textSize="@dimen/_14sdp"

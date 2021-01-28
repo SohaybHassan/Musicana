@@ -5,11 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.prography.musicana.feature.onboard.model.BodyPalycey;
-import com.prography.musicana.feature.onboard.model.DataPoalycey;
-import com.prography.musicana.feature.onboard.model.OnpordingModel;
-
-import com.prography.musicana.feature.onboard.model.termcondtion.GenerlClass;
+import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
+import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
+import com.prography.musicana.feature.onboard.model.termcondtion.TermsAndConditions;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,11 +21,11 @@ public class OnpordingPresenter {
     private NetworkInit networkInit;
     MutableLiveData<OnpordingModel> getdataMutableLiveData;
     MutableLiveData<DataPoalycey> getprivacypolicyMutableLiveData;
-    MutableLiveData<GenerlClass> termsAndConditionsMutableLiveData;
+    MutableLiveData<TermsAndConditions> termsAndConditionsMutableLiveData;
     private static OnpordingPresenter instance;
 
     public OnpordingPresenter() {
-        networkInit = NetworkInit.getInstance(false);
+        networkInit = NetworkInit.getInstance(true);
         getdataMutableLiveData = new MutableLiveData<>();
         getprivacypolicyMutableLiveData = new MutableLiveData<>();
         termsAndConditionsMutableLiveData = new MutableLiveData<>();
@@ -46,7 +44,7 @@ public class OnpordingPresenter {
             @Override
             public void onResponse(@NotNull Call<OnpordingModel> call, @NotNull Response<OnpordingModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().get(1).getId());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getOnboarding().get(1).getDetails());
                     getdataMutableLiveData.setValue(response.body());
                 } else {
                     Log.e(TAG, "onResponse:  null data heir");
@@ -69,7 +67,7 @@ public class OnpordingPresenter {
             @Override
             public void onResponse(@NotNull Call<DataPoalycey> call, @NotNull Response<DataPoalycey> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getData());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getPrivacy().getData());
                     getprivacypolicyMutableLiveData.setValue(response.body());
                 } else {
                     getprivacypolicyMutableLiveData.setValue(null);
@@ -86,13 +84,13 @@ public class OnpordingPresenter {
     }
 
 
-    public LiveData<GenerlClass> getermsAndConditions() {
-        networkInit.getRetrofitApis().getTermsAndConditions().enqueue(new Callback<GenerlClass>() {
+    public LiveData<TermsAndConditions> getermsAndConditions() {
+        networkInit.getRetrofitApis().getTermsAndConditions().enqueue(new Callback<TermsAndConditions>() {
             @Override
-            public void onResponse(Call<GenerlClass> call, Response<GenerlClass> response) {
+            public void onResponse(Call<TermsAndConditions> call, Response<TermsAndConditions> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getData());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getTerms().getData());
                     termsAndConditionsMutableLiveData.setValue(response.body());
                 } else {
                     termsAndConditionsMutableLiveData.setValue(null);
@@ -100,7 +98,7 @@ public class OnpordingPresenter {
             }
 
             @Override
-            public void onFailure(Call<GenerlClass> call, Throwable t) {
+            public void onFailure(Call<TermsAndConditions> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 termsAndConditionsMutableLiveData.setValue(null);
             }

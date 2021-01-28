@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
+import android.util.Log;
 
 import com.prography.musicana.SharedPreferencesHelper;
 
@@ -29,16 +30,19 @@ public class NetworkInit {
     private SharedPreferencesHelper sharedPreferencesHelper;
 
     public NetworkInit(Boolean isLogin) {
-        sharedPreferencesHelper=new SharedPreferencesHelper();
+        Log.d("TAG", "NetworkInit:   test ");
+        sharedPreferencesHelper = new SharedPreferencesHelper();
         Interceptor interceptor;
         if (isLogin) {
+            Log.d("TAG", "NetworkInit: true ");
             interceptor = chain -> {
                 Request.Builder builder = chain.request().newBuilder()
                         .addHeader(HEADER_ACCEPT_LANGUAGE, ACCEPT_LANGUAGE)
-                        .addHeader(TOKEN, sharedPreferencesHelper.getToken());
+                        .addHeader(TOKEN,  sharedPreferencesHelper.getToken());
                 return chain.proceed(builder.build());
             };
         } else {
+            Log.d("TAG", "NetworkInit:   false ");
             interceptor = chain -> {
                 Request.Builder builder = chain.request().newBuilder()
                         .addHeader(HEADER_ACCEPT_LANGUAGE, ACCEPT_LANGUAGE);

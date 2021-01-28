@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -21,24 +20,17 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.prography.musicana.R;
-import com.prography.musicana.custem.SWInterface.ListItemClick;
-import com.prography.musicana.custem.SWInterface.SendDataOnBording;
-import com.prography.musicana.feature.onboard.model.OnPordingData;
-import com.prography.musicana.feature.onboard.model.OnpordingModel;
-import com.prography.musicana.feature.onboard.model.SendDtatToActivity;
-import com.prography.musicana.feature.onboard.view.OnboardFragment;
-import com.prography.musicana.feature.onboard.view.OnboardTowFragment;
+import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
+import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 import com.prography.musicana.feature.onboard.view.Onboarding;
-import com.prography.musicana.feature.onboard.view.OnpoardFourFragment;
-import com.prography.musicana.feature.onboard.view.OnpoardThreeFragment;
 import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     public static final int The_time_of_the_start_activity = 3000;
@@ -47,7 +39,7 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
     private TextView btn_skip;
     CreateMediaPlayer createMediaPlayer;
     private OnPoardingViewmodel onPoardingViewmodel;
-    private ArrayList<OnPordingData> items;
+    private List<com.prography.musicana.feature.onboard.model.onPording.Onboarding> items;
 
 
     @Override
@@ -166,10 +158,10 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
                 if (onpordingModel != null) {
                     Log.d("TAG", "onChanged: " + " we have data");
                     btn_skip.setEnabled(true);
-                    items = onpordingModel.getResponse().getData();
+                    items = onpordingModel.getResponse().getData().getOnboarding();
                     sendDtatToActivity.setItems(items);
-                }else{
-                    Log.d("TAG", "onChanged: "+"no data");
+                } else {
+                    Log.d("TAG", "onChanged: " + "no data");
                 }
             }
         });

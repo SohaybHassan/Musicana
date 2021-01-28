@@ -9,9 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.prography.musicana.R;
 import com.prography.musicana.databinding.ActivityPrivacyPolicyBinding;
-import com.prography.musicana.feature.onboard.model.DataPoalycey;
+import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
 import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
 
 public class PrivacyPolicyActivity extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
             public void onChanged(DataPoalycey dataPoalycey) {
                 if (dataPoalycey != null) {
                     Log.d("TAG", "onChanged: " + "we have a data");
-                    String text = dataPoalycey.getResponse().getData().getData();
+                    String text = dataPoalycey.getResponse().getData().getPrivacy().getData();
                     binding.tvTextPlacy.setText(text);
                 }
             }

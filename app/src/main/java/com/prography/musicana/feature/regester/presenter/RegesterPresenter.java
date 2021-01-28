@@ -32,7 +32,7 @@ public class RegesterPresenter {
     private static RegesterPresenter instance;
 
     public RegesterPresenter() {
-        networkInit = NetworkInit.getInstance(false);
+        networkInit = NetworkInit.getInstance(true);
         newUserModelMutableLiveData = new MutableLiveData<>();
         requesBodyMutableLiveData = new MutableLiveData<>();
         requesBodycountryMutableLiveData = new MutableLiveData<>();

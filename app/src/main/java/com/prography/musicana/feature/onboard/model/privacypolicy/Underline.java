@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.onboard.model;
+package com.prography.musicana.feature.onboard.model.privacypolicy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Paragraph {
+public class Underline {
 
     @SerializedName("start")
     @Expose
@@ -11,7 +11,6 @@ public class Paragraph {
     @SerializedName("end")
     @Expose
     private String end;
-    private final static long serialVersionUID = 3285609888213519974L;
 
     public String getStart() {
         return start;

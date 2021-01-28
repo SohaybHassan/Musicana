@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.onboard.model.termcondtion;
+package com.prography.musicana.feature.onboard.model.privacypolicy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

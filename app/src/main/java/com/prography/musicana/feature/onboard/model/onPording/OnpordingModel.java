@@ -1,10 +1,9 @@
-package com.prography.musicana.feature.onboard.model;
+package com.prography.musicana.feature.onboard.model.onPording;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DataPoalycey {
-
+public class OnpordingModel {
 
     @SerializedName("response")
     @Expose
@@ -15,7 +14,6 @@ public class DataPoalycey {
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
 
     public Response getResponse() {
         return response;
@@ -42,4 +40,3 @@ public class DataPoalycey {
     }
 
 }
-

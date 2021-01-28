@@ -1,23 +1,23 @@
-package com.prography.musicana.feature.onboard.model.termcondtion;
+package com.prography.musicana.feature.onboard.model.privacypolicy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data {
 
-    @SerializedName("terms")
+    @SerializedName("privacy")
     @Expose
-    private Terms terms;
+    private Privacy privacy;
     @SerializedName("role")
     @Expose
     private Role role;
 
-    public Terms getTerms() {
-        return terms;
+    public Privacy getPrivacy() {
+        return privacy;
     }
 
-    public void setTerms(Terms terms) {
-        this.terms = terms;
+    public void setPrivacy(Privacy privacy) {
+        this.privacy = privacy;
     }
 
     public Role getRole() {

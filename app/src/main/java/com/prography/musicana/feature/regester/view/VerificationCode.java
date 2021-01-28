@@ -93,8 +93,8 @@ public class VerificationCode extends AppCompatActivity {
                     binding.tvResendCode.setVisibility(View.VISIBLE);
                     binding.btnVerifie.setVisibility(View.VISIBLE);
 
-                    Log.d(TAG, "onChanged: " + verificationRespone.getResponse().getData().getToken());
                     sharedPreferencesHelper.saveData(verificationRespone.getResponse().getData().getToken());
+                    Log.d(TAG, "sohaib Token: " + sharedPreferencesHelper.getToken());
                     SWStaticMethods.intentWithoutData(VerificationCode.this, MainActivity.class);
                 } else {
                     binding.btnVerifie.setVisibility(View.VISIBLE);

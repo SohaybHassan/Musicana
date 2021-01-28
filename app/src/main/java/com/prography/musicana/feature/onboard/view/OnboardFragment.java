@@ -1,32 +1,18 @@
 package com.prography.musicana.feature.onboard.view;
 
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.prography.musicana.R;
-import com.prography.musicana.custem.SWInterface.SendDataOnBording;
-import com.prography.musicana.databinding.ActivityOnboardingBinding;
 import com.prography.musicana.databinding.FragmentOnboardBinding;
-import com.prography.musicana.databinding.FragmentOnpoardFourBinding;
-import com.prography.musicana.feature.onboard.model.SendDtatToActivity;
+import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 
 
 public class OnboardFragment extends Fragment {

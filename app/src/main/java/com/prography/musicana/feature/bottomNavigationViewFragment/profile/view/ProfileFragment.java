@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,14 @@ import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileCustomBottomSheet;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
+import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
 import com.prography.musicana.feature.onboard.view.TermsConditionsActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,8 +44,10 @@ public class ProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ProfileViewModel profileViewModel;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    private static final String TAG = ProfileFragment.class.getSimpleName();
 
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -188,10 +194,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //////********///
+
         binding.profileLogoff.setOnClickListener(v -> {
-            //log off
-            Toast.makeText(getActivity(), "log off", Toast.LENGTH_SHORT).show();
+
+            logoutRequest();
         });
     }
 
@@ -208,15 +214,17 @@ public class ProfileFragment extends Fragment {
 
 
     public void logoutRequest() {
-        profileViewModel.logout().observe(getActivity(), new Observer<Logout>() {
-            @Override
-            public void onChanged(Logout logout) {
-                if (logout != null) {
-                    Toast.makeText(getActivity(), "logout done", Toast.LENGTH_SHORT).show();
-                    sharedPreferencesHelper.clerData();
-                } else {
+        profileViewModel.logout().observe(getActivity(), logout -> {
+            if (logout != null) {
+                Toast.makeText(getActivity(), "logout done", Toast.LENGTH_SHORT).show();
 
-                }
+                Log.d(TAG, "onChanged: " + sharedPreferencesHelper.getToken());
+
+                sharedPreferencesHelper.clerData();
+
+                SWStaticMethods.intentWithoutData(getActivity(), LoginActivity.class);
+            } else {
+                Toast.makeText(getActivity(), "some thing wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

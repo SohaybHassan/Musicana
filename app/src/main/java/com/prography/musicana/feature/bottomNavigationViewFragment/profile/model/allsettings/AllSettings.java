@@ -1,26 +1,25 @@
-package com.prography.musicana.feature.onboard.model;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OnpordingModel {
+public class AllSettings {
 
     @SerializedName("response")
     @Expose
-    private DataBody response;
+    private Response response;
     @SerializedName("status")
     @Expose
     private boolean status;
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
 
-    public DataBody getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(DataBody response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 
@@ -41,7 +40,3 @@ public class OnpordingModel {
     }
 
 }
-
-
-
-

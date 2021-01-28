@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.onboard.model;
+package com.prography.musicana.feature.onboard.model.privacypolicy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BodyPalycey {
+public class Privacy {
 
     @SerializedName("id")
     @Expose
@@ -14,7 +14,6 @@ public class BodyPalycey {
     @SerializedName("lastModified")
     @Expose
     private String lastModified;
-    private final static long serialVersionUID = -444086677628549714L;
 
     public String getId() {
         return id;
@@ -39,6 +38,5 @@ public class BodyPalycey {
     public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
     }
-
 
 }

@@ -25,6 +25,7 @@ public class ProfilePresenter {
 
     public ProfilePresenter() {
         networkInit = NetworkInit.getInstance(true);
+        Log.d(TAG, "ProfilePresenter:  11111111111111111111111111111111111111111111111111111111111111 ");
         logoutMutableLiveData = new MutableLiveData<>();
     }
 
@@ -44,6 +45,7 @@ public class ProfilePresenter {
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: " + response.body().getResponse());
+
                     logoutMutableLiveData.setValue(response.body());
                 } else {
                     logoutMutableLiveData.setValue(null);
