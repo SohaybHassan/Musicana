@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.presenter.ProfilePresenter;
 
 public class ProfileViewModel extends AndroidViewModel {

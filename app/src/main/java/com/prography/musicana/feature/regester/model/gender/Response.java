@@ -3,22 +3,29 @@ package com.prography.musicana.feature.regester.model.gender;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+public class Response {
 
-public class Response
-{
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private Data data;
 
-@SerializedName("data")
-@Expose
-private ArrayList<Datum> data = null;
-private final static long serialVersionUID = 5425821651980206974L;
+    public String getMessage() {
+        return message;
+    }
 
-public ArrayList<Datum> getData() {
-return data;
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-public void setData(ArrayList<Datum> data) {
-this.data = data;
-}
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
 
 }

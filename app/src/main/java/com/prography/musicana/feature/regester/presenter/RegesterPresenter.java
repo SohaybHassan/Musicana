@@ -6,17 +6,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.google.gson.JsonObject;
 import com.prography.musicana.feature.regester.model.RegesterModel;
-import com.prography.musicana.feature.regester.model.gender.RequesBody;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
-import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
+import com.prography.musicana.feature.regester.model.country.Countries;
+import com.prography.musicana.feature.regester.model.gender.Genders;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
+import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,10 +23,10 @@ public class RegesterPresenter {
     public static final String TAG = RegesterPresenter.class.getSimpleName();
     private NetworkInit networkInit;
     private MutableLiveData<RegesterModel> newUserModelMutableLiveData;
-    private MutableLiveData<RequesBody> requesBodyMutableLiveData;
-    private MutableLiveData<com.prography.musicana.feature.regester.model.country.RequesBody> requesBodycountryMutableLiveData;
-    private MutableLiveData<VerificationRespone> verificationResponeMutableLiveData;
-    private MutableLiveData<ResendVerification> resendVerificationMutableLiveData;
+    private MutableLiveData<Genders> requesBodyMutableLiveData;
+    private MutableLiveData<Countries> requesBodycountryMutableLiveData;
+    private MutableLiveData<VerificatioEmail> verificationResponeMutableLiveData;
+    private MutableLiveData<ResendVerificationCode> resendVerificationMutableLiveData;
     private static RegesterPresenter instance;
 
     public RegesterPresenter() {
@@ -48,10 +46,10 @@ public class RegesterPresenter {
     }
 
 
-    public LiveData<ResendVerification> resendVerificationLiveData(String email) {
-        networkInit.getRetrofitApis().resendVerificationCode(email).enqueue(new Callback<ResendVerification>() {
+    public LiveData<ResendVerificationCode> resendVerificationLiveData(String email) {
+        networkInit.getRetrofitApis().resendVerificationCode(email).enqueue(new Callback<ResendVerificationCode>() {
             @Override
-            public void onResponse(@NotNull Call<ResendVerification> call, @NotNull Response<ResendVerification> response) {
+            public void onResponse(@NotNull Call<ResendVerificationCode> call, @NotNull Response<ResendVerificationCode> response) {
                 if (response.isSuccessful()) {
                     resendVerificationMutableLiveData.setValue(response.body());
                     Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
@@ -62,7 +60,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResendVerification> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<ResendVerificationCode> call, @NotNull Throwable t) {
                 resendVerificationMutableLiveData.setValue(null);
                 Log.d(TAG, "onResponse:  some thing rounge -_-" + t.getMessage());
             }
@@ -71,14 +69,14 @@ public class RegesterPresenter {
         return resendVerificationMutableLiveData;
     }
 
-    public LiveData<VerificationRespone> verification(String verify_code, String password, String email, String device
+    public LiveData<VerificatioEmail> verification(String verify_code, String password, String email, String device
             , String uuis, String devicename) {
 
-        networkInit.getRetrofitApis().verificationCode(verify_code, password, email, device, uuis, devicename).enqueue(new Callback<VerificationRespone>() {
+        networkInit.getRetrofitApis().verificationCode(verify_code, password, email, device, uuis, devicename).enqueue(new Callback<VerificatioEmail>() {
             @Override
-            public void onResponse(@NotNull Call<VerificationRespone> call, @NotNull Response<VerificationRespone> response) {
+            public void onResponse(@NotNull Call<VerificatioEmail> call, @NotNull Response<VerificatioEmail> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getEmail());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getUser().getEmail());
                     verificationResponeMutableLiveData.setValue(response.body());
                 } else {
                     Log.d(TAG, "onResponse:  name data");
@@ -87,7 +85,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<VerificationRespone> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<VerificatioEmail> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 verificationResponeMutableLiveData.setValue(null);
             }
@@ -123,12 +121,12 @@ public class RegesterPresenter {
     }
 
 
-    public LiveData<RequesBody> getGender() {
-        networkInit.getRetrofitApis().getGender().enqueue(new Callback<RequesBody>() {
+    public LiveData<Genders> getGender() {
+        networkInit.getRetrofitApis().getGender().enqueue(new Callback<Genders>() {
             @Override
-            public void onResponse(Call<RequesBody> call, Response<RequesBody> response) {
+            public void onResponse(Call<Genders> call, Response<Genders> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().get(0).getGender());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getGenders().get(0).getGender());
                     requesBodyMutableLiveData.setValue(response.body());
                 } else {
                     requesBodyMutableLiveData.setValue(null);
@@ -137,7 +135,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(Call<RequesBody> call, Throwable t) {
+            public void onFailure(Call<Genders> call, Throwable t) {
                 requesBodyMutableLiveData.setValue(null);
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
@@ -145,12 +143,12 @@ public class RegesterPresenter {
         return requesBodyMutableLiveData;
     }
 
-    public LiveData<com.prography.musicana.feature.regester.model.country.RequesBody> getCountry() {
-        networkInit.getRetrofitApis().getCuntry().enqueue(new Callback<com.prography.musicana.feature.regester.model.country.RequesBody>() {
+    public LiveData<Countries> getCountry() {
+        networkInit.getRetrofitApis().getCuntry().enqueue(new Callback<Countries>() {
             @Override
-            public void onResponse(Call<com.prography.musicana.feature.regester.model.country.RequesBody> call, Response<com.prography.musicana.feature.regester.model.country.RequesBody> response) {
+            public void onResponse(Call<Countries> call, Response<Countries> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().get(0).getName());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getCountries().get(0).getName());
                     requesBodycountryMutableLiveData.setValue(response.body());
                 } else {
                     Log.d(TAG, "onResponse: " + "no have a data");
@@ -159,7 +157,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(Call<com.prography.musicana.feature.regester.model.country.RequesBody> call, Throwable t) {
+            public void onFailure(Call<Countries> call, Throwable t) {
                 Log.d(TAG, "onResponse: " + t.getMessage());
                 requesBodycountryMutableLiveData.setValue(null);
             }

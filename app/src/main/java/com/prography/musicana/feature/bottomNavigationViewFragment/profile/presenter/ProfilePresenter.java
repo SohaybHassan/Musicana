@@ -5,8 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
-import com.prography.musicana.feature.regester.presenter.RegesterPresenter;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +43,7 @@ public class ProfilePresenter {
             public void onResponse(@NotNull Call<Logout> call, @NotNull Response<Logout> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
 
                     logoutMutableLiveData.setValue(response.body());
                 } else {

@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +20,7 @@ import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
 import com.prography.musicana.feature.MainActivity;
-import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
-import com.prography.musicana.feature.login.model.Example;
+import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.login.viewmodel.LoginViewmodel;
 import com.prography.musicana.feature.regester.view.RegesterActivity;
 import com.prography.musicana.utils.SWStaticMethods;
@@ -48,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferencesHelper = new SharedPreferencesHelper();
 
 
-
-        if (sharedPreferencesHelper.getToken().equals(null) ) {
+        if (sharedPreferencesHelper.getToken().equals(null)) {
             Log.d(TAG, "onCreate:  token null");
         } else {
             Log.d(TAG, sharedPreferencesHelper.getToken());
@@ -152,16 +148,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void reqLogin(String mEmail, String mPass, String uuid, String model) {
-        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, new Observer<Example>() {
+        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, new Observer<Login>() {
             @Override
-            public void onChanged(Example dataLogin) {
+            public void onChanged(Login dataLogin) {
                 if (dataLogin != null) {
                     binding.btnLogin.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.GONE);
                     binding.tvForgotPassword.setVisibility(View.VISIBLE);
                     binding.tvRegesterNow.setVisibility(View.VISIBLE);
                     Log.d(TAG, "onChanged: " + "we have a data");
-                    Log.d(TAG, "onChanged: " + dataLogin.getResponse().getData().getEmail());
+                    Log.d(TAG, "onChanged: " + dataLogin.getResponse().getData().getUser().getEmail());
                     SWStaticMethods.intentWithoutData(LoginActivity.this, MainActivity.class);
                 } else {
                     binding.btnLogin.setVisibility(View.VISIBLE);

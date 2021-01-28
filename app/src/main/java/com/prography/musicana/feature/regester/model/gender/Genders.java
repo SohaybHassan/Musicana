@@ -1,13 +1,13 @@
-package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model;
+package com.prography.musicana.feature.regester.model.gender;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Logout {
+public class Genders {
 
     @SerializedName("response")
     @Expose
-    private String response;
+    private Response response;
     @SerializedName("status")
     @Expose
     private boolean status;
@@ -15,11 +15,11 @@ public class Logout {
     @Expose
     private String contentLanguage;
 
-    public String getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 

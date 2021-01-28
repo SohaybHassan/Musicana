@@ -3,7 +3,7 @@ package com.prography.musicana.feature.regester.model.gender;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class Gender {
 
     @SerializedName("id")
     @Expose
@@ -11,7 +11,6 @@ public class Datum {
     @SerializedName("gender")
     @Expose
     private String gender;
-    private final static long serialVersionUID = 7996228840709817389L;
 
     public String getId() {
         return id;

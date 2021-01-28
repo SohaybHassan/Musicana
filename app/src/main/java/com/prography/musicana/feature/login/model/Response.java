@@ -5,12 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class Response {
 
+    @SerializedName("message")
+    @Expose
+    private String message;
     @SerializedName("data")
     @Expose
     private Data data;
-    @SerializedName("settings")
-    @Expose
-    private Settings settings;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Data getData() {
         return data;
@@ -18,14 +26,6 @@ public class Response {
 
     public void setData(Data data) {
         this.data = data;
-    }
-
-    public Settings getSettings() {
-        return settings;
-    }
-
-    public void setSettings(Settings settings) {
-        this.settings = settings;
     }
 
 }

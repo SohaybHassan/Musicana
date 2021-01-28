@@ -1,19 +1,20 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.AllSettings;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.status.CloseStatus;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.Updatedata;
-import com.prography.musicana.feature.login.model.Example;
+import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
 import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
 import com.prography.musicana.feature.onboard.model.termcondtion.TermsAndConditions;
 import com.prography.musicana.feature.regester.model.RegesterModel;
-import com.prography.musicana.feature.regester.model.gender.RequesBody;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
-import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
+import com.prography.musicana.feature.regester.model.country.Countries;
+import com.prography.musicana.feature.regester.model.gender.Genders;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
+import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
 
 
 import okhttp3.MultipartBody;
@@ -49,35 +50,35 @@ public interface ApiPartLink {
                                 @Field("gender") String gender);
 
     @GET("data/genders")
-    Call<RequesBody> getGender();
+    Call<Genders> getGender();
 
 
     @GET("data/countries")
-    Call<com.prography.musicana.feature.regester.model.country.RequesBody> getCuntry();
+    Call<Countries> getCuntry();
 
     //logdin
     @FormUrlEncoded
     @POST("user/login")
-    Call<Example> login(@Field("email") String email,
-                        @Field("password") String pass,
-                        @Field("device") String device,
-                        @Field("UUID") String uuid,
-                        @Field("device_name") String deviceName);
+    Call<Login> login(@Field("email") String email,
+                      @Field("password") String pass,
+                      @Field("device") String device,
+                      @Field("UUID") String uuid,
+                      @Field("device_name") String deviceName);
 
     //verification
     @FormUrlEncoded
     @POST("user/verification")
-    Call<VerificationRespone> verificationCode(@Field("verify_code") String verify_code,
-                                               @Field("password") String password,
-                                               @Field("email") String email,
-                                               @Field("device") String device,
-                                               @Field("UUID") String uuid,
-                                               @Field("device_name") String devicename);
+    Call<VerificatioEmail> verificationCode(@Field("verify_code") String verify_code,
+                                            @Field("password") String password,
+                                            @Field("email") String email,
+                                            @Field("device") String device,
+                                            @Field("UUID") String uuid,
+                                            @Field("device_name") String devicename);
 
     //resend
     @FormUrlEncoded
     @POST("user/verification/resend")
-    Call<ResendVerification> resendVerificationCode(@Field("email") String Email);
+    Call<ResendVerificationCode> resendVerificationCode(@Field("email") String Email);
 
 
     //logout
@@ -106,7 +107,7 @@ public interface ApiPartLink {
 
 
     @POST("user/profile/updatedata/password")
-    Call<Updatedata>updatedatapassword(@Field("email") String email);
+    Call<Updatedata> updatedatapassword(@Field("email") String email);
 
 
     //userStatus
@@ -121,7 +122,7 @@ public interface ApiPartLink {
 //    @POST("user/status/new")
 //    Call<> newStatus(@Field("UUID") String uuid);
 
-   // user settings
+    // user settings
     @GET("user/settings")
     Call<AllSettings> getAllSettings();
 //

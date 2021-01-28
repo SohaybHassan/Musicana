@@ -1,4 +1,4 @@
-package com.prography.musicana.feature.regester.model.verification;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,9 +8,6 @@ public class Response {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("data")
-    @Expose
-    private Data data;
 
     public String getMessage() {
         return message;
@@ -18,14 +15,6 @@ public class Response {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
     }
 
 }

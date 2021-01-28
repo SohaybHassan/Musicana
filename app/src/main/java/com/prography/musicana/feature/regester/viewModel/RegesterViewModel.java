@@ -7,9 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.feature.regester.model.RegesterModel;
-import com.prography.musicana.feature.regester.model.gender.RequesBody;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
-import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
+import com.prography.musicana.feature.regester.model.country.Countries;
+import com.prography.musicana.feature.regester.model.gender.Genders;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
+import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
 import com.prography.musicana.feature.regester.presenter.RegesterPresenter;
 
 public class RegesterViewModel extends AndroidViewModel {
@@ -27,20 +28,20 @@ public class RegesterViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<VerificationRespone> verificationResponeLiveData(String verify_code, String password, String email, String device
+    public LiveData<VerificatioEmail> verificationResponeLiveData(String verify_code, String password, String email, String device
             , String uuis, String devicename) {
         return regesterPresenter.verification(verify_code, password, email, device, uuis, devicename);
     }
 
-    public LiveData<com.prography.musicana.feature.regester.model.country.RequesBody> getCountry() {
+    public LiveData<Countries> getCountry() {
         return regesterPresenter.getCountry();
     }
 
-    public LiveData<RequesBody> getGender() {
+    public LiveData<Genders> getGender() {
         return regesterPresenter.getGender();
     }
 
-    public LiveData<ResendVerification> resendVerificationLiveData(String email) {
+    public LiveData<ResendVerificationCode> resendVerificationLiveData(String email) {
         return regesterPresenter.resendVerificationLiveData(email);
     }
 }

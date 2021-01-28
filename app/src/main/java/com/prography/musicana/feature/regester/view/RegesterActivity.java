@@ -5,9 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +25,8 @@ import com.prography.musicana.custem.BottomSheetListView;
 import com.prography.musicana.databinding.ActivityRegesterBinding;
 import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.regester.model.RegesterModel;
-import com.prography.musicana.feature.regester.model.country.RequesBody;
+import com.prography.musicana.feature.regester.model.country.Countries;
+import com.prography.musicana.feature.regester.model.gender.Genders;
 import com.prography.musicana.feature.regester.viewModel.RegesterViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
@@ -92,28 +91,28 @@ public class RegesterActivity extends AppCompatActivity {
             startActivity(new Intent(RegesterActivity.this, LoginActivity.class));
         });
 
-        regesterViewModel.getCountry().observe(this, new Observer<RequesBody>() {
+        regesterViewModel.getCountry().observe(this, new Observer<Countries>() {
             @Override
-            public void onChanged(RequesBody requesBody) {
+            public void onChanged(Countries requesBody) {
                 if (requesBody != null) {
-                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().get(0).getName());
-                    for (int i = 0; i < requesBody.getResponse().getData().size(); i++) {
-                        contryName.add(requesBody.getResponse().getData().get(i).getName());
-                        contryId.add(requesBody.getResponse().getData().get(i).getId());
+                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().getCountries().get(0).getName());
+                    for (int i = 0; i < requesBody.getResponse().getData().getCountries().size(); i++) {
+                        contryName.add(requesBody.getResponse().getData().getCountries().get(i).getName());
+                        contryId.add(requesBody.getResponse().getData().getCountries().get(i).getId());
                     }
                 } else {
                     Log.d(TAG, "onChanged: " + "no data");
                 }
             }
         });
-        regesterViewModel.getGender().observe(this, new Observer<com.prography.musicana.feature.regester.model.gender.RequesBody>() {
+        regesterViewModel.getGender().observe(this, new Observer<Genders>() {
             @Override
-            public void onChanged(com.prography.musicana.feature.regester.model.gender.RequesBody requesBody) {
+            public void onChanged(Genders requesBody) {
                 if (requesBody != null) {
-                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().get(0).getGender());
+                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().getGenders().get(0).getGender());
 
-                    for (int i = 0; i < requesBody.getResponse().getData().size(); i++) {
-                        gendername.add(requesBody.getResponse().getData().get(i).getGender());
+                    for (int i = 0; i < requesBody.getResponse().getData().getGenders().size(); i++) {
+                        gendername.add(requesBody.getResponse().getData().getGenders().get(i).getGender());
                     }
                 } else {
                     Log.d(TAG, "onChanged: " + "no data");

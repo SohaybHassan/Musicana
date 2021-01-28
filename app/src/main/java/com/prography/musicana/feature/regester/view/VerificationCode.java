@@ -12,13 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityVerificationCodeBinding;
 import com.prography.musicana.feature.MainActivity;
-import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerification;
-import com.prography.musicana.feature.regester.model.verification.VerificationRespone;
+import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
+import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
 import com.prography.musicana.feature.regester.viewModel.RegesterViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
@@ -60,9 +58,10 @@ public class VerificationCode extends AppCompatActivity {
             if (!TextUtils.isEmpty(mEmail)) {
                 binding.btnVerifie.setVisibility(View.GONE);
                 binding.progressBar.setVisibility(View.VISIBLE);
-                request(mEmail);
 
+                request(mEmail);
             }
+
         });
 
 
@@ -85,15 +84,15 @@ public class VerificationCode extends AppCompatActivity {
 
     public void request(String code, String deciceName, String uuid, String pass, String mEmail) {
 
-        regesterViewModel.verificationResponeLiveData(code, pass, mEmail, "android", uuid, deciceName).observe(this, new Observer<VerificationRespone>() {
+        regesterViewModel.verificationResponeLiveData(code, pass, mEmail, "android", uuid, deciceName).observe(this, new Observer<VerificatioEmail>() {
             @Override
-            public void onChanged(VerificationRespone verificationRespone) {
+            public void onChanged(VerificatioEmail verificationRespone) {
                 if (verificationRespone != null) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.tvResendCode.setVisibility(View.VISIBLE);
                     binding.btnVerifie.setVisibility(View.VISIBLE);
 
-                    sharedPreferencesHelper.saveData(verificationRespone.getResponse().getData().getToken());
+                    sharedPreferencesHelper.saveData(verificationRespone.getResponse().getData().getUser().getToken());
                     Log.d(TAG, "sohaib Token: " + sharedPreferencesHelper.getToken());
                     SWStaticMethods.intentWithoutData(VerificationCode.this, MainActivity.class);
                 } else {
@@ -109,20 +108,16 @@ public class VerificationCode extends AppCompatActivity {
 
     public void request(String email) {
 
-        regesterViewModel.resendVerificationLiveData(email).observe(this, new Observer<ResendVerification>() {
-            @Override
-            public void onChanged(ResendVerification resendVerification) {
-                if (resendVerification != null) {
-                    binding.btnVerifie.setVisibility(View.VISIBLE);
-                    binding.progressBar.setVisibility(View.GONE);
-                    Log.d(TAG, "onChanged: " + resendVerification.getResponse().getMessage());
-                    Toast.makeText(VerificationCode.this, resendVerification.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    binding.btnVerifie.setVisibility(View.VISIBLE);
-                    binding.progressBar.setVisibility(View.GONE);
-                    Log.d(TAG, "onChanged: " + resendVerification.getResponse().getMessage());
-                    Toast.makeText(VerificationCode.this, "wrong email", Toast.LENGTH_SHORT).show();
-                }
+        regesterViewModel.resendVerificationLiveData(email).observe(this, resendVerification -> {
+            if (resendVerification != null) {
+                binding.btnVerifie.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onChanged: " + resendVerification.getResponse().getMessage());
+                Toast.makeText(VerificationCode.this, resendVerification.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
+            } else {
+                binding.btnVerifie.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                Toast.makeText(VerificationCode.this, "wrong email", Toast.LENGTH_SHORT).show();
             }
         });
 

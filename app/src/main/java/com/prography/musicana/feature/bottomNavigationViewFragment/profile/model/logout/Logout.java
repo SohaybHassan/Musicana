@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.regester.model.verification;
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class VerificationRespone {
+public class Logout {
 
     @SerializedName("response")
     @Expose

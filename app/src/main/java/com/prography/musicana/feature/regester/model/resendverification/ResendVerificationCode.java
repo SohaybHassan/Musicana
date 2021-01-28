@@ -1,9 +1,9 @@
-package com.prography.musicana.feature.regester.model.gender;
+package com.prography.musicana.feature.regester.model.resendverification;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RequesBody {
+public class ResendVerificationCode {
 
     @SerializedName("response")
     @Expose
@@ -14,7 +14,6 @@ public class RequesBody {
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
-    private final static long serialVersionUID = -517650579533454607L;
 
     public Response getResponse() {
         return response;

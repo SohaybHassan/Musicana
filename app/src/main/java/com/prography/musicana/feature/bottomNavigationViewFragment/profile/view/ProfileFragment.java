@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -25,9 +24,6 @@ import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.Logout;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileCustomBottomSheet;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
 import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
@@ -217,11 +213,8 @@ public class ProfileFragment extends Fragment {
         profileViewModel.logout().observe(getActivity(), logout -> {
             if (logout != null) {
                 Toast.makeText(getActivity(), "logout done", Toast.LENGTH_SHORT).show();
-
                 Log.d(TAG, "onChanged: " + sharedPreferencesHelper.getToken());
-
                 sharedPreferencesHelper.clerData();
-
                 SWStaticMethods.intentWithoutData(getActivity(), LoginActivity.class);
             } else {
                 Toast.makeText(getActivity(), "some thing wrong", Toast.LENGTH_SHORT).show();
