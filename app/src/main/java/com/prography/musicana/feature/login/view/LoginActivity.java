@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferencesHelper = new SharedPreferencesHelper();
 
+        sharedPreferencesHelper.clerData();
 
         if (sharedPreferencesHelper.getToken().equals(null)) {
             Log.d(TAG, "onCreate:  token null");
@@ -157,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                     binding.tvForgotPassword.setVisibility(View.VISIBLE);
                     binding.tvRegesterNow.setVisibility(View.VISIBLE);
                     Log.d(TAG, "onChanged: " + "we have a data");
+                    sharedPreferencesHelper.saveData(dataLogin.getResponse().getData().getUser().getToken());
                     Log.d(TAG, "onChanged: " + dataLogin.getResponse().getData().getUser().getEmail());
                     SWStaticMethods.intentWithoutData(LoginActivity.this, MainActivity.class);
                 } else {

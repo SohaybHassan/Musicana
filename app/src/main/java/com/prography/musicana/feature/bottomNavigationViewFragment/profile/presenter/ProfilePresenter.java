@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,13 +20,16 @@ public class ProfilePresenter {
     private static final String TAG = ProfilePresenter.class.getSimpleName();
     private NetworkInit networkInit;
     private MutableLiveData<Logout> logoutMutableLiveData;
+    private MutableLiveData<ProfileData> profileDataMutableLiveData;
+
     private static ProfilePresenter instance;
 
 
     public ProfilePresenter() {
         networkInit = NetworkInit.getInstance(true);
-        Log.d(TAG, "ProfilePresenter:  11111111111111111111111111111111111111111111111111111111111111 ");
+
         logoutMutableLiveData = new MutableLiveData<>();
+        profileDataMutableLiveData = new MutableLiveData<>();
     }
 
     public static ProfilePresenter getInstance() {
@@ -33,6 +37,30 @@ public class ProfilePresenter {
             instance = new ProfilePresenter();
         }
         return instance;
+    }
+
+
+    public LiveData<ProfileData> getProfiledata() {
+        networkInit.getRetrofitApis().getProfileData().enqueue(new Callback<ProfileData>() {
+            @Override
+            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                if (response.isSuccessful()) {
+
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getUser().getFirstname());
+                    profileDataMutableLiveData.setValue(response.body());
+                } else {
+                    Log.d(TAG, "onResponse: nodata");
+                    profileDataMutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileData> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                profileDataMutableLiveData.setValue(null);
+            }
+        });
+        return profileDataMutableLiveData;
     }
 
 

@@ -105,8 +105,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:backgroundTint="@color/textColorWhite"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
+            android:hint="@string/country"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ed_confirm_password" />
@@ -118,8 +117,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:backgroundTint="@color/textColorWhite"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
+            android:hint="@string/gender"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ed_country" />

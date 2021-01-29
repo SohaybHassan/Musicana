@@ -11,9 +11,9 @@ public class ProfileData {
     @SerializedName("status")
     @Expose
     private boolean status;
-    @SerializedName("language")
+    @SerializedName("Content-Language")
     @Expose
-    private String language;
+    private String contentLanguage;
 
     public Response getResponse() {
         return response;
@@ -31,12 +31,12 @@ public class ProfileData {
         this.status = status;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getContentLanguage() {
+        return contentLanguage;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setContentLanguage(String contentLanguage) {
+        this.contentLanguage = contentLanguage;
     }
 
 }

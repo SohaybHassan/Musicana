@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.profileUserArrow.setOnClickListener(v -> {
+        binding.profileUserName.setOnClickListener(v -> {
             //1
             mListener.onFragmentInteraction(R.id.editProfileFragment);
         });
@@ -74,7 +74,6 @@ public class ProfileFragment extends Fragment {
 
                     switch (id) {
                         case 1:
-
                             System.out.println("switch 1 is " + checked);
                             break;
                         case 2:
@@ -218,8 +217,10 @@ public class ProfileFragment extends Fragment {
                 SWStaticMethods.intentWithoutData(getActivity(), LoginActivity.class);
             } else {
                 Toast.makeText(getActivity(), "some thing wrong", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onChanged: " + sharedPreferencesHelper.getToken());
             }
         });
     }
+
 
 }
