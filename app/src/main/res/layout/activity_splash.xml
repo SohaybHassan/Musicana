@@ -32,6 +32,7 @@
         android:text="@string/Skip"
         android:textColor="@color/textColorWhite"
         android:textSize="@dimen/_13sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

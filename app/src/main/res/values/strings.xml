@@ -126,5 +126,6 @@
     <string name="play_list_name">Play List Name</string>
     <string name="OK">OK</string>
     <string name="resendcode">ResendCode!</string>
+    <string name="lastname">Last Name</string>
 
 </resources>

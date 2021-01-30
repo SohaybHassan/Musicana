@@ -4,7 +4,6 @@ package com.prography.musicana.network;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.AllSettings;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.status.CloseStatus;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.Updatedata;
 import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
@@ -15,6 +14,9 @@ import com.prography.musicana.feature.regester.model.country.Countries;
 import com.prography.musicana.feature.regester.model.gender.Genders;
 import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
 import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
+import com.prography.musicana.feature.status.changestatus.ChangeStatus;
+import com.prography.musicana.feature.status.closestatus.CloseStatus;
+import com.prography.musicana.feature.status.newstatus.NewStatus;
 
 
 import okhttp3.MultipartBody;
@@ -25,7 +27,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 
-public interface ApiPartLink {
+public interface ApiMusicana {
     //OnBording
     @GET("data/onboarding")
     Call<OnpordingModel> getOnpordingData();
@@ -90,6 +92,10 @@ public interface ApiPartLink {
     Call<ProfileData> getProfileData();
 
 
+
+
+    //TODO start here
+
     @FormUrlEncoded
     @Multipart
     @POST("user/profile/updatedata")
@@ -115,12 +121,12 @@ public interface ApiPartLink {
     Call<CloseStatus> colseStatus();
 
 
-//    @POST("user/status/change")
-//    Call<> changeStatus(@Field("status_to") String Background);
-//
-//
-//    @POST("user/status/new")
-//    Call<> newStatus(@Field("UUID") String uuid);
+    @POST("user/status/change")
+    Call<ChangeStatus> changeStatus(@Field("status_to") String Background);
+
+
+    @POST("user/status/new")
+    Call<NewStatus> newStatus(@Field("UUID") String uuid);
 
     // user settings
     @GET("user/settings")

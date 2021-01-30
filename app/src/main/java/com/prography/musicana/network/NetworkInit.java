@@ -24,7 +24,7 @@ import static com.prography.musicana.network.ApiConstant.TOKEN;
 
 public class NetworkInit {
 
-    private ApiPartLink apiPartLink;
+    private ApiMusicana apiPartLink;
     private static NetworkInit instance;
     private static boolean myConnection;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -81,7 +81,7 @@ public class NetworkInit {
     }
 
 
-    public ApiPartLink getRetrofitApis() {
+    public ApiMusicana getRetrofitApis() {
         return apiPartLink;
     }
 
@@ -103,7 +103,7 @@ public class NetworkInit {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)  //Show Data body
                 .build();
-        apiPartLink = retrofit.create(ApiPartLink.class);
+        apiPartLink = retrofit.create(ApiMusicana.class);
 
 
     }

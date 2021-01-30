@@ -48,11 +48,6 @@
         <activity android:name=".feature.regester.view.RegesterActivity" />
         <activity android:name=".feature.login.view.LoginActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
 
         </activity>
@@ -74,6 +69,11 @@
         <activity android:name=".feature.MainActivity"></activity>
         <activity android:name=".feature.SplashActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

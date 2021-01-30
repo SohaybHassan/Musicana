@@ -18,6 +18,8 @@ import com.prography.musicana.databinding.FragmentEditProfileBinding;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
+import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
+import com.prography.musicana.utils.SWStaticMethods;
 
 public class EditProfileFragment extends Fragment {
 
@@ -42,6 +44,15 @@ public class EditProfileFragment extends Fragment {
         binding.editProfileBackArrow.setOnClickListener(v -> {
             // go back
             mListener.onFragmentInteraction(0);
+        });
+
+        binding.edEmail.setEnabled(false);
+        binding.edPassword.setEnabled(false);
+        binding.edEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SWStaticMethods.intentWithoutDataAndFinish(getActivity(), ForgotPasswordActivity.class);
+            }
         });
 
 
@@ -71,6 +82,7 @@ public class EditProfileFragment extends Fragment {
                     binding.edPhone.setText(profileData.getResponse().getData().getUser().getPhone());
                     binding.edCountry.setText(profileData.getResponse().getData().getUser().getCountry());
                     binding.edGender.setText(profileData.getResponse().getData().getUser().getGender());
+                    binding.edLastName.setText(profileData.getResponse().getData().getUser().getLastname());
 
                     Log.d(TAG, "onChanged: " + profileData.getResponse().getData().getUser().getFirstname());
                     Log.d(TAG, "onChanged:  we have data here");

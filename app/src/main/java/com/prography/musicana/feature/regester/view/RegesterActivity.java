@@ -41,7 +41,7 @@ public class RegesterActivity extends AppCompatActivity {
     public static final String TAG = RegesterActivity.class.getSimpleName();
     private ActivityRegesterBinding binding;
     private RegesterViewModel regesterViewModel;
-    private String name, phone, email, password, confarmPassword, country, gender;
+    private String name, phone, email, password, confarmPassword, country, gender, lastNmae;
     private ArrayList<String> contryName;
     private ArrayList<String> contryId;
     private String cont_id;
@@ -57,9 +57,6 @@ public class RegesterActivity extends AppCompatActivity {
         gendername = new ArrayList<>();
 
 
-
-
-
         regesterViewModel = new ViewModelProvider(this).get(RegesterViewModel.class);
 
 
@@ -72,13 +69,14 @@ public class RegesterActivity extends AppCompatActivity {
             confarmPassword = binding.edConfirmPassword.getText().toString();
             country = binding.edCountry.getText().toString();
             gender = binding.edGender.getText().toString();
+            lastNmae = binding.edLastName.getText().toString();
 
 
-            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email)
+            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastNmae) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email)
                     && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(cont_id) && !TextUtils.isEmpty(gender)) {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 binding.btnRegester.setVisibility(View.GONE);
-                regesterReques(name, phone, email, password, cont_id, gender);
+                regesterReques(name, lastNmae, phone, email, password, cont_id, gender);
             } else {
                 Toast.makeText(this, "plese enter All felied", Toast.LENGTH_SHORT).show();
             }
@@ -215,21 +213,21 @@ public class RegesterActivity extends AppCompatActivity {
     }
 
 
-    public void regesterReques(String firdName, String phone, String email
+    public void regesterReques(String firdName, String lastNmae, String phone, String email
             , String password, String country, String gender) {
 
-        regesterViewModel.newUser(firdName, "Hassan", phone, email, password, country, gender).observe(this, new Observer<RegesterModel>() {
+        regesterViewModel.newUser(firdName, lastNmae, phone, email, password, country, gender).observe(this, new Observer<RegesterModel>() {
             @Override
             public void onChanged(RegesterModel regesterModel) {
                 if (regesterModel != null) {
                     binding.btnRegester.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onChanged: " + regesterModel.getResponse());
-                    Bundle bundle=new Bundle();
-                    bundle.putString("password",password);
-                    bundle.putString("email",email);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("password", password);
+                    bundle.putString("email", email);
 
-                    SWStaticMethods.intentWithData(RegesterActivity.this, VerificationCode.class,bundle);
+                    SWStaticMethods.intentWithData(RegesterActivity.this, VerificationCode.class, bundle);
                 } else {
                     binding.btnRegester.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.GONE);

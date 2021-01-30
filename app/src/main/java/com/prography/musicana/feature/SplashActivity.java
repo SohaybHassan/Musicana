@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowInsets;
@@ -23,10 +24,14 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.prography.musicana.R;
+import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
 import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 import com.prography.musicana.feature.onboard.view.Onboarding;
 import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
+import com.prography.musicana.feature.status.newstatus.NewStatus;
+import com.prography.musicana.feature.status.viewModel.StatusViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
@@ -35,27 +40,55 @@ import java.util.List;
 public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     public static final int The_time_of_the_start_activity = 3000;
     public static final int REQUEST_CODE = 3000;
+    public static final String TAG=SplashActivity.class.getSimpleName();
     private VideoView videoView;
     private TextView btn_skip;
-    CreateMediaPlayer createMediaPlayer;
+    private CreateMediaPlayer createMediaPlayer;
     private OnPoardingViewmodel onPoardingViewmodel;
     private List<com.prography.musicana.feature.onboard.model.onPording.Onboarding> items;
-
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private StatusViewModel statusViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideTheStatusBar();
         setContentView(R.layout.activity_splash);
+        sharedPreferencesHelper = new SharedPreferencesHelper();
         createMediaPlayer = CreateMediaPlayer.getInstance();
+        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
+
+
+        String uuid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d(" 1997 android :", uuid);
+
         getData();
+
         btn_skip = findViewById(R.id.btn_skip);
+
         btn_skip.setEnabled(false);
+        Log.d("TAG", "onCreate: " + sharedPreferencesHelper.getToken());
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SWStaticMethods.intentWithoutData(SplashActivity.this, Onboarding.class);
-                finish();
+
+                if (!sharedPreferencesHelper.getToken().equals("")) {
+
+                    SWStaticMethods.intentWithoutData(SplashActivity.this, MainActivity.class);
+                    finish();
+                } else {
+                    Log.d("TAG", "onCreate: is first : " + sharedPreferencesHelper.getisFirst());
+                    if (sharedPreferencesHelper.getisFirst() && sharedPreferencesHelper.getToken().equals("")) {
+                        SWStaticMethods.intentWithoutData(SplashActivity.this, Onboarding.class);
+                        finish();
+                    } else if (!sharedPreferencesHelper.getisFirst() && sharedPreferencesHelper.getToken().equals("")) {
+
+                        SWStaticMethods.intentWithoutData(SplashActivity.this, LoginActivity.class);
+                        finish();
+                    }
+
+                }
+
             }
         });
 
@@ -160,10 +193,24 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
                     btn_skip.setEnabled(true);
                     items = onpordingModel.getResponse().getData().getOnboarding();
                     sendDtatToActivity.setItems(items);
+                    btn_skip.setVisibility(View.VISIBLE);
                 } else {
                     Log.d("TAG", "onChanged: " + "no data");
                 }
             }
+        });
+    }
+
+    public void myStatus(String uuid) {
+        statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
         });
     }
 

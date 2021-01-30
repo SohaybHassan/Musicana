@@ -20,6 +20,7 @@ import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
 import com.prography.musicana.feature.MainActivity;
+import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
 import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.login.viewmodel.LoginViewmodel;
 import com.prography.musicana.feature.regester.view.RegesterActivity;
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         sharedPreferencesHelper = new SharedPreferencesHelper();
-
+        sharedPreferencesHelper.isFirstTime(false);
         sharedPreferencesHelper.clerData();
 
         if (sharedPreferencesHelper.getToken().equals(null)) {
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.tvForgotPassword.setOnClickListener(view -> {
             androidnetwork();
+            sharedPreferencesHelper.clerData();
             // SWStaticMethods.intentWithoutData(LoginActivity.this, ForgotPasswordActivity.class);
         });
 
