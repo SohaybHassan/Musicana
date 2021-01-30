@@ -1,7 +1,9 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -11,8 +13,12 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.prography.musicana.feature.CreateMediaPlayer;
+import com.prography.musicana.utils.SWStaticMethods;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,11 +26,15 @@ import java.util.concurrent.TimeUnit;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
-    private MediaPlayer mediaPlayer;
-    private ArrayList<PhoneModelFragmentList> songList;
-    private int songPosn;
+    private static MediaPlayer mediaPlayer;
+    private static CreateMediaPlayer createMediaPlayer;
+    private static ArrayList<PhoneModelFragmentList> songList;
+    private static int songPosn;
     static String startTime;
     static String endTime;
+
+    static int mCurrentPosition;
+    static int mDuration;
     private final IBinder musicBind = new MusicBinder();
 
     @Nullable
@@ -40,48 +50,74 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         return false;
     }
 
+
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         return false;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onPrepared(MediaPlayer mp) {
         //start playback
         mp.start();
         int timeEnd = mp.getDuration();
-        int timestart =  mp.getCurrentPosition();
-
+        int timestart = mp.getCurrentPosition();
+        setDuration(timeEnd);
+        setCurrentPosition(timestart);
         endTime = String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes(timeEnd), TimeUnit.MILLISECONDS.toSeconds(timeEnd) -
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeEnd)));
+
+
         startTime = String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes(timestart), TimeUnit.MILLISECONDS.toSeconds(timestart) -
                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timestart)));
-        Log.d("TAG", "End Time : " +endTime );
-        Log.d("TAG", "Start Time : " +startTime );
+        Log.d("TAG", "End Time test : " + endTime);
+        Log.d("TAG", "Start Time  test: " + startTime);
 
     }
-    public static  String EndTime(){
+
+    public static String EndTime() {
         return endTime;
     }
-    public static  String startTime(){
+
+    public static String startTime() {
         return startTime;
+    }
+
+    public void setDuration(int Duration) {
+        this.mDuration = Duration;
+    }
+
+    public void setCurrentPosition(int CurrentPosition) {
+        this.mCurrentPosition = CurrentPosition;
+    }
+
+    public static int getDuration() {
+        return mDuration;
+    }
+
+    public static int getCurrentPosition() {
+        return mCurrentPosition;
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        songPosn = getSongPosn();
+        setSong(++songPosn);
+        playSong(getApplicationContext());
 
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = new MediaPlayer();
-        Log.d("mediaPlayer", "onCreate: serves  ");
+        createMediaPlayer = CreateMediaPlayer.getInstance();
+        mediaPlayer = createMediaPlayer.getMediaPlayer();
         initMusicPlayer();
     }
 
     public void initMusicPlayer() {
-        Log.d("mediaPlayer", "initMusicPlayer: serves  ");
+
         mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setOnPreparedListener(this);
@@ -89,46 +125,52 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         mediaPlayer.setOnErrorListener(this);
     }
 
-    public void setList(ArrayList<PhoneModelFragmentList> theSongs) {
-        songList = theSongs;
-    }
 
     public class MusicBinder extends Binder {
 
         public MusicService getService() {
-            Log.d("mediaPlayer", "getService: serves  ");
             return MusicService.this;
 
         }
     }
 
-    public void playSong() {
-        Log.d("mediaPlayer", "playSong: serves  ");
+    public static void playSong(Context context) {
         mediaPlayer.reset();
+        songList = createMediaPlayer.getLsi();
         //get Song
         PhoneModelFragmentList song = songList.get(songPosn);
+        Log.d("TAG", "playSong: " + songPosn);
         //get is
         long carrSong = song.getId();
         //set uri
         Uri trakUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, carrSong);
 
 
-
         try {
-            mediaPlayer.setDataSource(getApplicationContext(), trakUri);
-            Log.d("mediaPlayer", "playSong: serves  ");
+            mediaPlayer.setDataSource(context, trakUri);
+
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("MUSIC SERVICE", "Error setting data source", e);
-            Log.e("MUSIC SERVICE", e.getMessage());
+
         }
 
         mediaPlayer.prepareAsync();
 
     }
 
-    public void setSong(int songIndex) {
-        this.songPosn = songIndex;
+    public static void setSong(int songIndex) {
+        Log.d("TAG", "setSong: " + songIndex);
+        songPosn = songIndex;
+
     }
+
+    public static int getSongPosn() {
+        return songPosn;
+    }
+
+    public static MediaPlayer getMyMediaPlayer() {
+        return mediaPlayer;
+    }
+
 
 }

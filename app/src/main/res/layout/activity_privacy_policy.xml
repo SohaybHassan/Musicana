@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.onboard.PrivacyPolicyActivity">
+    tools:context=".feature.onboard.view.PrivacyPolicyActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -34,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
+        android:id="@+id/tv_text_placy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"

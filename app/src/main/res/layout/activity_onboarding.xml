@@ -13,8 +13,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/btn_skip"
@@ -35,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_13sdp"
-        android:layout_marginBottom="@dimen/_60sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
         android:drawableEnd="@drawable/ic_next_arrow_right"
         android:drawablePadding="@dimen/_6sdp"
         android:fontFamily="@font/opensansbold"
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_26sdp"
         android:layout_marginEnd="@dimen/_26sdp"
-        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
         android:background="@drawable/btn_onpoard_four_shape"
         android:fontFamily="@font/opensansbold"
         android:text="@string/start"
@@ -67,7 +69,7 @@
         android:id="@+id/dotsIndicator"
         android:layout_width="0dp"
         android:layout_height="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_60sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
         app:dot_height="12dp"
         app:dot_width="12dp"
         app:dots_count="4"
@@ -78,7 +80,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_next"
         app:selected_dot_resource="@drawable/ic_doits"
         app:selected_dot_scale_factor="1.6"
         app:unselected_dot_resource="@drawable/ic_dots_nuselected" />

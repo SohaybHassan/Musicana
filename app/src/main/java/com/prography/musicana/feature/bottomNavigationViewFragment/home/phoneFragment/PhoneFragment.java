@@ -4,9 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.Cursor;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,53 +15,59 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Environment;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.prography.musicana.R;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.prography.musicana.custem.BottomSheetAddToPlayList;
+import com.prography.musicana.custem.BottomSheetMore;
+import com.prography.musicana.custem.SWDialog;
+import com.prography.musicana.custem.SWInterface.PlayListName;
 import com.prography.musicana.databinding.FragmentPhoneBinding;
-import com.prography.musicana.feature.ListItemClick;
-import com.prography.musicana.feature.OnFragmentInteractionListener;
+import com.prography.musicana.feature.CreateMediaPlayer;
+import com.prography.musicana.custem.SWInterface.ListItemClick;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.playListFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter.PhoneFragmentAdapter;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.AddToList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.concurrent.TimeUnit;
 
 
 public class PhoneFragment extends Fragment {
 
     public static final String TAG = PhoneFragment.class.getSimpleName();
     private FragmentPhoneBinding binding;
-    private String[] STAR = {"*"};
     private ArrayList<PhoneModelFragmentList> items;
     MediaPlayer mediaPlayer;
-    private double startTime;
-    private double endTime;
     private ListItemClick listener;
+    private CreateMediaPlayer createMediaPlayer;
     //
+    private boolean musicBound;
     private MusicService musicService;
     private Intent playIntent;
-    private boolean musicBound = false;
+    private BottomSheetMore bottomSheetMore;
+    private BottomSheetDialog bottomSheetDialog;
+    private BottomSheetAddToPlayList bottomSheetAddToPlayList;
+    private SWDialog swDialog;
+    ArrayList<String> addItem;
+    private playListFragment playListFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPhoneBinding.inflate(getLayoutInflater());
-        items = new ArrayList<>();
+        playListFragment = new playListFragment();
         mediaPlayer = new MediaPlayer();
-
+        createMediaPlayer = CreateMediaPlayer.getInstance();
+        items = createMediaPlayer.getLsi();
+        bottomSheetDialog = new BottomSheetDialog(getContext());
+        addItem = new ArrayList<>();
         return binding.getRoot();
     }
 
@@ -71,66 +75,62 @@ public class PhoneFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listAllSong();
-
-        Collections.sort(items, new Comparator<PhoneModelFragmentList>() {
-            @Override
-            public int compare(PhoneModelFragmentList o1, PhoneModelFragmentList o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
 
         binding.rvPhoneFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvPhoneFragment.setAdapter(new PhoneFragmentAdapter(items, new PhoneFragmentAdapter.ClickItems() {
             @Override
-            public void onClickItem(int position) {
+            public void onClickItem(int position, PhoneModelFragmentList phoneModel) {
                 musicService.setSong(position);
-                musicService.playSong();
-                Log.d("mediaPlayer", "onClickItem: fragment  ");
-                listener.itemClick(mediaPlayer, items);
+                musicService.playSong(getContext());
+                listener.itemClick(items, position, phoneModel);
+            }
+
+            @Override
+            public void onClickMore(PhoneModelFragmentList phoneModel) {
+                bottomSheetMore = new BottomSheetMore(getContext(), bottomSheetDialog, new BottomSheetMore.BottomSheetMoreMethode() {
+                    @Override
+                    public void addtoplayList() {
+                        Log.d(TAG, "addtoplayList: ");
+                        bottomSheetAddToPlayList = new BottomSheetAddToPlayList(getContext(), bottomSheetDialog, () -> {
+                            swDialog = new SWDialog(lsitName -> {
+                                addItem.add(lsitName.getText().toString());
+                                Log.d(TAG, "addtoplayList: " + addItem.size());
+                                AddToList addToList = AddToList.getInstance();
+                                addToList.setAdditem(addItem);
+                                Toast.makeText(getContext(), " تم إضافة PLay List", Toast.LENGTH_SHORT).show();
+                                swDialog.dismiss();
+                            });
+                            swDialog.show(getParentFragmentManager(), "hi thir");
+                        });
+                        bottomSheetAddToPlayList.openDialog();
+
+                    }
+
+                    @Override
+                    public void downlode() {
+                        Toast.makeText(getContext(), " انت تمتلك هذه الاغنية بلفعل ", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void share() {
+                        Log.d(TAG, "share:");
+
+                    }
+
+                    @Override
+                    public void addToFavorite() {
+                        Log.d(TAG, "addToFavorite: ");
+
+                    }
+                });
+                bottomSheetMore.openDialog();
             }
         }));
 
 
         Log.d(TAG, "onViewCreated: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
 
-    }
-
-    public void listAllSong()
-    {
-        Cursor cursor;
-        Uri allsongUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-       // String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-        Log.d(TAG, "listAllSong: "+allsongUri.toString());
-        if (isSdPresent()) {
-            cursor = getContext().getContentResolver().query(allsongUri, null, null, null, null);
-            if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    do {
-
-                        String songName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                        int songId = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-                        String albumname = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-
-                        Log.d(TAG, "listAllSong: " + songName + "_####### _" + songId + "_############### _" + albumname);
-                        try {
-                            mediaPlayer.addTimedTextSource(getContext(), allsongUri, ".mp3");
-                        } catch (IOException e) {
-                            Log.d(TAG, "listAllSong: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                        items.add(new PhoneModelFragmentList(songId, songName, albumname));
-
-                    } while (cursor.moveToNext());
-                }
-                cursor.close();
-            }
-
-        }
-    }
-
-    public static boolean isSdPresent() {
-        return android.os.Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
 
@@ -140,10 +140,7 @@ public class PhoneFragment extends Fragment {
 
             MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
             musicService = binder.getService();
-            musicService.setList(items);
             musicBound = true;
-
-
         }
 
         @Override
@@ -181,4 +178,6 @@ public class PhoneFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+
 }

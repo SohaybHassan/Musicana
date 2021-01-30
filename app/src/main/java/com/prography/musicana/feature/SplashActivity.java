@@ -4,36 +4,106 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Window;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.prography.musicana.R;
-import com.prography.musicana.feature.onboard.Onboarding;
+import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.feature.login.view.LoginActivity;
+import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
+import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
+import com.prography.musicana.feature.onboard.view.Onboarding;
+import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
+import com.prography.musicana.feature.status.newstatus.NewStatus;
+import com.prography.musicana.feature.status.viewModel.StatusViewModel;
+import com.prography.musicana.utils.SWStaticMethods;
 
-public class SplashActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     public static final int The_time_of_the_start_activity = 3000;
     public static final int REQUEST_CODE = 3000;
+    public static final String TAG=SplashActivity.class.getSimpleName();
+    private VideoView videoView;
+    private TextView btn_skip;
+    private CreateMediaPlayer createMediaPlayer;
+    private OnPoardingViewmodel onPoardingViewmodel;
+    private List<com.prography.musicana.feature.onboard.model.onPording.Onboarding> items;
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private StatusViewModel statusViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideTheStatusBar();
         setContentView(R.layout.activity_splash);
+        sharedPreferencesHelper = new SharedPreferencesHelper();
+        createMediaPlayer = CreateMediaPlayer.getInstance();
+        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
+
+
+        String uuid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d(" 1997 android :", uuid);
+
+        getData();
+
+        btn_skip = findViewById(R.id.btn_skip);
+
+        btn_skip.setEnabled(false);
+        Log.d("TAG", "onCreate: " + sharedPreferencesHelper.getToken());
+        btn_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!sharedPreferencesHelper.getToken().equals("")) {
+
+                    SWStaticMethods.intentWithoutData(SplashActivity.this, MainActivity.class);
+                    finish();
+                } else {
+                    Log.d("TAG", "onCreate: is first : " + sharedPreferencesHelper.getisFirst());
+                    if (sharedPreferencesHelper.getisFirst() && sharedPreferencesHelper.getToken().equals("")) {
+                        SWStaticMethods.intentWithoutData(SplashActivity.this, Onboarding.class);
+                        finish();
+                    } else if (!sharedPreferencesHelper.getisFirst() && sharedPreferencesHelper.getToken().equals("")) {
+
+                        SWStaticMethods.intentWithoutData(SplashActivity.this, LoginActivity.class);
+                        finish();
+                    }
+
+                }
+
+            }
+        });
 
         takePermission();
+        videoView = findViewById(R.id.video_view);
+        mRun();
+        //   CreateMediaPlayer.getInstance().getplayListMusicFomDivice();
+
     }
 
+
     public void takePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED||
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            nextPage();
+            //  nextPage();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
 
@@ -47,7 +117,9 @@ public class SplashActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                nextPage();
+                // nextPage();
+            } else {
+
             }
         }
 
@@ -55,12 +127,92 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void nextPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
+        Thread background = new Thread() {
             public void run() {
-                startActivity(new Intent(SplashActivity.this, Onboarding.class));
-                finish();
+                try {
+                    // Thread will sleep for 5 seconds
+                    sleep(The_time_of_the_start_activity);
+
+                    // After 5 seconds redirect to another intent
+                    Intent i = new Intent(SplashActivity.this, Onboarding.class);
+                    startActivity(i);
+
+                    //Remove activity
+                    finish();
+                } catch (Exception e) {
+                }
             }
-        }, The_time_of_the_start_activity);
+        };
+        // start thread
+        background.start();
+
     }
+
+    //hideTheStatusBar
+    public void hideTheStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+
+            if (controller != null)
+                controller.hide(WindowInsets.Type.statusBars());
+        } else {
+            //noinspection deprecation
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+
+    public void mRun() {
+        String videopth = "android.resource://com.prography.musicana/" + R.raw.music;
+
+        Uri uri = Uri.parse(videopth);
+        videoView.setVideoURI(uri);
+        videoView.start();
+        if (!videoView.isPlaying()) {
+            videoView.start();
+        }
+        videoView.setOnCompletionListener(this);
+
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mRun();
+    }
+
+
+    public void getData() {
+        onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
+        SendDtatToActivity sendDtatToActivity = SendDtatToActivity.getInstance();
+        onPoardingViewmodel.getData().observe(this, new Observer<OnpordingModel>() {
+            @Override
+            public void onChanged(OnpordingModel onpordingModel) {
+                if (onpordingModel != null) {
+                    Log.d("TAG", "onChanged: " + " we have data");
+                    btn_skip.setEnabled(true);
+                    items = onpordingModel.getResponse().getData().getOnboarding();
+                    sendDtatToActivity.setItems(items);
+                    btn_skip.setVisibility(View.VISIBLE);
+                } else {
+                    Log.d("TAG", "onChanged: " + "no data");
+                }
+            }
+        });
+    }
+
+    public void myStatus(String uuid) {
+        statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+
 }

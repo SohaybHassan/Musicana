@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.onboard.TermsConditionsActivity">
+    tools:context=".feature.onboard.view.TermsConditionsActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -34,6 +34,7 @@
         android:background="@color/textColor_or_w"
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
     <TextView
+        android:id="@+id/tv_text_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"

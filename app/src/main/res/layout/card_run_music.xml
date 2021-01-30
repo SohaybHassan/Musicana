@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cadr_name_time"
         android:layout_width="match_parent"
@@ -21,6 +20,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
+
+
+
 
             <ImageView
                 android:id="@+id/share"
@@ -46,33 +50,45 @@
                 android:id="@+id/colas_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_close_card"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:src="@drawable/ic_close_card"
                 app:layout_constraintBottom_toBottomOf="@id/download"
                 app:layout_constraintEnd_toStartOf="@id/download"
-                app:layout_constraintTop_toTopOf="@id/download"/>
+                app:layout_constraintTop_toTopOf="@id/download" />
 
             <TextView
                 android:id="@+id/name_musec"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_80sdp"
                 android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_30sdp"
+                android:ellipsize="marquee"
                 android:fontFamily="@font/opensansbold"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/musec_name"
                 android:textColor="@color/textColorWhite"
                 android:textSize="@dimen/_15sdp"
-                app:layout_constraintEnd_toStartOf="@id/download"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/share"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/_55sdp"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/type_musec"
-                android:layout_width="wrap_content"
+               android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/type_musec"
                 android:textColor="@color/textColor_or_w"
                 android:textSize="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="@+id/name_musec"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/name_musec"
                 app:layout_constraintTop_toBottomOf="@id/name_musec" />
 
@@ -155,6 +171,7 @@
                 app:layout_constraintTop_toTopOf="@id/im_next_music" />
 
             <ImageView
+                android:id="@+id/pre_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_29sdp"
@@ -169,7 +186,7 @@
     </com.google.android.material.card.MaterialCardView>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
@@ -182,12 +199,11 @@
         app:layout_constraintStart_toStartOf="@id/cadr_name_time"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView
 
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/image_play_smale"
-
         android:elevation="@dimen/_1sdp"
         app:civ_border_color="#FFf"
         app:civ_border_width="3dp"

@@ -1,146 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
-    tools:context=".feature.regester.RegesterActivity">
+    android:fillViewport="true">
 
 
-    <TextView
-        android:id="@+id/tv_regester"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:fontFamily="@font/opensansbold"
-        android:text="@string/regester"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/ed_name"
-        style="@style/EditTextStyle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_23sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/name"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_regester" />
-
-    <EditText
-        android:id="@+id/ed_phone"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/phone"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_name" />
-
-    <EditText
-        android:id="@+id/ed_email"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_phone" />
-
-    <EditText
-        android:id="@+id/ed_password"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_email" />
-
-    <EditText
-        android:id="@+id/ed_confirm_password"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_password" />
-
-    <EditText
-        android:id="@+id/ed_country"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_confirm_password" />
-
-    <EditText
-        android:id="@+id/ed_gender"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:backgroundTint="@color/textColorWhite"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_country" />
+        android:layout_height="match_parent"
+        android:background="@color/appBackground"
+        tools:context=".feature.regester.view.RegesterActivity">
 
 
-    <Button
-        android:id="@+id/btn_regester"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_23sdp"
-        android:layout_marginEnd="@dimen/_25sdp"
-        android:background="@drawable/btn_onpoard_four_shape"
-        android:fontFamily="@font/opensans_light"
-        android:text="@string/regester"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_13sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_gender" />
+        <TextView
+            android:id="@+id/tv_regester"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:fontFamily="@font/opensansbold"
+            android:text="@string/regester"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_login_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_17sdp"
-        android:fontFamily="@font/opensansbold"
-        android:text="@string/login_now"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="@id/btn_regester"
-        app:layout_constraintStart_toStartOf="@id/btn_regester"
-        app:layout_constraintTop_toBottomOf="@id/btn_regester" />
+        <EditText
+            android:id="@+id/ed_name"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_23sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/name"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_regester" />
+
+        <EditText
+            android:id="@+id/ed_last_name"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_23sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/lastname"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_name" />
+
+        <EditText
+            android:id="@+id/ed_phone"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/phone"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_last_name" />
+
+        <EditText
+            android:id="@+id/ed_email"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_phone" />
+
+        <EditText
+            android:id="@+id/ed_password"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_email" />
+
+        <EditText
+            android:id="@+id/ed_confirm_password"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_password" />
+
+        <TextView
+            android:id="@+id/ed_country"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/textColorWhite"
+            android:clickable="false"
+            android:hint="@string/country"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_confirm_password" />
+
+        <TextView
+            android:id="@+id/ed_gender"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:backgroundTint="@color/textColorWhite"
+            android:clickable="false"
+            android:hint="@string/gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_country" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_75sdp"
+            android:elevation="@dimen/_5sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <Button
+            android:id="@+id/btn_regester"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_23sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:background="@drawable/btn_onpoard_four_shape"
+            android:fontFamily="@font/opensans_light"
+            android:text="@string/regester"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_gender" />
+
+        <TextView
+            android:id="@+id/tv_login_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:fontFamily="@font/opensansbold"
+            android:text="@string/login_now"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_regester"
+            app:layout_constraintStart_toStartOf="@id/btn_regester"
+            app:layout_constraintTop_toBottomOf="@id/btn_regester" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

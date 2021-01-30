@@ -1,71 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_screen"
     tools:context=".feature.SplashActivity">
 
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginBottom="@dimen/_50sdp"-->
-<!--        android:src="@drawable/icon_app_splash" />-->
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:layout_marginEnd="@dimen/_10sdp"-->
-<!--        android:layout_marginTop="@dimen/_20sdp"-->
-<!--        android:src="@drawable/star_on" />-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_forground" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:src="@drawable/star_tow"-->
-<!--        android:layout_gravity="center|start"-->
-<!--        android:layout_marginStart="@dimen/_10sdp"-->
-<!--        android:layout_marginBottom="@dimen/_180sdp"-->
-<!--        android:layout_height="wrap_content" />-->
+    <TextView
+        android:id="@+id/btn_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:fontFamily="@font/opensans_light"
+        android:gravity="center_horizontal"
+        android:text="@string/Skip"
+        android:textColor="@color/textColorWhite"
+        android:textSize="@dimen/_13sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="@dimen/_60sdp"-->
-<!--        android:fontFamily="@font/opensansbold"-->
-<!--        android:text="@string/musicana"-->
-<!--        android:textColor="@color/textColorWhite"-->
-<!--        android:textSize="@dimen/_30sdp" />-->
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="@dimen/_100sdp"-->
-<!--        android:fontFamily="@font/opensansbold"-->
-<!--        android:text="@string/musicana_ar"-->
-<!--        android:textColor="@color/textColorWhite"-->
-<!--        android:textSize="@dimen/_30sdp" />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|center"-->
-<!--        android:layout_marginBottom="@dimen/_20sdp"-->
-<!--        android:fontFamily="@font/opensansbold"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@string/author_idea"-->
-<!--        android:textColor="@color/textColorWhite"-->
-<!--        android:textSize="@dimen/_15sdp" />-->
-
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:src="@drawable/splash_screen"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:scaleType="fitXY"-->
-<!--        android:layout_height="match_parent" />-->
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentHomeBinding;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.mapFragment.MapFragment;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.playListFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
 
@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new OnlineFragment()).commit();
 
         binding.tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -54,7 +53,7 @@ public class HomeFragment extends Fragment {
                         getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new PhoneFragment()).commit();
                         break;
                     case 2:
-                        getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new MapFragment()).commit();
+                        getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new playListFragment()).commit();
                         break;
                 }
             }

@@ -1,8 +1,10 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,9 +38,7 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
         PhoneModelFragmentList phoneModelFragmentList = item.get(position);
         holder.name.setText(phoneModelFragmentList.getName());
         holder.alpom.setText(phoneModelFragmentList.getAlpom());
-        int musicNumber = position + 1;
-        holder.number_music.setText(musicNumber + "");
-        holder.bind(clickItems, position);
+        holder.bind(clickItems, position, phoneModelFragmentList);
     }
 
     @Override
@@ -47,29 +47,35 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView name, alpom, number_music;
+        private TextView name, alpom;
+        ImageView imageView, image_more;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_musec);
             alpom = itemView.findViewById(R.id.type_musec);
-            number_music = itemView.findViewById(R.id.number_music);
+            imageView = itemView.findViewById(R.id.image_music);
+            image_more = itemView.findViewById(R.id.image_more);
 
         }
 
-        public void bind(ClickItems listener, int position) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClickItem(position);
-                }
+        public void bind(ClickItems listener, int position, PhoneModelFragmentList phoneModel) {
+            itemView.setOnClickListener(v -> listener.onClickItem(position, phoneModel));
+
+            image_more.setOnClickListener(v -> {
+                listener.onClickMore(phoneModel);
             });
+
         }
 
 
     }
 
     public interface ClickItems {
-        void onClickItem(int position);
+        void onClickItem(int position, PhoneModelFragmentList phoneModel);
+
+        void onClickMore(PhoneModelFragmentList phoneMusic);
     }
+
+
 }

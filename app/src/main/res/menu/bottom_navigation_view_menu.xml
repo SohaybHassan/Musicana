@@ -8,9 +8,9 @@
         android:title="Hoem" />
 
     <item
-        android:id="@+id/archives"
+        android:id="@+id/download"
         android:icon="@drawable/ic_play_list_line"
-        android:title="Archives" />
+        android:title="Download" />
 
     <item
         android:id="@+id/favorite"

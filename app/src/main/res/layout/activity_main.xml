@@ -36,25 +36,15 @@
             android:textSize="@dimen/_20sdp"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/img_catagory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:layout_marginEnd="@dimen/_14sdp"
-            android:src="@drawable/ic_catagory" />
-
 
         <ImageView
             android:id="@+id/img_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
             android:layout_marginEnd="@dimen/_15sdp"
             android:src="@drawable/ic_search"
-
-            app:layout_constraintBottom_toBottomOf="@id/tablayout"
-            android:layout_gravity="end|center"
-           />
+            app:layout_constraintBottom_toBottomOf="@id/tablayout" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -77,6 +67,7 @@
         android:id="@+id/contener_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +83,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/re_run_music_bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:clickable="true"
+        android:elevation="@dimen/_5sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/bottom_sheet_main" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
