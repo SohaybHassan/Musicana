@@ -10,25 +10,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
-import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
-import com.prography.musicana.feature.login.view.LoginActivity;
+import com.prography.musicana.databinding.FragmentProfileBinding;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileCustomBottomSheet;
 import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
 import com.prography.musicana.feature.onboard.view.TermsConditionsActivity;
-import com.prography.musicana.utils.SWStaticMethods;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -38,21 +35,14 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private BottomSheetDialog sheetDialog;
     private OnFragmentInteractionListener mListener;
-    private ProfileViewModel profileViewModel;
-    private SharedPreferencesHelper sharedPreferencesHelper;
-    private static final String TAG = ProfileFragment.class.getSimpleName();
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         sheetDialog = new BottomSheetDialog(getActivity());
-        profileViewModel = new ViewModelProvider(getActivity()).get(ProfileViewModel.class);
-        sharedPreferencesHelper = new SharedPreferencesHelper();
         return binding.getRoot();
-
     }
 
     @Override
@@ -70,8 +60,6 @@ public class ProfileFragment extends Fragment {
             ProfileCustomBottomSheet sheet = new ProfileCustomBottomSheet(getActivity(), sheetDialog, new ProfileCustomBottomSheet.BottomSheetListener() {
                 @Override
                 public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
-                    SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
-
                     switch (id) {
                         case 1:
                             System.out.println("switch 1 is " + checked);
@@ -87,10 +75,10 @@ public class ProfileFragment extends Fragment {
                 }
             });
             sheet.openDialog(getResources().getString(R.string.EntryPermit),
-                    getResources().getString(R.string.RunningBackground),
-                    getResources().getString(R.string.EntryPermitAudioFiles),
-                    null,
-                    false);
+                    null, getResources().getString(R.string.RunningBackground),
+                    null, getResources().getString(R.string.EntryPermitAudioFiles),
+                    null, getResources().getString(R.string.Location),
+                    true);
         });
         binding.profileMood.setOnClickListener(v -> {
             //3
@@ -98,6 +86,7 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onSwitchClicked(int id, boolean checked, SwitchCompat s1, SwitchCompat s2, SwitchCompat s3) {
                     SharedPreferences.Editor modeEditor = getActivity().getSharedPreferences(AppConstants.Mode, MODE_PRIVATE).edit();
+
                     switch (id) {
                         case 1:
                             s1.setChecked(checked);
@@ -111,7 +100,6 @@ public class ProfileFragment extends Fragment {
                             }
                             modeEditor.apply();
                             modeEditor.commit();
-
                             break;
                         case 2:
                             s1.setChecked(!checked);
@@ -126,14 +114,13 @@ public class ProfileFragment extends Fragment {
                             modeEditor.apply();
                             modeEditor.commit();
                             break;
-
                     }
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Mood),
-                    getResources().getString(R.string.DarkMode),
-                    getResources().getString(R.string.MoonMode),
-                    null,
+                    SharedPreferencesHelper.getMode(getContext()) == 1, getResources().getString(R.string.DarkMode),
+                    SharedPreferencesHelper.getMode(getContext()) == 2, getResources().getString(R.string.MoonMode),
+                    null, null,
                     false);
         });
         binding.profileLanguage.setOnClickListener(v -> {
@@ -153,9 +140,9 @@ public class ProfileFragment extends Fragment {
                 }
             });
             sheet.openDialog(getResources().getString(R.string.Language),
-                    getResources().getString(R.string.English),
-                    getResources().getString(R.string.Arabic),
-                    null,
+                    null, getResources().getString(R.string.English),
+                    null, getResources().getString(R.string.Arabic),
+                    null, null,
                     false);
         });
 
@@ -189,10 +176,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        //////********///
         binding.profileLogoff.setOnClickListener(v -> {
-
-            logoutRequest();
+            //log off
+            Toast.makeText(getActivity(), "log off", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -206,21 +193,5 @@ public class ProfileFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
-
-
-    public void logoutRequest() {
-        profileViewModel.logout().observe(getActivity(), logout -> {
-            if (logout != null) {
-                Toast.makeText(getActivity(), "logout done", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onChanged: " + sharedPreferencesHelper.getToken());
-                sharedPreferencesHelper.clerData();
-                SWStaticMethods.intentWithoutData(getActivity(), LoginActivity.class);
-            } else {
-                Toast.makeText(getActivity(), "some thing wrong", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onChanged: " + sharedPreferencesHelper.getToken());
-            }
-        });
-    }
-
 
 }

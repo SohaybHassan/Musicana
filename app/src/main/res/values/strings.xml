@@ -127,5 +127,7 @@
     <string name="OK">OK</string>
     <string name="resendcode">ResendCode!</string>
     <string name="lastname">Last Name</string>
+    <string name="crop_image_text">Crop</string>
+    <string name="permission_denied">permission denied</string>
 
 </resources>

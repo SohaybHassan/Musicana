@@ -53,6 +53,9 @@ dependencies {
     //circle_image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //Crop image
+    implementation 'com.github.yalantis:ucrop:2.2.5-native'
+
     //google map
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
 
