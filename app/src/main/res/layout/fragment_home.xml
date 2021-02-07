@@ -39,8 +39,15 @@
             android:text="@string/playlist" />
     </com.google.android.material.tabs.TabLayout>
 
-
-
+    <LinearLayout
+        android:id="@+id/banner_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tablayout" />
 
     <FrameLayout
         android:id="@+id/home_contener"
@@ -51,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tablayout" />
+        app:layout_constraintTop_toBottomOf="@+id/banner_container" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

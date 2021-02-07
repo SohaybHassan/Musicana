@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.facebook.ads.AudienceNetworkAds;
+
 public class MusicaApp extends Application {
     public static final String CHANNEL_ID = "MUSIC_ID";
     public static final String CHANNEL_NAME = "MUSIC";
@@ -14,6 +16,7 @@ public class MusicaApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AudienceNetworkAds.initialize(this);
         instans = this;
         createChannel();
     }

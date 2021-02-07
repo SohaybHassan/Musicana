@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.google.android.material.tabs.TabLayout;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentHomeBinding;
@@ -22,7 +24,7 @@ import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFra
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
-
+    AdView adView;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -39,6 +41,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //fb ads
+        adView = new AdView(getContext(), getResources().getString(R.string.fb_eg), AdSize.BANNER_HEIGHT_50);
+        binding.bannerContainer.addView(adView);
+        adView.loadAd();
 
         getChildFragmentManager().beginTransaction().replace(R.id.home_contener, new OnlineFragment()).commit();
 

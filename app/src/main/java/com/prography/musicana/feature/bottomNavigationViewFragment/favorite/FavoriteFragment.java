@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentFavoriteBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.favorite.adapter.FavoriteAdapter;
@@ -32,5 +34,11 @@ public class FavoriteFragment extends Fragment {
 
         binding.rvFavorite.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvFavorite.setAdapter(new FavoriteAdapter());
+
+        MobileAds.initialize(getContext(), initializationStatus -> {
+
+        });
+        AdRequest request = new AdRequest.Builder().build();
+        binding.adView.loadAd(request);
     }
 }

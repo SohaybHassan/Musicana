@@ -130,4 +130,15 @@
     <string name="crop_image_text">Crop</string>
     <string name="permission_denied">permission denied</string>
 
+
+    <!--    google admob-->
+    <string name="ggl_eg">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ggl_banner1">ca-app-pub-1246280412638998/1963834072</string>
+    <string name="ggl_banner2">ca-app-pub-1246280412638998/3616160239</string>
+
+    <!--    fb ads-->
+    <string name="fb_eg">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_banner1">IMG_16_9_APP_INSTALL#705981750064104_707890133206599</string>
+    <string name="fb_banner2">IMG_16_9_APP_INSTALL#705981750064104_707887729873506</string>
+
 </resources>

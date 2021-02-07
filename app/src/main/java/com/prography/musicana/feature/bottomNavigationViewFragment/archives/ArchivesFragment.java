@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentArchivesBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.archives.adapter.ArchivesAdapter;
@@ -36,5 +38,10 @@ public class ArchivesFragment extends Fragment {
         binding.rvArchives.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvArchives.setAdapter(new ArchivesAdapter());
 
+        MobileAds.initialize(getContext(), initializationStatus -> {
+
+        });
+        AdRequest request = new AdRequest.Builder().build();
+        binding.adView.loadAd(request);
     }
 }
