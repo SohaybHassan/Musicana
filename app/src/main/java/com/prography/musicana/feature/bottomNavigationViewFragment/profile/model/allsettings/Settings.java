@@ -1,9 +1,12 @@
+
 package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Settings {
+public class Settings implements Serializable
+{
 
     @SerializedName("permissions")
     @Expose
@@ -20,6 +23,7 @@ public class Settings {
     @SerializedName("auto_update")
     @Expose
     private boolean autoUpdate;
+    private final static long serialVersionUID = 6383710437493063466L;
 
     public Permissions getPermissions() {
         return permissions;

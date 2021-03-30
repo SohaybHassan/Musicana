@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
 import com.prography.musicana.databinding.FragmentProfileBinding;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileCustomBottomSheet;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
 import com.prography.musicana.feature.onboard.view.PrivacyPolicyActivity;
 import com.prography.musicana.feature.onboard.view.TermsConditionsActivity;
 
@@ -39,12 +42,14 @@ public class ProfileFragment extends Fragment {
     private BottomSheetDialog sheetDialog;
     private OnFragmentInteractionListener mListener;
     AdView adView;
+    private ProfileViewModel profileViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         sheetDialog = new BottomSheetDialog(getActivity());
         return binding.getRoot();
     }
@@ -190,6 +195,31 @@ public class ProfileFragment extends Fragment {
             //log off
             Toast.makeText(getActivity(), "log off", Toast.LENGTH_SHORT).show();
         });
+
+        // settings requests
+        getAllSettings();
+        changeSettings("1","1","1","1","1","1","1");
+    }
+
+    public void getAllSettings() {
+        profileViewModel.getAllSettings().observe(getActivity(), settingsResponse -> {
+            if (settingsResponse != null) {
+                Log.d("settingsResponse", "update profile Not null");
+            } else {
+                Log.d("settingsResponse", "update profile null");
+            }
+        });
+    }
+
+    public void changeSettings(String mood, String language, String additional_screen, String auto_update, String background, String audio, String location) {
+        profileViewModel.changeSettings(mood, language, additional_screen, auto_update, background, audio, location)
+                .observe(getActivity(), settingsResponse -> {
+                    if (settingsResponse != null) {
+                        Log.d("settingsResponse", "update profile Not null");
+                    } else {
+                        Log.d("settingsResponse", "update profile null");
+                    }
+                });
     }
 
     @Override
@@ -204,7 +234,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public  void onDestroy() {
+    public void onDestroy() {
         if (adView != null) {
             adView.destroy();
         }

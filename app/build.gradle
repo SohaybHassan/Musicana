@@ -55,7 +55,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //Crop image
-    implementation 'com.github.yalantis:ucrop:2.2.5-native'
+//    implementation 'com.github.yalantis:ucrop:2.2.5-native'
+    implementation 'com.mikhaellopez:circularimageview:4.1.1'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
     //google map
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
@@ -65,8 +67,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
 
     //night mode

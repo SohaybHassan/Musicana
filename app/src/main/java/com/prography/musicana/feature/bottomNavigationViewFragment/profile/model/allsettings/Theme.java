@@ -1,9 +1,12 @@
+
 package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Theme {
+public class Theme implements Serializable
+{
 
     @SerializedName("id")
     @Expose
@@ -11,6 +14,7 @@ public class Theme {
     @SerializedName("name")
     @Expose
     private String name;
+    private final static long serialVersionUID = 1718544405682210110L;
 
     public String getId() {
         return id;

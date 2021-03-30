@@ -1,10 +1,10 @@
 package com.prography.musicana.network;
 
 
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.SettingsResponse;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.AllSettings;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.Updatedata;
+import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.UpdateProfileResponse;
 import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
 import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
@@ -19,13 +19,17 @@ import com.prography.musicana.feature.status.closestatus.CloseStatus;
 import com.prography.musicana.feature.status.newstatus.NewStatus;
 
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiMusicana {
     //OnBording
@@ -96,24 +100,38 @@ public interface ApiMusicana {
 
     //TODO start here
 
-    @FormUrlEncoded
+
     @Multipart
     @POST("user/profile/updatedata")
-    Call<Updatedata> updatedata(@Field("firstname") String verify_code,
-                                @Field("middlename") String password,
-                                @Field("lastname") String email,
-                                @Field("phone") String device,
-                                @Field("gender") String uuid,
-                                @Field("country") String devicename,
-                                @Field("imag") MultipartBody.Part image);
+    Call<UpdateProfileResponse> updateProfile(@Part("firstname") RequestBody first_name,
+                                              @Part("middlename") RequestBody middle_name,
+                                              @Part("lastname") RequestBody last_name,
+                                              @Part("phone") RequestBody phone,
+                                              @Part("gender") RequestBody gender,
+                                              @Part("country") RequestBody country,
+                                              @Part MultipartBody.Part image);
+    // user settings
+    @GET("user/settings")
+    Call<SettingsResponse> getAllSettings();
+
+    @FormUrlEncoded
+    @POST("user/settings/change")
+    Call<SettingsResponse> changeSettings(@Field("mood") String mood,
+                                          @Field("language") String language,
+                                          @Field("additional_screen") String additional_screen,
+                                          @Field("auto_update") String auto_update,
+                                          @Field("background") String background,
+                                          @Field("audio") String audio,
+                                          @Field("location") String location);
 
 
-    @POST("user/profile/updatedata/emai")
-    Call<Updatedata> updatedataemai(@Field("email") String email);
+
+    @POST("user/profile/updatedata/email")
+    Call<UpdateProfileResponse> updateEmail(@Field("email") String email);
 
 
     @POST("user/profile/updatedata/password")
-    Call<Updatedata> updatedatapassword(@Field("email") String email);
+    Call<UpdateProfileResponse> updatePassword(@Field("password") String password);
 
 
     //userStatus
@@ -128,9 +146,10 @@ public interface ApiMusicana {
     @POST("user/status/new")
     Call<NewStatus> newStatus(@Field("UUID") String uuid);
 
-    // user settings
-    @GET("user/settings")
-    Call<AllSettings> getAllSettings();
+
+
+
+
 //
 //    @POST("user/settings/change")
 //    Call<> changeSettings(@Field("mood") String mood,

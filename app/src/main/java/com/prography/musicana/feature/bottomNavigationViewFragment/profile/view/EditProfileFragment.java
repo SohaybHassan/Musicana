@@ -46,7 +46,9 @@ import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
 import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
 import com.prography.musicana.utils.SWStaticMethods;
-import com.yalantis.ucrop.UCrop;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+//import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,6 +57,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -97,9 +103,31 @@ public class EditProfileFragment extends Fragment {
             SWStaticMethods.intentWithoutDataAndFinish(getActivity(), ForgotPasswordActivity.class);
         });
         binding.editProfileUserImage.setOnClickListener(v -> {
-            chooseUserPhotoFromGallery();
+            getPhoto();
         });
+        binding.btnUpdate.setOnClickListener(v -> {
+            RequestBody profile_name = RequestBody.create(MediaType.parse("text/plain"), binding.edName.getText().toString().trim());
+            RequestBody profile_middle_name = RequestBody.create(MediaType.parse("text/plain"), "mohammed");
+            RequestBody profile_last_name = RequestBody.create(MediaType.parse("text/plain"), binding.edLastName.getText().toString().trim());
+            RequestBody profile_phone = RequestBody.create(MediaType.parse("text/plain"), binding.edPhone.getText().toString().trim());
+            RequestBody profile_gender = RequestBody.create(MediaType.parse("text/plain"), binding.edGender.getText().toString().trim());
+            RequestBody profile_country = RequestBody.create(MediaType.parse("text/plain"), binding.edCountry.getText().toString().trim());
 
+
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+            MultipartBody.Part profile_image = null;
+                    profile_image =
+                            MultipartBody.Part.createFormData("files[0]", file.getName(), requestBody);
+
+            updateProfile(profile_name,
+                    profile_middle_name,
+                    profile_last_name,
+                    profile_phone,
+                    profile_gender,
+                    profile_country,
+                    profile_image
+            );
+        });
         getdata();
     }
 
@@ -137,192 +165,47 @@ public class EditProfileFragment extends Fragment {
         });
     }
 
-    public void chooseUserPhotoFromGallery() {
-        try {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_GALLERY);
-            } else {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, REQUEST_CODE_GALLERY);
-            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void updateProfile(RequestBody first_name, RequestBody middle_name, RequestBody last_name, RequestBody phone, RequestBody gender, RequestBody country, MultipartBody.Part image) {
+        profileViewModel.updateProfile(first_name, middle_name, last_name, phone, gender, country, image)
+                .observe(getViewLifecycleOwner(), updateProfileResponse -> {
+                    if (updateProfileResponse != null) {
+                        Log.d("updateProfile", "update profile Not null");
+                    } else {
+                        Log.d("updateProfile", "update profile null");
+                    }
+                });
     }
 
 
-    public void chooseUserPhotoFromCamera() {
-        try {
+    // image methods
+    public void getPhoto() {
 
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_CAMERA);
-            } else {
-                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                StrictMode.setVmPolicy(builder.build());
-
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                    String imageFileName = "JPG_" + timeStamp + "_";
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Images.Media.TITLE, imageFileName);
-                    values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
-                    outputFileUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                    startActivityForResult(intent, REQUEST_CODE_CAMERA);
-                } else {
-                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                        String imageFileName = timeStamp + ".jpg";
-                        File storageDir = Environment.getExternalStoragePublicDirectory(
-                                Environment.DIRECTORY_PICTURES);
-                        String pictureImagePath = storageDir.getAbsolutePath() + "/" + imageFileName;
-//                        file = new File(pictureImagePath);
-
-                        outputFileUri = Uri.fromFile(file);
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                        startActivityForResult(intent, REQUEST_CODE_CAMERA);
-                    } else {
-                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                        String imageFileName = "JPEG_" + timeStamp + "_";
-                        //This is the directory in which the file will be created. This is the default location of Camera photos
-                        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
-                                Environment.DIRECTORY_DCIM), "Camera");
-                        File image = File.createTempFile(
-                                imageFileName,  /* prefix */
-                                ".jpg",         /* suffix */
-                                storageDir      /* directory */
-                        );
-                        // Save a file: path for using again
-                        outputFileUri = Uri.fromFile(image);
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", image));
-
-                        startActivityForResult(intent, REQUEST_CODE_CAMERA);
-                    }
-
-
-                    // cameraFilePath = "file://" + image.getAbsolutePath();
-
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            //  Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
-
-        }
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(1,1)
+                .start(getActivity());
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                outputFileUri = result.getUri();
                 if (outputFileUri != null) {
-                    Log.e(TAG, "CapturePhoto: " + outputFileUri + "");
-                    String destinationFileName = "DubaiLadPP" + count + ".jpg";
-//                    ivUserAvatar.setImageURI(data.getData());
-                    count++;
-                    Uri destinationUri = Uri.fromFile(new File(getActivity().getCacheDir(), destinationFileName));
-                    UCrop.Options options = new UCrop.Options();
-                    options.setCompressionQuality(50);
-                    options.setCircleDimmedLayer(false);
-                    options.setShowCropFrame(false);
-                    options.setShowCropGrid(false);
-                    options.setToolbarTitle(getString(R.string.crop_image_text));
-                    options.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-                    options.setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
-                    UCrop.of(outputFileUri, destinationUri)
-                            .withOptions(options)
-                            .withAspectRatio(1, 1)
-                            .start(getActivity());
-                }
-
-            } else if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null) {
-                Uri imageUri = data.getData();
-                if (imageUri != null) {
-                    Log.d(TAG, "Image Uri " + imageUri + "");
-//                    ivUserAvatar.setImageURI(imageUri);
-                    String destinationFileName = "DubaiLadPP" + count + ".jpg";
-                    count++;
-                    outputFileUri = imageUri;
-                    Uri destinationUri = Uri.fromFile(new File(getActivity().getCacheDir(), destinationFileName));
-                    UCrop.Options options = new UCrop.Options();
-                    options.setCircleDimmedLayer(false);
-                    options.setCompressionQuality(100);
-                    options.setToolbarTitle(getString(R.string.crop_image_text));
-                    options.setShowCropFrame(false);
-                    options.setShowCropGrid(false);
-                    options.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-                    options.setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
-                    UCrop.of(imageUri, destinationUri)
-                            .withOptions(options)
-                            .withAspectRatio(1, 1)
-                            .start(getActivity());
-                }
-            } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-                Uri resultUri = UCrop.getOutput(data);
-                if (resultUri != null) {
-
-                    outputFileUri = resultUri;
                     file = new File(outputFileUri.getPath());
-                    Bitmap bm = BitmapFactory.decodeFile(resultUri.getPath());
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bm.compress(Bitmap.CompressFormat.JPEG, 30, baos);
-                    binding.editProfileUserImage.setImageBitmap(bm);
-                    Glide.with(getContext()).setDefaultRequestOptions(new RequestOptions())
-                            .load(bm).centerCrop().diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.editProfileUserImage);
+                    Glide.with(getContext()).load(outputFileUri).into(binding.editProfileUserImage);
+//                    binding.editProfileUserImage.setImageURI(outputFileUri);
+                    Toast.makeText(getContext(), ""+outputFileUri, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onActivityResult: "+outputFileUri);
                 }
-            } else if (resultCode == UCrop.RESULT_ERROR) {
-                final Throwable cropError = UCrop.getError(data);
-                Log.e(TAG, cropError.getMessage());
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(getContext(), "you failed", Toast.LENGTH_SHORT).show();
+//                binding.send.setEnabled(true);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        try {
-            switch (requestCode) {
-                case REQUEST_PERMISSION_CODE_CAMERA: {
-                    // If request is cancelled, the result arrays are empty.
-                    Log.e("grantResults", grantResults.length + "");
-                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                        // permission was granted.
-                        chooseUserPhotoFromCamera();
-                    } else {
-                        Toast.makeText(getContext(), R.string.permission_denied, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-
-                case REQUEST_PERMISSION_CODE_GALLERY: {
-                    // If request is cancelled, the result arrays are empty.
-                    if (grantResults.length > 0
-                            && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                        // permission was granted.
-                        chooseUserPhotoFromGallery();
-                    } else {
-                        Toast.makeText(getContext(), R.string.permission_denied, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-                // other 'case' lines to check for other
-                // permissions this app might request.
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
 }

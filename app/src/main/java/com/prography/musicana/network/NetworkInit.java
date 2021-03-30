@@ -38,7 +38,10 @@ public class NetworkInit {
             interceptor = chain -> {
                 Request.Builder builder = chain.request().newBuilder()
                         .addHeader(HEADER_ACCEPT_LANGUAGE, ACCEPT_LANGUAGE)
-                        .addHeader(TOKEN,  sharedPreferencesHelper.getToken());
+                        .addHeader(TOKEN,
+                        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyIwIjp7ImlhdCI6MTYxMjc4MTc2OSwiaXNzIjoibXVzaWNhYS5hcHAifSwiZGF0YSI6eyJ1c2VyX2lkIjoiMTAwIiwidXNlcl9lbWFpbCI6InRlc3QyQHRlc3QuY29tIiwiZGV2aWNlX2lkIjoiMSIsImxvZ2luX2lkIjoiNjYiLCJNT0QiOjJ9fQ.a0WmBAfvPwgFYNZzCOe1uKFEkdblcvbD8QeZszU8ZYE"
+                        );
+//                sharedPreferencesHelper.getToken()
                 return chain.proceed(builder.build());
             };
         } else {

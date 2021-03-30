@@ -1,9 +1,12 @@
+
 package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class Response implements Serializable
+{
 
     @SerializedName("message")
     @Expose
@@ -11,6 +14,7 @@ public class Response {
     @SerializedName("data")
     @Expose
     private Data data;
+    private final static long serialVersionUID = 5930469972830744834L;
 
     public String getMessage() {
         return message;

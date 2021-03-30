@@ -1,9 +1,12 @@
-package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile;
 
+package com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings;
+
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Updatedata {
+public class SettingsResponse implements Serializable
+{
 
     @SerializedName("response")
     @Expose
@@ -14,6 +17,7 @@ public class Updatedata {
     @SerializedName("Content-Language")
     @Expose
     private String contentLanguage;
+    private final static long serialVersionUID = -7283013413955596087L;
 
     public Response getResponse() {
         return response;
