@@ -33,6 +33,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.prography.musicana.data.getallplaylist.Data;
 import com.prography.musicana.utils.AppConstants;
 import com.prography.musicana.R;
 import com.prography.musicana.utils.SharedPreferencesHelper;
@@ -554,14 +555,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     public ArrayList<Playlist> getAllplaylist() {
         Log.d(TAG, "getAllplaylist: ");
-        playlsitViewModel.getAllPlayListLiveData().observe(this, new Observer<GetAllPlayList>() {
+        playlsitViewModel.getAllPlayListLiveData().observe(this, new Observer<Data>() {
             @Override
-            public void onChanged(GetAllPlayList getAllPlayList) {
+            public void onChanged(Data getAllPlayList) {
                 if (getAllPlayList != null) {
                     getPlaylistName.clear();
-                    for (int i = 0; i < getAllPlayList.getResponse().getData().getPlaylists().size(); i++) {
-                        getPlaylistName.add(getAllPlayList.getResponse().getData().getPlaylists().get(i));
-                        Log.d("TAG", "onChanged getAllplaylist: " + getAllPlayList.getResponse().getData().getPlaylists().get(i).getName());
+                    for (int i = 0; i < getAllPlayList.getPlaylists().size(); i++) {
+                        getPlaylistName.add(getAllPlayList.getPlaylists().get(i));
+                        Log.d("TAG", "onChanged getAllplaylist: " + getAllPlayList.getPlaylists().get(i).getName());
                     }
                     Log.d(TAG, "onChanged: " + getPlaylistName.size());
 

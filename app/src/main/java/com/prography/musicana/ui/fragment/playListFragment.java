@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prography.musicana.custem.dialog.SWDialog;
+import com.prography.musicana.data.getallplaylist.Data;
 import com.prography.musicana.databinding.FragmentPlayListBinding;
 import com.prography.musicana.adapter.PlayListAdapter;
 import com.prography.musicana.data.getallplaylist.GetAllPlayList;
@@ -85,14 +86,14 @@ public class playListFragment extends Fragment {
     }
 
     public void getAllPlaylist() {
-        playlsitViewModel.getAllPlayListLiveData().observe(getViewLifecycleOwner(), new Observer<GetAllPlayList>() {
+        playlsitViewModel.getAllPlayListLiveData().observe(getViewLifecycleOwner(), new Observer<Data>() {
             @Override
-            public void onChanged(GetAllPlayList getAllPlayList) {
+            public void onChanged(Data getAllPlayList) {
                 if (getAllPlayList != null) {
                     itemPlayList.clear();
-                    for (int i = 0; i < getAllPlayList.getResponse().getData().getPlaylists().size(); i++) {
-                        itemPlayList.add(getAllPlayList.getResponse().getData().getPlaylists().get(i));
-                        Log.d(TAG, "onChanged: " + getAllPlayList.getResponse().getData().getPlaylists().get(i).getName());
+                    for (int i = 0; i < getAllPlayList.getPlaylists().size(); i++) {
+                        itemPlayList.add(getAllPlayList.getPlaylists().get(i));
+                        Log.d(TAG, "onChanged: " + getAllPlayList.getPlaylists().get(i).getName());
                     }
 
 

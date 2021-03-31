@@ -12,10 +12,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.custem.bottomsheet.BottomSheetplaylistSongMore;
 import com.prography.musicana.databinding.ActivityShowPlaylisttSongAndDataBinding;
 import com.prography.musicana.adapter.PlayListSongAdapter;
-import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
 import com.prography.musicana.data.getallplaylist.Playlist;
-import com.prography.musicana.data.viewallsongtoplaylist.Datum;
-import com.prography.musicana.data.viewallsongtoplaylist.ViewAllSongToPlaylist;
+import com.prography.musicana.data.PlaylistSongData;
 import com.prography.musicana.viewmodel.PlaylsitViewModel;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
     private ActivityShowPlaylisttSongAndDataBinding binding;
     private final static String TAG = ShowPlaylisttSongAndData.class.getSimpleName();
     private PlaylsitViewModel playlsitViewModel;
-    private ArrayList<Datum> items;
+    private ArrayList<PlaylistSongData> items;
     private PlayListSongAdapter playListSongAdapter;
     private String id;
     private BottomSheetplaylistSongMore bottomSheetplaylistSongMore;
@@ -42,13 +40,13 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
         items = new ArrayList<>();
         playListSongAdapter = new PlayListSongAdapter(items, new PlayListSongAdapter.ItemsSongClicked() {
             @Override
-            public void clickedSongRun(int position, Datum data) {
+            public void clickedSongRun(int position, PlaylistSongData data) {
 
 
             }
 
             @Override
-            public void more(Datum data) {
+            public void more(PlaylistSongData data) {
                 bottomSheetplaylistSongMore = new BottomSheetplaylistSongMore(ShowPlaylisttSongAndData.this, bottomSheetDialog, new BottomSheetplaylistSongMore.BottomSheetPlaylistSongMoreMethode() {
                     @Override
                     public void delete() {
@@ -89,14 +87,15 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
     }
 
     public void getlsitSongtoplaylist(String playlistid) {
-        playlsitViewModel.getAllsongtoplaylist(playlistid).observe(this, new Observer<ViewAllSongToPlaylist>() {
+        playlsitViewModel.getAllsongtoplaylist(playlistid).observe(this, new Observer<ArrayList<PlaylistSongData>>() {
             @Override
-            public void onChanged(ViewAllSongToPlaylist viewAllSongToPlaylist) {
-                if (viewAllSongToPlaylist != null) {
-                    for (int i = 0; i < viewAllSongToPlaylist.getResponse().getData().size(); i++) {
+            public void onChanged(ArrayList<PlaylistSongData> data) {
 
-                        items.add(viewAllSongToPlaylist.getResponse().getData().get(i));
-                        Log.d(TAG, "onChanged: " + viewAllSongToPlaylist.getResponse().getData().get(i).getName());
+                if (data != null) {
+                    for (int i = 0; i < data.size(); i++) {
+
+                        items.add(data.get(i));
+                        Log.d(TAG, "onChanged: " + data.get(i).getName());
                     }
                     binding.rvChannelDataList.setLayoutManager(new LinearLayoutManager(ShowPlaylisttSongAndData.this));
                     binding.rvChannelDataList.setAdapter(playListSongAdapter);
@@ -111,11 +110,11 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
     }
 
     public void deleteSong(String songid, String listid) {
-        playlsitViewModel.deleteSong(songid, listid).observe(this, new Observer<DeleteSongFromPLaylsit>() {
+        playlsitViewModel.deleteSong(songid, listid).observe(this, new Observer<String>() {
             @Override
-            public void onChanged(DeleteSongFromPLaylsit deleteSongFromPLaylsit) {
+            public void onChanged(String deleteSongFromPLaylsit) {
                 if (deleteSongFromPLaylsit != null) {
-                    Log.d(TAG, "onChanged:" + deleteSongFromPLaylsit.getResponse().getMassage());
+                    Log.d(TAG, "onChanged:" + deleteSongFromPLaylsit);
                 } else {
                     Log.d(TAG, "onChanged:  no data");
                 }

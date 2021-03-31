@@ -6,14 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.createplaylist.CreatePlayList;
-import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
+import com.prography.musicana.data.getallplaylist.Data;
 import com.prography.musicana.data.getallplaylist.GetAllPlayList;
-import com.prography.musicana.data.viewallsongtoplaylist.ViewAllSongToPlaylist;
+import com.prography.musicana.data.PlaylistSongData;
+import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,10 +29,10 @@ public class PlaylistPresenter {
     private static final String TAG = PlaylistPresenter.class.getSimpleName();
     private NetworkInit networkInit;
     MutableLiveData<CreatePlayList> createPlayListMutableLiveData;
-    MutableLiveData<GetAllPlayList> getAllPlayListMutableLiveData;
-    MutableLiveData<AddSongToPlayList> addSongToPlayListMutableLiveData;
-    MutableLiveData<ViewAllSongToPlaylist> viewAllSongToPlaylistMutableLiveData;
-    MutableLiveData<DeleteSongFromPLaylsit> deleteSongFromPLaylsitMutableLiveData;
+    MutableLiveData<Data> getAllPlayListMutableLiveData;
+    MutableLiveData<String> addSongToPlayListMutableLiveData;
+    MutableLiveData<ArrayList<PlaylistSongData>> viewAllSongToPlaylistMutableLiveData;
+    MutableLiveData<String> deleteSongFromPLaylsitMutableLiveData;
     private static PlaylistPresenter instance;
 
 
@@ -72,13 +77,17 @@ public class PlaylistPresenter {
         return createPlayListMutableLiveData;
     }
 
-    public LiveData<GetAllPlayList> getAllPlaylsit() {
-        networkInit.getRetrofitApis().getAllPlayList().enqueue(new Callback<GetAllPlayList>() {
+    public LiveData<Data> getAllPlaylsit() {
+        networkInit.getRetrofitApis().getAllPlayList().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<GetAllPlayList> call, Response<GetAllPlayList> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getPlaylists().get(0).getName());
-                    getAllPlayListMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<Data>() {
+                    }.getType();
+                    Data data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    Log.d(TAG, "onResponse: " + data.getPlaylists().get(0).getName());
+                    getAllPlayListMutableLiveData.setValue(data);
 
                 } else {
                     Log.d(TAG, "onResponse:  no data");
@@ -87,7 +96,7 @@ public class PlaylistPresenter {
             }
 
             @Override
-            public void onFailure(Call<GetAllPlayList> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 getAllPlayListMutableLiveData.setValue(null);
 
@@ -97,13 +106,13 @@ public class PlaylistPresenter {
         return getAllPlayListMutableLiveData;
     }
 
-    public LiveData<AddSongToPlayList> addSong(String songID, String playlistID) {
-        networkInit.getRetrofitApis().addToPlayList(songID, playlistID).enqueue(new Callback<AddSongToPlayList>() {
+    public LiveData<String> addSong(String songID, String playlistID) {
+        networkInit.getRetrofitApis().addToPlayList(songID, playlistID).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<AddSongToPlayList> call, @NotNull Response<AddSongToPlayList> response) {
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
-                    addSongToPlayListMutableLiveData.setValue(response.body());
+                    addSongToPlayListMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     Log.d(TAG, "onResponse:  no data");
                     addSongToPlayListMutableLiveData.setValue(null);
@@ -111,7 +120,7 @@ public class PlaylistPresenter {
             }
 
             @Override
-            public void onFailure(@NonNull Call<AddSongToPlayList> call, @NotNull Throwable t) {
+            public void onFailure(@NonNull Call<DataModel> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 addSongToPlayListMutableLiveData.setValue(null);
             }
@@ -121,13 +130,18 @@ public class PlaylistPresenter {
 
     }
 
-    public LiveData<ViewAllSongToPlaylist> showAllSong(String playlistid) {
-        networkInit.getRetrofitApis().ViewPliatListSong(playlistid).enqueue(new Callback<ViewAllSongToPlaylist>() {
+    public LiveData<ArrayList<PlaylistSongData>> showAllSong(String playlistid) {
+        networkInit.getRetrofitApis().ViewPliatListSong(playlistid).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<ViewAllSongToPlaylist> call, Response<ViewAllSongToPlaylist> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().get(0).getName());
-                    viewAllSongToPlaylistMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ArrayList<PlaylistSongData>>() {
+                    }.getType();
+                    ArrayList<PlaylistSongData> data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+
+                    Log.d(TAG, "onResponse: " + data.get(0).getName());
+                    viewAllSongToPlaylistMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse:  no data");
                     viewAllSongToPlaylistMutableLiveData.setValue(null);
@@ -135,7 +149,7 @@ public class PlaylistPresenter {
             }
 
             @Override
-            public void onFailure(Call<ViewAllSongToPlaylist> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 viewAllSongToPlaylistMutableLiveData.setValue(null);
             }
@@ -143,13 +157,13 @@ public class PlaylistPresenter {
         return viewAllSongToPlaylistMutableLiveData;
     }
 
-    public LiveData<DeleteSongFromPLaylsit> DeleteSong(String songid, String listid) {
-        networkInit.getRetrofitApis().deleteSong(songid, listid).enqueue(new Callback<DeleteSongFromPLaylsit>() {
+    public LiveData<String> DeleteSong(String songid, String listid) {
+        networkInit.getRetrofitApis().deleteSong(songid, listid).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<DeleteSongFromPLaylsit> call, Response<DeleteSongFromPLaylsit> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMassage());
-                    deleteSongFromPLaylsitMutableLiveData.setValue(response.body());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
+                    deleteSongFromPLaylsitMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     Log.d(TAG, "onResponse:  no data");
                     deleteSongFromPLaylsitMutableLiveData.setValue(null);
@@ -157,7 +171,7 @@ public class PlaylistPresenter {
             }
 
             @Override
-            public void onFailure(Call<DeleteSongFromPLaylsit> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 deleteSongFromPLaylsitMutableLiveData.setValue(null);
             }
