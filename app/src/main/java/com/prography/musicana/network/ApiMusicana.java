@@ -15,9 +15,6 @@ import com.prography.musicana.data.home.HomeModel;
 import com.prography.musicana.data.search.SearchMolde;
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
-import com.prography.musicana.data.changestatus.ChangeStatus;
-import com.prography.musicana.data.closestatus.CloseStatus;
-import com.prography.musicana.data.newstatus.NewStatus;
 import com.prography.musicana.model.DataModel;
 
 
@@ -48,12 +45,12 @@ public interface ApiMusicana {
     @FormUrlEncoded
     @POST("user/register")
     Call<DataModel> newUser(@Field("firstname") String firstname,
-                                @Field("lastname") String lastname,
-                                @Field("phone") String phone,
-                                @Field("email") String email,
-                                @Field("password") String password,
-                                @Field("country") String country,
-                                @Field("gender") String gender);
+                            @Field("lastname") String lastname,
+                            @Field("phone") String phone,
+                            @Field("email") String email,
+                            @Field("password") String password,
+                            @Field("country") String country,
+                            @Field("gender") String gender);
 
     @GET("data/genders")
     Call<DataModel> getGender();
@@ -66,20 +63,20 @@ public interface ApiMusicana {
     @FormUrlEncoded
     @POST("user/login")
     Call<DataModel> login(@Field("email") String email,
-                      @Field("password") String pass,
-                      @Field("device") String device,
-                      @Field("UUID") String uuid,
-                      @Field("device_name") String deviceName);
+                          @Field("password") String pass,
+                          @Field("device") String device,
+                          @Field("UUID") String uuid,
+                          @Field("device_name") String deviceName);
 
     //verification
     @FormUrlEncoded
     @POST("user/verification")
     Call<DataModel> verificationCode(@Field("verify_code") String verify_code,
-                                            @Field("password") String password,
-                                            @Field("email") String email,
-                                            @Field("device") String device,
-                                            @Field("UUID") String uuid,
-                                            @Field("device_name") String devicename);
+                                     @Field("password") String password,
+                                     @Field("email") String email,
+                                     @Field("device") String device,
+                                     @Field("UUID") String uuid,
+                                     @Field("device_name") String devicename);
 
     //resend
     @FormUrlEncoded
@@ -135,15 +132,15 @@ public interface ApiMusicana {
     //userStatus
     @FormUrlEncoded
     @POST("user/status")
-    Call<CloseStatus> colseStatus();
+    Call<DataModel> colseStatus();
 
     @FormUrlEncoded
     @POST("user/status/change")
-    Call<ChangeStatus> changeStatus(@Field("status_to") String Background);
+    Call<DataModel> changeStatus(@Field("status_to") String Background);
 
     @FormUrlEncoded
     @POST("user/status/new")
-    Call<NewStatus> newStatus(@Field("UUID") String uuid);
+    Call<DataModel> newStatus(@Field("UUID") String uuid);
 
     @FormUrlEncoded
     @POST("music/Favorite/add/")
