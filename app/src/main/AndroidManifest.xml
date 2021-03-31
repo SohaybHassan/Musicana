@@ -18,51 +18,51 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".feature.bottomNavigationViewFragment.home.PlayListFragment.view.ShowPlaylisttSongAndData"></activity>
-        <activity android:name=".feature.regester.view.VerificationCode"></activity>
+        <activity android:name=".ui.activity.ShowPlaylisttSongAndData"></activity>
+        <activity android:name=".ui.activity.VerificationCode"></activity>
         <activity
-            android:name=".feature.channelsdata.ChannelsDataActivity"
-            android:parentActivityName=".feature.channels.ChannelsActivity">
+            android:name=".ui.activity.ChannelsDataActivity"
+            android:parentActivityName=".ui.activity.ChannelsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.channels.ChannelsActivity" />
+                android:value=".ui.activity.ChannelsActivity" />
         </activity>
         <activity
-            android:name=".feature.channels.ChannelsActivity"
-            android:parentActivityName=".feature.home.MainActivity">
+            android:name=".ui.activity.ChannelsActivity"
+            android:parentActivityName=".ui.activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.home.MainActivity" />
+                android:value=".ui.activity.MainActivity" />
         </activity>
-        <activity android:name=".feature.bottomNavigationViewFragment.home.search.SearchActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
         <activity
-            android:name=".feature.forgotPassword.ForgotPasswordActivity"
-            android:parentActivityName=".feature.login.view.LoginActivity">
+            android:name=".ui.activity.ForgotPasswordActivity"
+            android:parentActivityName=".ui.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.login.view.LoginActivity" />
+                android:value=".ui.activity.LoginActivity" />
         </activity>
-        <activity android:name=".feature.regester.view.RegesterActivity" />
-        <activity android:name=".feature.login.view.LoginActivity"></activity>
+        <activity android:name=".ui.activity.RegesterActivity" />
+        <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity
-            android:name=".feature.onboard.view.PrivacyPolicyActivity"
-            android:parentActivityName=".feature.onboard.view.Onboarding">
+            android:name=".ui.activity.PrivacyPolicyActivity"
+            android:parentActivityName=".ui.activity.Onboarding">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.onboard.view.Onboarding" />
+                android:value=".ui.activity.Onboarding" />
         </activity>
         <activity
-            android:name=".feature.onboard.view.TermsConditionsActivity"
-            android:parentActivityName=".feature.onboard.view.Onboarding">
+            android:name=".ui.activity.TermsConditionsActivity"
+            android:parentActivityName=".ui.activity.Onboarding">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.onboard.view.Onboarding" />
+                android:value=".ui.activity.Onboarding" />
         </activity>
-        <activity android:name=".feature.onboard.view.Onboarding" />
-        <activity android:name=".feature.home.MainActivity">
+        <activity android:name=".ui.activity.Onboarding" />
+        <activity android:name=".ui.activity.MainActivity">
 
         </activity>
-        <activity android:name=".feature.SplashActivity">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,7 +70,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService">
+        <service android:name=".model.MusicService">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>

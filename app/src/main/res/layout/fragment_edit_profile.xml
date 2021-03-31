@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/appBackground"
     android:fillViewport="true"
-    tools:context=".feature.bottomNavigationViewFragment.profile.view.EditProfileFragment">
+    tools:context=".ui.fragment.EditProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

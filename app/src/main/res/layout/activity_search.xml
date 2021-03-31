@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground"
-    tools:context=".feature.bottomNavigationViewFragment.home.search.SearchActivity">
+    tools:context=".ui.activity.SearchActivity">
 
 
     <androidx.appcompat.widget.Toolbar

@@ -6,7 +6,7 @@ import android.net.Network;
 import android.net.NetworkRequest;
 import android.util.Log;
 
-import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.utils.SharedPreferencesHelper;
 
 import java.util.concurrent.TimeUnit;
 

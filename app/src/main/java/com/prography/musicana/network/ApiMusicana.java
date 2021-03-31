@@ -1,33 +1,32 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.feature.bottomNavigationViewFragment.favorite.model.AddSongToFavorite;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.addsongtoplaylist.AddSongToPlayList;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.createplaylist.CreatePlayList;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.deletesong.DeleteSongFromPLaylsit;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.getallplaylist.GetAllPlayList;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.viewallsongtoplaylist.ViewAllSongToPlaylist;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.SettingsResponse;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
-import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.UpdateProfileResponse;
-import com.prography.musicana.feature.home.model.home.HomeModel;
-import com.prography.musicana.feature.home.model.search.SearchMolde;
-import com.prography.musicana.feature.login.model.Login;
-import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
-import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
-import com.prography.musicana.feature.onboard.model.termcondtion.TermsAndConditions;
-import com.prography.musicana.feature.regester.model.RegesterModel;
-import com.prography.musicana.feature.regester.model.country.Countries;
-import com.prography.musicana.feature.regester.model.gender.Genders;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
-import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
-import com.prography.musicana.feature.status.changestatus.ChangeStatus;
-import com.prography.musicana.feature.status.closestatus.CloseStatus;
-import com.prography.musicana.feature.status.newstatus.NewStatus;
+import com.prography.musicana.model.AddSongToFavorite;
+import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
+import com.prography.musicana.data.createplaylist.CreatePlayList;
+import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
+import com.prography.musicana.data.getallplaylist.GetAllPlayList;
+import com.prography.musicana.data.viewallsongtoplaylist.ViewAllSongToPlaylist;
+import com.prography.musicana.data.allsettings.SettingsResponse;
+import com.prography.musicana.data.logout.Logout;
+import com.prography.musicana.data.profiledata.ProfileData;
+import com.prography.musicana.data.updataprofile.UpdateProfileResponse;
+import com.prography.musicana.data.home.HomeModel;
+import com.prography.musicana.data.search.SearchMolde;
+import com.prography.musicana.data.loginmodel.Login;
+import com.prography.musicana.data.onPording.OnpordingModel;
+import com.prography.musicana.data.privacypolicy.DataPoalycey;
+import com.prography.musicana.data.termcondtion.TermsAndConditions;
+import com.prography.musicana.data.registermodel.RegesterModel;
+import com.prography.musicana.data.country.Countries;
+import com.prography.musicana.data.gender.Genders;
+import com.prography.musicana.data.resendverification.ResendVerificationCode;
+import com.prography.musicana.data.verification.VerificatioEmail;
+import com.prography.musicana.data.changestatus.ChangeStatus;
+import com.prography.musicana.data.closestatus.CloseStatus;
+import com.prography.musicana.data.newstatus.NewStatus;
+import com.prography.musicana.model.DataModel;
 
-
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -46,7 +45,7 @@ public interface ApiMusicana {
 
     //privacypolicy
     @GET("data/privacypolicy")
-    Call<DataPoalycey> getprivacypolicy();
+    Call<DataModel> getprivacypolicy();
 
     //TermAndCondtion
     @GET("data/TermsAndConditions")

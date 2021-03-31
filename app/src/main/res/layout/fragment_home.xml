@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tab_top_bottom"
-    tools:context=".feature.bottomNavigationViewFragment.home.HomeFragment">
+    tools:context=".ui.fragment.HomeFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"

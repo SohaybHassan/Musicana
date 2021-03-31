@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.prography.musicana.BuildConfig;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.viewmodel.PlaylsitViewModel;
+import com.prography.musicana.viewmodel.PlaylsitViewModel;
 
 public class SWStaticMethods {
 

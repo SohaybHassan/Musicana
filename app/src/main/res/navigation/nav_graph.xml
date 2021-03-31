@@ -8,27 +8,27 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.home.HomeFragment"
+        android:name="com.prography.musicana.ui.fragment.HomeFragment"
         android:label="moves"
         tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
         android:id="@+id/favorite"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.favorite.FavoriteFragment"
+        android:name="com.prography.musicana.ui.fragment.FavoriteFragment"
         android:label="moves"
         tools:layout="@layout/fragment_favorite"/>
 
     <fragment
         android:id="@+id/download"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.archives.ArchivesFragment"
+        android:name="com.prography.musicana.ui.fragment.ArchivesFragment"
         android:label="moves"
         tools:layout="@layout/fragment_archives"/>
 
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.ProfileFragment"
+        android:name="com.prography.musicana.ui.fragment.ProfileFragment"
         android:label="moves"
         tools:layout="@layout/fragment_profile">
 
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.prography.musicana.feature.bottomNavigationViewFragment.profile.view.EditProfileFragment"
+        android:name="com.prography.musicana.ui.fragment.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
 
