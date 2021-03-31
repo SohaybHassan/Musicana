@@ -8,9 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.prography.musicana.data.createplaylist.CreatePlayList;
+import com.prography.musicana.data.createplaylist.PlaylistData;
 import com.prography.musicana.data.getallplaylist.Data;
-import com.prography.musicana.data.getallplaylist.GetAllPlayList;
 import com.prography.musicana.data.PlaylistSongData;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
@@ -28,7 +27,7 @@ public class PlaylistPresenter {
 
     private static final String TAG = PlaylistPresenter.class.getSimpleName();
     private NetworkInit networkInit;
-    MutableLiveData<CreatePlayList> createPlayListMutableLiveData;
+    MutableLiveData<PlaylistData> createPlayListMutableLiveData;
     MutableLiveData<Data> getAllPlayListMutableLiveData;
     MutableLiveData<String> addSongToPlayListMutableLiveData;
     MutableLiveData<ArrayList<PlaylistSongData>> viewAllSongToPlaylistMutableLiveData;
@@ -54,14 +53,18 @@ public class PlaylistPresenter {
         return instance;
     }
 
-    public LiveData<CreatePlayList> createPlaylsit(String plsylistName) {
+    public LiveData<PlaylistData> createPlaylsit(String plsylistName) {
 
-        networkInit.getRetrofitApis().createPlaylist(plsylistName).enqueue(new Callback<CreatePlayList>() {
+        networkInit.getRetrofitApis().createPlaylist(plsylistName).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<CreatePlayList> call, Response<CreatePlayList> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getPlaylist().getName());
-                    createPlayListMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<PlaylistData>() {
+                    }.getType();
+                    PlaylistData data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    Log.d(TAG, "onResponse: " + data.getPlaylist().getName());
+                    createPlayListMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse:  no data");
                     createPlayListMutableLiveData.setValue(null);
@@ -69,7 +72,7 @@ public class PlaylistPresenter {
             }
 
             @Override
-            public void onFailure(Call<CreatePlayList> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 createPlayListMutableLiveData.setValue(null);
             }

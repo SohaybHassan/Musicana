@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prography.musicana.adapter.SearchAdapter;
+import com.prography.musicana.data.search.SearchData;
 import com.prography.musicana.utils.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivitySearchBinding;
 import com.prography.musicana.data.search.Result;
@@ -132,27 +133,27 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
     }
 
     public void search(String text) {
-        homeViewModel.getResule(text, nextpage).observe(SearchActivity.this, new Observer<SearchMolde>() {
+        homeViewModel.getResule(text, nextpage).observe(SearchActivity.this, new Observer<SearchData>() {
             @Override
-            public void onChanged(SearchMolde searchMolde) {
+            public void onChanged(SearchData searchMolde) {
                 if (searchMolde != null) {
 
-                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getResponse().getData().getNextPage());
+                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
 
                     Log.d(TAG, "onScrolled nextpage search: " + nextpage);
                     Log.d(TAG, "onScrolled oldpage search: " + oldpage);
 
                     oldpage = nextpage;
                     nextpage = null;
-                    nextpage = searchMolde.getResponse().getData().getNextPage();
-                    searchMolde.getResponse().getData().setNextPage(null);
-                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getResponse().getData().getNextPage());
+                    nextpage = searchMolde.getNextPage();
+                    searchMolde.setNextPage(null);
+                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
                     Log.d(TAG, "onScrolled nextpage search: " + nextpage);
                     Log.d(TAG, "onScrolled oldpage search: " + oldpage);
 
                     binding.progressBar.setVisibility(View.GONE);
-                    for (int i = 0; i < searchMolde.getResponse().getData().getResults().size(); i++) {
-                        items.add(searchMolde.getResponse().getData().getResults().get(i));
+                    for (int i = 0; i < searchMolde.getResults().size(); i++) {
+                        items.add(searchMolde.getResults().get(i));
                     }
                     Toast.makeText(SearchActivity.this, "size: " + items.size(), Toast.LENGTH_SHORT).show();
                     searchAdapter.notifyDataSetChanged();

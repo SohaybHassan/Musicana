@@ -1,9 +1,6 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.data.createplaylist.CreatePlayList;
-import com.prography.musicana.data.home.HomeModel;
-import com.prography.musicana.data.search.SearchMolde;
 import com.prography.musicana.model.DataModel;
 
 
@@ -20,7 +17,7 @@ import retrofit2.http.Part;
 public interface ApiMusicana {
     //OnBording
     @GET("data/onboarding")
-    Call<DataModel> getOnBoardingData();
+    Call<DataModel> getOnpordingData();
 
     //PrivacyPolicy
     @GET("data/privacypolicy")
@@ -102,12 +99,12 @@ public interface ApiMusicana {
     @FormUrlEncoded
     @POST("user/settings/change")
     Call<DataModel> changeSettings(@Field("mood") String mood,
-                                          @Field("language") String language,
-                                          @Field("additional_screen") String additional_screen,
-                                          @Field("auto_update") String auto_update,
-                                          @Field("background") String background,
-                                          @Field("audio") String audio,
-                                          @Field("location") String location);
+                                   @Field("language") String language,
+                                   @Field("additional_screen") String additional_screen,
+                                   @Field("auto_update") String auto_update,
+                                   @Field("background") String background,
+                                   @Field("audio") String audio,
+                                   @Field("location") String location);
 
 
     @POST("user/profile/updatedata/email")
@@ -152,15 +149,15 @@ public interface ApiMusicana {
 
     @FormUrlEncoded
     @POST("music/playlist/create")
-    Call<CreatePlayList> createPlaylist(String plsylistName);
+    Call<DataModel> createPlaylist(String plsylistName);
 
     @FormUrlEncoded
     @POST("music/home")
-    Call<HomeModel> homeData(String vPage, String cPage);
+    Call<DataModel> homeData(String vPage, String cPage);
 
     @FormUrlEncoded
     @POST("music/search/")
-    Call<SearchMolde> search(String q, String nextPage);
+    Call<DataModel> search(String q, String nextPage);
 
 
 //

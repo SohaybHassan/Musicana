@@ -239,7 +239,7 @@ public class PhoneFragment extends Fragment {
     public void createPLayList(String name) {
         playlsitViewModel.creatPlaylist(name).observe(getActivity(), createPlayList -> {
             if (createPlayList != null) {
-                Log.d(TAG, "onChanged: " + createPlayList.getResponse().getData().getPlaylist().getName());
+                Log.d(TAG, "onChanged: " + createPlayList.getPlaylist().getName());
                 Log.d(TAG, "onChanged: ");
             } else {
                 Log.d(TAG, "onChanged:  no data");

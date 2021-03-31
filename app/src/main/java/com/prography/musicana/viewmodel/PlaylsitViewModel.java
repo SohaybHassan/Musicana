@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.createplaylist.CreatePlayList;
+import com.prography.musicana.data.createplaylist.PlaylistData;
 import com.prography.musicana.data.getallplaylist.Data;
-import com.prography.musicana.data.getallplaylist.GetAllPlayList;
 import com.prography.musicana.data.PlaylistSongData;
 import com.prography.musicana.repo.PlaylistPresenter;
 
@@ -26,7 +25,7 @@ public class PlaylsitViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<CreatePlayList> creatPlaylist(String playlistName) {
+    public LiveData<PlaylistData> creatPlaylist(String playlistName) {
         return playlistPresenter.createPlaylsit(playlistName);
     }
 
