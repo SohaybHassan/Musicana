@@ -22,8 +22,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.R;
 import com.prography.musicana.custem.bottomsheet.BottomSheetListView;
+import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.databinding.ActivityRegesterBinding;
-import com.prography.musicana.data.registermodel.RegesterModel;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
 import com.prography.musicana.viewmodel.RegesterViewModel;
@@ -215,13 +215,13 @@ public class RegesterActivity extends AppCompatActivity {
     public void regesterReques(String firdName, String lastNmae, String phone, String email
             , String password, String country, String gender) {
 
-        regesterViewModel.newUser(firdName, lastNmae, phone, email, password, country, gender).observe(this, new Observer<RegesterModel>() {
+        regesterViewModel.newUser(firdName, lastNmae, phone, email, password, country, gender).observe(this, new Observer<String>() {
             @Override
-            public void onChanged(RegesterModel regesterModel) {
+            public void onChanged(String regesterModel) {
                 if (regesterModel != null) {
                     binding.btnRegester.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.GONE);
-                    Log.d(TAG, "onChanged: " + regesterModel.getResponse());
+                    Log.d(TAG, "onChanged: " + regesterModel);
                     Bundle bundle = new Bundle();
                     bundle.putString("password", password);
                     bundle.putString("email", email);

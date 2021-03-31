@@ -3,7 +3,7 @@ package com.prography.musicana.data.registermodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class ResponseRegester {
 
     @SerializedName("message")
     @Expose

@@ -2,13 +2,13 @@ package com.prography.musicana.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.prography.musicana.data.addsongtoplaylist.Response;
+import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 
 public class DataModel {
 
     @SerializedName("response")
     @Expose
-    private Object response;
+    private ResponsePrivacyPolicy response;
     @SerializedName("status")
     @Expose
     private boolean status;
@@ -16,11 +16,11 @@ public class DataModel {
     @Expose
     private String contentLanguage;
 
-    public Object getResponse() {
+    public ResponsePrivacyPolicy getResponse() {
         return response;
     }
 
-    public void setResponse(Response response) {
+    public void setResponse(ResponsePrivacyPolicy response) {
         this.response = response;
     }
 

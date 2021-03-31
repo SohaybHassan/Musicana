@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.onPording.OnpordingModel;
-import com.prography.musicana.data.privacypolicy.Data;
-import com.prography.musicana.data.privacypolicy.DataPoalycey;
-import com.prography.musicana.data.privacypolicy.Privacy;
+import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
 import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 import com.prography.musicana.data.termcondtion.TermsAndConditions;
 import com.prography.musicana.model.DataModel;
@@ -28,7 +26,7 @@ public class OnpordingPresenter {
     public static final String TAG = OnpordingPresenter.class.getSimpleName();
     private NetworkInit networkInit;
     MutableLiveData<OnpordingModel> getdataMutableLiveData;
-    MutableLiveData<ResponsePrivacyPolicy> getprivacypolicyMutableLiveData;
+    MutableLiveData<DataPrivacyPolicy> getprivacypolicyMutableLiveData;
     MutableLiveData<TermsAndConditions> termsAndConditionsMutableLiveData;
     private static OnpordingPresenter instance;
 
@@ -70,15 +68,15 @@ public class OnpordingPresenter {
     }
 
 
-    public LiveData<ResponsePrivacyPolicy> getprivacypolicy() {
+    public LiveData<DataPrivacyPolicy> getprivacypolicy() {
         networkInit.getRetrofitApis().getprivacypolicy().enqueue(new Callback<DataModel>() {
             @Override
             public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
-                    Type type = new TypeToken<ResponsePrivacyPolicy>() {
+                    Type type = new TypeToken<DataPrivacyPolicy>() {
                     }.getType();
-                    ResponsePrivacyPolicy data = gson.fromJson(gson.toJson(response.body().getResponse()), type);
+                    DataPrivacyPolicy data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
                     getprivacypolicyMutableLiveData.setValue(data);
                 } else {
                     getprivacypolicyMutableLiveData.setValue(null);

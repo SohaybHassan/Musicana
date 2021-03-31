@@ -6,14 +6,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.prography.musicana.data.registermodel.RegesterModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
+import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.VerificatioEmail;
+import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Type;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +27,7 @@ import retrofit2.Response;
 public class RegesterPresenter {
     public static final String TAG = RegesterPresenter.class.getSimpleName();
     private NetworkInit networkInit;
-    private MutableLiveData<RegesterModel> newUserModelMutableLiveData;
+    private MutableLiveData<String> newUserModelMutableLiveData;
     private MutableLiveData<Genders> requesBodyMutableLiveData;
     private MutableLiveData<Countries> requesBodycountryMutableLiveData;
     private MutableLiveData<VerificatioEmail> verificationResponeMutableLiveData;
@@ -94,16 +99,19 @@ public class RegesterPresenter {
     }
 
 
-    public LiveData<RegesterModel> newUser(String firdName, String lastName, String phone, String email
+    public LiveData<String> newUser(String firdName, String lastName, String phone, String email
             , String password, String country, String gender) {
 
-        networkInit.getRetrofitApis().newUser(firdName, lastName, phone, email, password, country, gender).enqueue(new Callback<RegesterModel>() {
+        networkInit.getRetrofitApis().newUser(firdName, lastName, phone, email, password, country, gender).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<RegesterModel> call, @NotNull Response<RegesterModel> response) {
-
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
+//                    Gson gson = new Gson();
+//                    Type type = new TypeToken<ResponseRegester>() {
+//                    }.getType();
+//                    ResponseRegester data = gson.fromJson(gson.toJson(response.body().getResponse().getMessage()), type);
                     Log.d(TAG, "onResponse: " + response.body().getResponse());
-                    newUserModelMutableLiveData.setValue(response.body());
+                    newUserModelMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     Log.d(TAG, "onResponse: " + " new data");
                     newUserModelMutableLiveData.setValue(null);
@@ -111,7 +119,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<RegesterModel> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure : " + t.getMessage());
                 Log.d(TAG, "onFailure : " + t.getLocalizedMessage());
                 newUserModelMutableLiveData.setValue(null);

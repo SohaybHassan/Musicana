@@ -9,17 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.prography.musicana.data.privacypolicy.Data;
-import com.prography.musicana.data.privacypolicy.Privacy;
+import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
 import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 import com.prography.musicana.databinding.ActivityPrivacyPolicyBinding;
-import com.prography.musicana.data.privacypolicy.DataPoalycey;
-import com.prography.musicana.model.DataModel;
 import com.prography.musicana.viewmodel.OnPoardingViewmodel;
-
-import java.lang.reflect.Type;
 
 public class PrivacyPolicyActivity extends AppCompatActivity {
     private ActivityPrivacyPolicyBinding binding;
@@ -41,13 +34,13 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
 
-        onPoardingViewmodel.getprivacypolicy().observe(this, new Observer<ResponsePrivacyPolicy>() {
+        onPoardingViewmodel.getprivacypolicy().observe(this, new Observer<DataPrivacyPolicy>() {
             @Override
-            public void onChanged(ResponsePrivacyPolicy dataPoalycey) {
+            public void onChanged(DataPrivacyPolicy dataPoalycey) {
                 if (dataPoalycey != null) {
 
                     Log.d("TAG", "onChanged: " + "we have a data");
-                    String text = dataPoalycey.getData().getPrivacy().getData();
+                    String text = dataPoalycey.getPrivacy().getData();
                     Log.d(TAG, "onChanged: "+text);
                     binding.tvTextPlacy.setText(text);
                 }

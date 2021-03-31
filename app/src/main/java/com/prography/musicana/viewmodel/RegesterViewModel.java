@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.registermodel.RegesterModel;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
+import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.VerificatioEmail;
 import com.prography.musicana.repo.RegesterPresenter;
@@ -22,7 +22,7 @@ public class RegesterViewModel extends AndroidViewModel {
         regesterPresenter = RegesterPresenter.getInstance();
     }
 
-    public LiveData<RegesterModel> newUser(String firdName, String lastName, String phone, String email
+    public LiveData<String> newUser(String firdName, String lastName, String phone, String email
             , String password, String country, String gender) {
         return regesterPresenter.newUser(firdName, lastName, phone, email, password, country, gender);
 

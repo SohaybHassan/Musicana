@@ -15,9 +15,7 @@ import com.prography.musicana.data.home.HomeModel;
 import com.prography.musicana.data.search.SearchMolde;
 import com.prography.musicana.data.loginmodel.Login;
 import com.prography.musicana.data.onPording.OnpordingModel;
-import com.prography.musicana.data.privacypolicy.DataPoalycey;
 import com.prography.musicana.data.termcondtion.TermsAndConditions;
-import com.prography.musicana.data.registermodel.RegesterModel;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
@@ -54,7 +52,7 @@ public interface ApiMusicana {
     //regester
     @FormUrlEncoded
     @POST("user/register")
-    Call<RegesterModel> newUser(@Field("firstname") String firstname,
+    Call<DataModel> newUser(@Field("firstname") String firstname,
                                 @Field("lastname") String lastname,
                                 @Field("phone") String phone,
                                 @Field("email") String email,
