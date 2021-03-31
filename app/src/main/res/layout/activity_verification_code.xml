@@ -64,7 +64,7 @@
         app:lineColor="@color/textColor_or_w"
         app:lineWidth="@dimen/_1sdp" />
 
-    <!--    android:indeterminateTint="#fff"-->
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

@@ -18,9 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".feature.regester.view.VerificationCode">
-
-        </activity>
+        <activity android:name=".feature.bottomNavigationViewFragment.home.PlayListFragment.view.ShowPlaylisttSongAndData"></activity>
+        <activity android:name=".feature.regester.view.VerificationCode"></activity>
         <activity
             android:name=".feature.channelsdata.ChannelsDataActivity"
             android:parentActivityName=".feature.channels.ChannelsActivity">
@@ -30,10 +29,10 @@
         </activity>
         <activity
             android:name=".feature.channels.ChannelsActivity"
-            android:parentActivityName=".feature.MainActivity">
+            android:parentActivityName=".feature.home.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.MainActivity" />
+                android:value=".feature.home.MainActivity" />
         </activity>
         <activity android:name=".feature.bottomNavigationViewFragment.home.search.SearchActivity" />
         <activity
@@ -42,15 +41,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".feature.login.view.LoginActivity" />
-
-
         </activity>
         <activity android:name=".feature.regester.view.RegesterActivity" />
-        <activity android:name=".feature.login.view.LoginActivity">
-
-
-
-        </activity>
+        <activity android:name=".feature.login.view.LoginActivity"></activity>
         <activity
             android:name=".feature.onboard.view.PrivacyPolicyActivity"
             android:parentActivityName=".feature.onboard.view.Onboarding">
@@ -66,32 +59,29 @@
                 android:value=".feature.onboard.view.Onboarding" />
         </activity>
         <activity android:name=".feature.onboard.view.Onboarding" />
-        <activity android:name=".feature.MainActivity"></activity>
-        <activity android:name=".feature.SplashActivity">
+        <activity android:name=".feature.home.MainActivity">
 
+        </activity>
+        <activity android:name=".feature.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <service android:name=".feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
-        </service>
-
-        <!--admob-->
+        </service> <!-- admob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1246280412638998~1033895781"/>
-
-<!--        crop activity-->
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:value="ca-app-pub-1246280412638998~1033895781" />
+        <!--        crop activity-->
+<!--        <activity-->
+<!--            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"-->
+<!--            android:theme="@style/Base.Theme.AppCompat" />-->
 
     </application>
 

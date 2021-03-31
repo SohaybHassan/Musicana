@@ -35,7 +35,7 @@ private SendDtatToActivity sendDtatToActivity;
         if (sendDtatToActivity.getItems()!=null){
             binding.det.setText(sendDtatToActivity.getItems().get(2).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(2).getTitle());
-            Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(2).getImg()).into(binding.imgOnpoardOne);
+       //     Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(2).getImg()).into(binding.imgOnpoardOne);
         }else{
 
         }

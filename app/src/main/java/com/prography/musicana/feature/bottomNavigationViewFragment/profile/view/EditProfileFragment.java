@@ -46,8 +46,8 @@ import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.viewmodel.ProfileViewModel;
 import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
 import com.prography.musicana.utils.SWStaticMethods;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import com.yalantis.ucrop.view.CropImageView;
+
 //import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
@@ -100,7 +100,7 @@ public class EditProfileFragment extends Fragment {
         binding.edEmail.setEnabled(false);
         binding.edPassword.setEnabled(false);
         binding.edEmail.setOnClickListener(v -> {
-            SWStaticMethods.intentWithoutDataAndFinish(getActivity(), ForgotPasswordActivity.class);
+            SWStaticMethods.intentWithOutDataAndFinish(getActivity(), ForgotPasswordActivity.class);
         });
         binding.editProfileUserImage.setOnClickListener(v -> {
             getPhoto();
@@ -181,31 +181,31 @@ public class EditProfileFragment extends Fragment {
     // image methods
     public void getPhoto() {
 
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1,1)
-                .start(getActivity());
+//        CropImage.activity()
+//                .setGuidelines(CropImageView.Guidelines.ON)
+//                .setAspectRatio(1,1)
+//                .start(getActivity());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                outputFileUri = result.getUri();
-                if (outputFileUri != null) {
-                    file = new File(outputFileUri.getPath());
-                    Glide.with(getContext()).load(outputFileUri).into(binding.editProfileUserImage);
-//                    binding.editProfileUserImage.setImageURI(outputFileUri);
-                    Toast.makeText(getContext(), ""+outputFileUri, Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onActivityResult: "+outputFileUri);
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(getContext(), "you failed", Toast.LENGTH_SHORT).show();
-//                binding.send.setEnabled(true);
-            }
-        }
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if (resultCode == RESULT_OK) {
+//                outputFileUri = result.getUri();
+//                if (outputFileUri != null) {
+//                    file = new File(outputFileUri.getPath());
+//                    Glide.with(getContext()).load(outputFileUri).into(binding.editProfileUserImage);
+////                    binding.editProfileUserImage.setImageURI(outputFileUri);
+//                    Toast.makeText(getContext(), ""+outputFileUri, Toast.LENGTH_SHORT).show();
+//                    Log.d(TAG, "onActivityResult: "+outputFileUri);
+//                }
+//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+//                Toast.makeText(getContext(), "you failed", Toast.LENGTH_SHORT).show();
+////                binding.send.setEnabled(true);
+//            }
+//        }
     }
 
 }

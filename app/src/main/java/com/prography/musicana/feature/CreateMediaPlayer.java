@@ -1,5 +1,6 @@
 package com.prography.musicana.feature;
 
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -53,15 +54,21 @@ public class CreateMediaPlayer {
                         int songId = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
                         String albumname = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
 
-                        Log.d("TAG", "listAllSong: " + songName + "_####### _" + songId + "_############### _" + albumname);
+
+                        Long albumId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID));
+                        Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
+                        Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+
                         try {
                             mediaPlayer.addTimedTextSource(MusicaApp.getIstant(), allsongUri, ".mp3");
                         } catch (IOException e) {
                             Log.d("TAG", "listAllSong: " + e.getMessage());
                             e.printStackTrace();
                         }
-                        if (!cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)).equals("WhatsApp Audio") && !cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)).equals("call_rec") ) {
-                            mList.add(new PhoneModelFragmentList(songId, songName, albumname));
+                        if (!cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)).equals("WhatsApp Audio")
+                                && !cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)).equals("call_rec")
+                                && !cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)).equals("Voice Messages")) {
+                            mList.add(new PhoneModelFragmentList(songId, songName, albumname, albumArtUri));
                         }
 
 
@@ -76,17 +83,6 @@ public class CreateMediaPlayer {
     static {
         CreateMediaPlayer.getInstance().getplayListMusicFomDivice();
 
-
-        Cursor cursor2 = MusicaApp.getIstant().getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
-                MediaStore.Audio.Albums._ID + "=?",
-                null,
-                null);
-
-        if (cursor2.moveToFirst()) {
-            String path = cursor2.getString(cursor2.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
-            Log.d("TAG", "getplayListMusicFomDivice path: " + path);
-        }
     }
 
     public ArrayList<PhoneModelFragmentList> getLsi() {
@@ -136,12 +132,13 @@ public class CreateMediaPlayer {
     public int getPosition() {
         int myListPostion = MusicService.getSongPosn();
         return myListPostion;
-
     }
 
     public static boolean isSdPresent() {
         return android.os.Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
+
+
 
 
     public static Runnable updateSeekPar(SeekBar seekBar, Handler handler, TextView start) {

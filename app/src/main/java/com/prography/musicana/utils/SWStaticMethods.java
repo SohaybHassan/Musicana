@@ -1,31 +1,28 @@
 package com.prography.musicana.utils;
 
 import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
-import com.prography.musicana.feature.MainActivity;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import com.prography.musicana.BuildConfig;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.viewmodel.PlaylsitViewModel;
 
 public class SWStaticMethods {
-    private static ArrayList<PhoneModelFragmentList> SWLtems = new ArrayList<>();
 
+
+    private PlaylsitViewModel playlsitViewModel;
+    private ViewModelStoreOwner context;
+    LifecycleOwner lifecycleOwner;
+
+    public SWStaticMethods(ViewModelStoreOwner context, LifecycleOwner lifecycleOwner) {
+        this.context = context;
+        this.lifecycleOwner = lifecycleOwner;
+        playlsitViewModel = new ViewModelProvider(context).get(PlaylsitViewModel.class);
+    }
 
     public static void intentWithoutData(Activity firstActivity, Class<?> call) {
         Intent intentWithoutData = new Intent(firstActivity, call);
@@ -40,10 +37,31 @@ public class SWStaticMethods {
         firstActivity.finish();
     }
 
-    public static void intentWithoutDataAndFinish(Activity firstActivity, Class<?> call) {
+    public static void intentWithDataWithoutfinish(Activity firstActivity, Class<?> call, Bundle bundle) {
+        Intent intentWithData = new Intent(firstActivity, call);
+        intentWithData.putExtra("data", bundle);
+        firstActivity.startActivity(intentWithData);
+
+    }
+
+    public static void intentWithOutDataAndFinish(Activity firstActivity, Class<?> call) {
         Intent intentWithoutData = new Intent(firstActivity, call);
         firstActivity.startActivity(intentWithoutData);
 
+    }
+
+    public static void shareApp(Activity activity) {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+            String shareMessage = "\nLet me recommend you this application\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            activity.startActivity(Intent.createChooser(shareIntent, "choose one"));
+        } catch (Exception e) {
+            //e.toString();
+        }
     }
 
 

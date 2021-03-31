@@ -33,6 +33,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     static String startTime;
     static String endTime;
 
+
     static int mCurrentPosition;
     static int mDuration;
     private final IBinder musicBind = new MusicBinder();

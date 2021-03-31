@@ -19,11 +19,11 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
-import com.prography.musicana.feature.MainActivity;
-import com.prography.musicana.feature.forgotPassword.ForgotPasswordActivity;
+import com.prography.musicana.feature.home.MainActivity;
 import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.login.viewmodel.LoginViewmodel;
 import com.prography.musicana.feature.regester.view.RegesterActivity;
+import com.prography.musicana.feature.status.viewModel.StatusViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import org.json.JSONObject;
@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private LoginViewmodel loginViewmodel;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    private StatusViewModel statusViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         sharedPreferencesHelper = new SharedPreferencesHelper();
+        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
         sharedPreferencesHelper.isFirstTime(false);
         sharedPreferencesHelper.clerData();
 
-        if (sharedPreferencesHelper.getToken().equals(null)) {
+        if (sharedPreferencesHelper.getToken().equals("")) {
             Log.d(TAG, "onCreate:  token null");
         } else {
             Log.d(TAG, sharedPreferencesHelper.getToken());
@@ -62,13 +64,6 @@ public class LoginActivity extends AppCompatActivity {
 
         String model = android.os.Build.MODEL;
         Log.d(TAG, "1997 android :" + model);
-
-
-//        TelephonyManager tManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-//        tManager.getDeviceId();
-//        String uuid = tManager.getDeviceId();
-
-        // Log.d(TAG, "1997 android :" + uuid);
 
 
         loginViewmodel = new ViewModelProvider(this).get(LoginViewmodel.class);
@@ -174,4 +169,75 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void myStatus(String uuid) {
+        statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    public void myChangeStatus(String Change_to) {
+        statusViewModel.setChangeStatus(Change_to).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getActiveStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    public void myCloseStatus() {
+        statusViewModel.setCloseStatus().observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getMessage());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myCloseStatus();
+        }
+        Log.d(TAG, "onDestroy: 0000000000000000000000000000000000000000000000000");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myChangeStatus("Background");
+        }
+        Log.d(TAG, "onPause: 0000000000000000000000000000000000000000000000000");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myChangeStatus("Active");
+        }
+
+        Log.d(TAG, "onResume: 0000000000000000000000000000000000000000000000000");
+    }
+
+
 }

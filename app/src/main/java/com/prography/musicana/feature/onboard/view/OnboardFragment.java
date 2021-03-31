@@ -39,7 +39,7 @@ public class OnboardFragment extends Fragment {
             binding.detels.setText(sendDtatToActivity.getItems().get(3).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(3).getTitle());
 
-           Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(3).getImg()).into(binding.imgOnpoardOne);
+       //    Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(3).getImg()).into(binding.imgOnpoardOne);
         } else {
 
         }

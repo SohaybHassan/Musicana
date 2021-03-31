@@ -25,22 +25,21 @@ import android.widget.VideoView;
 
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.feature.home.MainActivity;
 import com.prography.musicana.feature.login.view.LoginActivity;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
 import com.prography.musicana.feature.onboard.model.onPording.SendDtatToActivity;
 import com.prography.musicana.feature.onboard.view.Onboarding;
 import com.prography.musicana.feature.onboard.viewModel.OnPoardingViewmodel;
-import com.prography.musicana.feature.status.newstatus.NewStatus;
 import com.prography.musicana.feature.status.viewModel.StatusViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     public static final int The_time_of_the_start_activity = 3000;
     public static final int REQUEST_CODE = 3000;
-    public static final String TAG=SplashActivity.class.getSimpleName();
+    public static final String TAG = SplashActivity.class.getSimpleName();
     private VideoView videoView;
     private TextView btn_skip;
     private CreateMediaPlayer createMediaPlayer;
@@ -57,10 +56,16 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
         sharedPreferencesHelper = new SharedPreferencesHelper();
         createMediaPlayer = CreateMediaPlayer.getInstance();
         statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
-
+        Log.d(TAG, "onCreate: 0000000000000000000000000000000000000000000000000");
 
         String uuid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d(" 1997 android :", uuid);
+
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            Log.d(TAG, "onCreate: 000000000000000000000000000000000000");
+            myStatus(uuid);
+        }
+
 
         getData();
 
@@ -202,12 +207,15 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
     }
 
     public void myStatus(String uuid) {
+
+        Log.d(TAG, "onCreate: 000000000000000000000000000000000000");
         statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
 
             if (newStatus != null) {
+                Log.d(TAG, "onCreate true : 000000000000000000000000000000000000");
                 Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
             } else {
-                Log.d(TAG, "myStatus: no data");
+                Log.d(TAG, "myStatus false: no data");
             }
 
 

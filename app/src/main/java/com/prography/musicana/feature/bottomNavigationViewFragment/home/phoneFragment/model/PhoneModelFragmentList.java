@@ -1,14 +1,27 @@
 package com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model;
 
+import android.net.Uri;
+
 public class PhoneModelFragmentList {
     private String name;
     private String alpom;
     private int id;
+    private Uri uri;
 
-    public PhoneModelFragmentList(int id, String name, String alpom) {
+
+    public PhoneModelFragmentList(int id, String name, String alpom, Uri uri) {
         this.name = name;
         this.alpom = alpom;
         this.id = id;
+        this.uri = uri;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 
     public int getId() {

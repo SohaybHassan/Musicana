@@ -1,10 +1,18 @@
 package com.prography.musicana.network;
 
 
+import com.prography.musicana.feature.bottomNavigationViewFragment.favorite.model.AddSongToFavorite;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.addsongtoplaylist.AddSongToPlayList;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.createplaylist.CreatePlayList;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.deletesong.DeleteSongFromPLaylsit;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.getallplaylist.GetAllPlayList;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.viewallsongtoplaylist.ViewAllSongToPlaylist;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.allsettings.SettingsResponse;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.logout.Logout;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.profiledata.ProfileData;
 import com.prography.musicana.feature.bottomNavigationViewFragment.profile.model.updataprofile.UpdateProfileResponse;
+import com.prography.musicana.feature.home.model.home.HomeModel;
+import com.prography.musicana.feature.home.model.search.SearchMolde;
 import com.prography.musicana.feature.login.model.Login;
 import com.prography.musicana.feature.onboard.model.onPording.OnpordingModel;
 import com.prography.musicana.feature.onboard.model.privacypolicy.DataPoalycey;
@@ -96,8 +104,6 @@ public interface ApiMusicana {
     Call<ProfileData> getProfileData();
 
 
-
-
     //TODO start here
 
 
@@ -110,6 +116,7 @@ public interface ApiMusicana {
                                               @Part("gender") RequestBody gender,
                                               @Part("country") RequestBody country,
                                               @Part MultipartBody.Part image);
+
     // user settings
     @GET("user/settings")
     Call<SettingsResponse> getAllSettings();
@@ -125,7 +132,6 @@ public interface ApiMusicana {
                                           @Field("location") String location);
 
 
-
     @POST("user/profile/updatedata/email")
     Call<UpdateProfileResponse> updateEmail(@Field("email") String email);
 
@@ -135,19 +141,48 @@ public interface ApiMusicana {
 
 
     //userStatus
+    @FormUrlEncoded
     @POST("user/status")
     Call<CloseStatus> colseStatus();
 
-
+    @FormUrlEncoded
     @POST("user/status/change")
     Call<ChangeStatus> changeStatus(@Field("status_to") String Background);
 
-
+    @FormUrlEncoded
     @POST("user/status/new")
     Call<NewStatus> newStatus(@Field("UUID") String uuid);
 
+    @FormUrlEncoded
+    @POST("music/Favorite/add/")
+    Call<AddSongToFavorite> addToFavorite(String songid);
 
+    @FormUrlEncoded
+    @POST("music/playlist/add")
+    Call<AddSongToPlayList> addToPlayList(String songID, String playlistID);
 
+    @FormUrlEncoded
+    @POST("music/playlist/view")
+    Call<ViewAllSongToPlaylist> ViewPliatListSong(String playlistid);
+
+    @FormUrlEncoded
+    @POST("music/playlist/delete")
+    Call<DeleteSongFromPLaylsit> deleteSong(String songid, String listid);
+
+    @GET("music/playlist/")
+    Call<GetAllPlayList> getAllPlayList();
+
+    @FormUrlEncoded
+    @POST("music/playlist/create")
+    Call<CreatePlayList> createPlaylist(String plsylistName);
+
+    @FormUrlEncoded
+    @POST("music/home")
+    Call<HomeModel> homeData(String vPage, String cPage);
+
+    @FormUrlEncoded
+    @POST("music/search/")
+    Call<SearchMolde> search(String q, String nextPage);
 
 
 //
@@ -161,15 +196,6 @@ public interface ApiMusicana {
 //                          @Field("location") String location);
 
 
-    //music
-
-//    @POST("music/search/")
-//    Call<> search(@Field("q") String text, @Field("nextPage") String page);
-//
-//    @POST("music/home")
-//    Call<> homeData(@Field("vpage") String vpage, @Field("cpage") String cpage);
-
-
     //view
 //    @POST("music/view/channel")
 //    Call<> viewchannel(@Field("channelId") String id);
@@ -181,8 +207,6 @@ public interface ApiMusicana {
 
     //Favorite
 
-//    @POST("music/Favorite/add/")
-//    Call<> addToFavorite(@Field("videoId") String id);
 //
 //    @POST("music/Favorite/add/playlist")
 //    Call<> addPlaylistToFavorite(@Field("playlistId") String id);
@@ -190,23 +214,6 @@ public interface ApiMusicana {
 //
 //    @GET("music/Favorite/")
 //    Call<> getAllFavorit();
-
-
-    //playList
-//    @GET("music/playlist/")
-//    Call<> getAllPlayList();
-//
-//    @POST("music/playlist/create")
-//    Call<> createPlaylist(@Field("playlistName") String name);
-//
-//    @POST("music/playlist/add")
-//    Call<> addToPlayList(@Field("songId") String songid, @Field("playlistId") String playListid);
-//
-//    @POST("music/playlist/view")
-//    Call<> ViewPliatListSong(@Field("playlistId") String playlistid);
-//
-//    @POST("music/playlist/delete")
-//    Call<> deletePlayList(@Field("songId") String songid, @Field("playlistId") String listid);
 
 
 }

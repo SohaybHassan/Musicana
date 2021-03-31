@@ -52,7 +52,7 @@ public class OnlineFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                SWStaticMethods.intentWithoutDataAndFinish(getActivity(), ChannelsActivity.class);
+                SWStaticMethods.intentWithOutDataAndFinish(getActivity(), ChannelsActivity.class);
             }
         });
     }

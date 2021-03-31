@@ -1,156 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appBackground">
-
-    <TextView
-        android:id="@+id/tv_music_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_bolditalic"
-        android:text="@string/music_name"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_alpom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:fontFamily="@font/opensans_bolditalic"
-        android:text="@string/music_alpom"
-        android:textColor="@color/textColor_or_w"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@id/tv_music_name"
-        app:layout_constraintStart_toStartOf="@id/tv_music_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_music_name" />
-
-    <ImageView
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:layout_marginEnd="@dimen/_7sdp"
-        android:src="@drawable/ic_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_music_profile"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_alpom"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_rv_music_profile" />
+        android:layout_height="match_parent"
+        android:background="@color/appBackground">
 
-
-    <TextView
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0:33"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintStart_toStartOf="@id/seekBar"
-        app:layout_constraintBottom_toTopOf="@id/seekBar" />
-
-    <TextView
-        android:id="@+id/end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3:57"
-        android:textColor="@color/textColorWhite"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintBottom_toTopOf="@id/seekBar"
-        app:layout_constraintEnd_toEndOf="@id/seekBar" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:progress="20"
-        android:progressTint="@color/textColor_or_w"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_music_profile"
-
-        />
-
-    <LinearLayout
-        android:id="@+id/button_conterl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:weightSum="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekBar">
-
-        <ImageView
-            android:id="@+id/im_repet"
+        <TextView
+            android:id="@+id/tv_music_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:src="@drawable/ic_repeat" />
+            android:fontFamily="@font/opensans_bolditalic"
+            android:text="@string/music_name"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/im_backe_music"
+        <TextView
+            android:id="@+id/tv_alpom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:src="@drawable/ic_backe_music" />
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/opensans_bolditalic"
+            android:text="@string/music_alpom"
+            android:textColor="@color/textColor_or_w"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="@id/tv_music_name"
+            app:layout_constraintStart_toStartOf="@id/tv_music_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_music_name" />
 
         <ImageView
-            android:id="@+id/im_stop_start"
+            android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            android:layout_weight="1"
-            android:src="@drawable/ic_start_stop" />
 
-        <ImageView
-            android:id="@+id/next_image"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_music_profile"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_alpom"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_rv_music_profile" />
+
+
+        <TextView
+            android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_naext_music" />
+            android:text="0:33"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toTopOf="@id/seekBar"
+            app:layout_constraintStart_toStartOf="@id/seekBar" />
 
-        <ImageView
-            android:id="@+id/im_repet2"
+        <TextView
+            android:id="@+id/end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:src="@drawable/ic_repeat" />
+            android:text="3:57"
+            android:textColor="@color/textColorWhite"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toTopOf="@id/seekBar"
+            app:layout_constraintEnd_toEndOf="@id/seekBar" />
 
-    </LinearLayout>
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:progress="20"
+            android:progressTint="@color/textColor_or_w"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_music_profile"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_semear_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        app:layout_constraintTop_toBottomOf="@id/button_conterl"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_rv_channels" />
+            />
+
+        <LinearLayout
+            android:id="@+id/button_conterl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:weightSum="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seekBar">
+
+            <ImageView
+                android:id="@+id/im_repet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:src="@drawable/ic_repeat" />
+
+            <ImageView
+                android:id="@+id/im_backe_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:src="@drawable/ic_backe_music" />
+
+            <ImageView
+                android:id="@+id/im_stop_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:src="@drawable/ic_start_stop" />
+
+            <ImageView
+                android:id="@+id/next_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_naext_music" />
+
+            <ImageView
+                android:id="@+id/im_repet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:src="@drawable/ic_repeat" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_semear_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:layout_constraintTop_toBottomOf="@id/button_conterl"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_rv_channels" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/extraSpace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_semear_profile" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

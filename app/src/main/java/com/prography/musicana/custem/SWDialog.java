@@ -38,8 +38,8 @@ public class SWDialog extends DialogFragment {
 
         View root = requireActivity().getLayoutInflater().inflate(R.layout.sw_add_to_play_list_dialog, null);
         init(root);
-
         clicked(playList_name);
+
         builder.setCanceledOnTouchOutside(false);
         builder.setContentView(root);
         return builder;
@@ -49,7 +49,7 @@ public class SWDialog extends DialogFragment {
 
         btn_ok = root.findViewById(R.id.btn_OK);
         playList_name = root.findViewById(R.id.playList_name);
-        Log.d("TAG", "init: "+playList_name.getText().toString());
+        Log.d("TAG", "init: " + playList_name.getText().toString());
     }
 
     public void clicked(EditText text) {

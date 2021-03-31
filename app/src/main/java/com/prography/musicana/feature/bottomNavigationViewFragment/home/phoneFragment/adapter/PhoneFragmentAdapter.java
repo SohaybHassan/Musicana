@@ -38,6 +38,7 @@ public class PhoneFragmentAdapter extends RecyclerView.Adapter<PhoneFragmentAdap
         PhoneModelFragmentList phoneModelFragmentList = item.get(position);
         holder.name.setText(phoneModelFragmentList.getName());
         holder.alpom.setText(phoneModelFragmentList.getAlpom());
+        holder.imageView.setImageURI(phoneModelFragmentList.getUri());
         holder.bind(clickItems, position, phoneModelFragmentList);
     }
 

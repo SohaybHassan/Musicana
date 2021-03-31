@@ -1,4 +1,4 @@
-package com.prography.musicana.feature;
+package com.prography.musicana.feature.home;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -30,15 +32,27 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.AppConstants;
+import com.prography.musicana.BuildConfig;
 import com.prography.musicana.R;
 import com.prography.musicana.SharedPreferencesHelper;
+import com.prography.musicana.custem.BottmSheetMain;
+import com.prography.musicana.custem.BottomSheetAddToPlayList;
+import com.prography.musicana.custem.BottomSheetMore;
+import com.prography.musicana.custem.SWDialog;
 import com.prography.musicana.custem.SWInterface.ListItemClick;
 import com.prography.musicana.custem.SWInterface.OnFragmentInteractionListener;
 import com.prography.musicana.databinding.ActivityMainBinding;
+import com.prography.musicana.feature.CreateMediaPlayer;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.getallplaylist.GetAllPlayList;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.model.getallplaylist.Playlist;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.viewmodel.PlaylsitViewModel;
+import com.prography.musicana.feature.home.adapter.MainAdapter;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.MusicService;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.search.SearchActivity;
+import com.prography.musicana.feature.status.viewModel.StatusViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
 import java.util.ArrayList;
@@ -59,29 +73,49 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private MusicService musicService;
     private MainAdapter mainAdapter;
     private CreateMediaPlayer createMediaPlayer;
-
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private StatusViewModel statusViewModel;
     //rv_items need
     private TextView mStart, mEnd;
-    SeekBar mSeekBar;
-    ImageView mImageView;
+    private SeekBar mSeekBar;
+    private ImageView mImageView;
+    private BottomSheetAddToPlayList bottomSheetAddToPlayList;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private SWDialog swDialog;
+    private ArrayList<String> addItem;
+    private PlaylsitViewModel playlsitViewModel;
+    private ArrayList<Playlist> getPlaylistName;
+    private int pos = -1;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferencesHelper = new SharedPreferencesHelper();
+        statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
+        playlsitViewModel = new ViewModelProvider(this).get(PlaylsitViewModel.class);
         notificationManagerCompat = NotificationManagerCompat.from(this);
         createMediaPlayer = CreateMediaPlayer.getInstance();
         mainMediaPlayer = createMediaPlayer.getMediaPlayer();
         items = createMediaPlayer.getLsi();
+        addItem = new ArrayList<>();
+        getPlaylistName = new ArrayList<>();
+        getPlaylistName = getAllplaylist();
         changMode();
         runMusic();
 
         //divise ID
         String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
         Log.d("android_id", "onCreate: " + android_id);
+
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myStatus(android_id);
+        }
+
 
         myHandler = new Handler();
 
@@ -145,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         });
 
 
-        binding.imgSearch.setOnClickListener(view -> SWStaticMethods.intentWithoutData(
+        binding.imgSearch.setOnClickListener(view -> SWStaticMethods.intentWithOutDataAndFinish(
                 MainActivity.this, SearchActivity.class));
         binding.cardInclude.colasCard.setOnClickListener(view -> binding.contenerCard.setVisibility(View.GONE));
     }
@@ -195,7 +229,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         mainAdapter = new MainAdapter(new MainAdapter.ListItemClick() {
             @Override
             public void itemViewClick(int position) {
-                Log.d("TAG", "itemViewClick: " + position);
+                BottmSheetMain bottmSheetMain = new BottmSheetMain(MainActivity.this, new BottomSheetDialog(MainActivity.this));
+                bottmSheetMain.opendialog();
             }
 
             @Override
@@ -222,6 +257,54 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void menu(int position) {
                 Log.d("TAG", "menu: " + position);
+
+                BottomSheetMore bottomSheetMore = new BottomSheetMore(MainActivity.this, new BottomSheetDialog(MainActivity.this), new BottomSheetMore.BottomSheetMoreMethode() {
+                    @Override
+                    public void addtoplayList() {
+//                        Log.d(TAG, "addtoplayList: addtoplayList ");
+//                        bottomSheetAddToPlayList = new BottomSheetAddToPlayList(MainActivity.this, new BottomSheetDialog(MainActivity.this), new BottomSheetAddToPlayList.BottomSheetAddToPlayListMethode() {
+//                            @Override
+//                            public void addtoplayList() {
+//                                swDialog = new SWDialog(lsitName -> {
+//                                    addItem.clear();
+//                                    createPLayList(lsitName.getText().toString());
+//                                    getPlaylistName = getAllplaylist();
+//                                    bottomSheetAddToPlayList.setList(getPlaylistName);
+//                                    swDialog.dismiss();
+//                                });
+//                                swDialog.show(getSupportFragmentManager(), "hi thir");
+//                            }
+//
+//                            @Override
+//                            public void addsongToplayList(String playListid) {
+////                                addsong(String.valueOf(phoneModel.getId()), playListid);
+//                            }
+//                        });
+//
+//                        bottomSheetAddToPlayList.openDialog();
+//
+//                        Log.d(TAG, "addtoplayList: " + getPlaylistName.size());
+//                        bottomSheetAddToPlayList.setList(getPlaylistName);
+                    }
+
+
+                    @Override
+                    public void downlode() {
+                        Log.d(TAG, "downlode: ");
+                    }
+
+                    @Override
+                    public void share() {
+                        Log.d(TAG, "share: ");
+                        SWStaticMethods.shareApp(MainActivity.this);
+                    }
+
+                    @Override
+                    public void addToFavorite() {
+                        Log.d(TAG, "addToFavorite: ");
+                    }
+                });
+                bottomSheetMore.openDialog();
             }
 
         });
@@ -235,21 +318,31 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         binding.reRunMusicBottomSheet.computeHorizontalScrollOffset();
 
 
-        binding.reRunMusicBottomSheet.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.reRunMusicBottomSheet.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
+//                Log.d(TAG, "onScrolled: " + (1 + linearLayoutManager.findFirstVisibleItemPosition()));
+                if (pos != linearLayoutManager.findFirstVisibleItemPosition()) {
 
-                if (createMediaPlayer.getMediaPlayer() != null) {
+                    pos = linearLayoutManager.findFirstVisibleItemPosition();
+                    System.out.println("test" + pos);
+
+//                    PhoneModelFragmentList data = mainAdapter.getdata((linearLayoutManager.findFirstVisibleItemPosition()));
+
+                    musicService.setSong(linearLayoutManager.findFirstVisibleItemPosition());
+                    System.out.println("data" + pos);
+                    System.out.println("media" + createMediaPlayer.getMediaPlayer().isPlaying());
+
                     if (createMediaPlayer.getMediaPlayer().isPlaying()) {
-                        musicService.setSong(recyclerView.computeHorizontalScrollOffset() / 1000);
+
                         musicService.playSong(MainActivity.this);
                         mImageView = mainAdapter.getImage();
+
                         mImageView.setImageResource(R.drawable.ic_start_stop);
 
                     }
-
                 }
 
             }
@@ -260,7 +353,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void itemClick(ArrayList<PhoneModelFragmentList> items, final int position, PhoneModelFragmentList phoneModel) {
+    public void itemClick(ArrayList<PhoneModelFragmentList> items,
+                          final int position, PhoneModelFragmentList phoneModel) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -338,22 +432,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
-    public void updataSeekpar(TextView tv_start, SeekBar seekBar) {
-        startTime = mainMediaPlayer.getCurrentPosition();
-        tv_start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime))));
-        seekBar.setProgress((int) startTime);
-    }
+//    public void updataSeekpar(TextView tv_start, SeekBar seekBar) {
+//        startTime = mainMediaPlayer.getCurrentPosition();
+////        tv_start.setText(String.format("%02d:%02d ", TimeUnit.MILLISECONDS.toMinutes((long) startTime), TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+////                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime))));
+//        seekBar.setProgress((int) startTime);
+//    }
 
     public void inti(TextView tv_end, TextView tv_start, SeekBar seekBar) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                Log.d("TAG", "getDuration: " + MusicService.EndTime());
-                tv_end.setText(MusicService.EndTime());
-                Log.d("TAG", "start_stop_music: " + MusicService.startTime());
-                tv_start.setText(MusicService.startTime());
+//                Log.d("TAG", "getDuration: " + MusicService.EndTime());
+////                tv_end.setText(MusicService.EndTime());
+//                Log.d("TAG", "start_stop_music: " + MusicService.startTime());
+//                tv_start.setText(MusicService.startTime());
                 seekBar.setMax(MusicService.getDuration());
                 seekBar.setProgress(mainMediaPlayer.getCurrentPosition());
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -374,9 +468,114 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
                     }
                 });
-                updataSeekpar(tv_start, seekBar);
+                //updataSeekpar(tv_start, seekBar);
                 myHandler.postDelayed(this, 100);
             }
         }, 100);
     }
+
+
+    public void myStatus(String uuid) {
+        statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    public void myChangeStatus(String Change_to) {
+        statusViewModel.setChangeStatus(Change_to).observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getActiveStatus().getStatus());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    public void myCloseStatus() {
+        statusViewModel.setCloseStatus().observe(this, newStatus -> {
+
+            if (newStatus != null) {
+                Log.d(TAG, "myStatus: " + newStatus.getResponse().getMessage());
+            } else {
+                Log.d(TAG, "myStatus: no data");
+            }
+
+
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myCloseStatus();
+        }
+        Log.d(TAG, "onDestroy: 0000000000000000000000000000000000000000000000000");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myChangeStatus("Background");
+        }
+        Log.d(TAG, "onPause: 0000000000000000000000000000000000000000000000000");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!sharedPreferencesHelper.getToken().equals("")) {
+            myChangeStatus("Active");
+        }
+
+        Log.d(TAG, "onResume: 0000000000000000000000000000000000000000000000000");
+    }
+
+    public void createPLayList(String name) {
+        playlsitViewModel.creatPlaylist(name).observe(this, createPlayList -> {
+            if (createPlayList != null) {
+                Log.d(TAG, "onChanged: " + createPlayList.getResponse().getData().getPlaylist().getName());
+                Log.d(TAG, "onChanged: ");
+            } else {
+                Log.d(TAG, "onChanged:  no data");
+            }
+        });
+    }
+
+
+    public ArrayList<Playlist> getAllplaylist() {
+        Log.d(TAG, "getAllplaylist: ");
+        playlsitViewModel.getAllPlayListLiveData().observe(this, new Observer<GetAllPlayList>() {
+            @Override
+            public void onChanged(GetAllPlayList getAllPlayList) {
+                if (getAllPlayList != null) {
+                    getPlaylistName.clear();
+                    for (int i = 0; i < getAllPlayList.getResponse().getData().getPlaylists().size(); i++) {
+                        getPlaylistName.add(getAllPlayList.getResponse().getData().getPlaylists().get(i));
+                        Log.d("TAG", "onChanged getAllplaylist: " + getAllPlayList.getResponse().getData().getPlaylists().get(i).getName());
+                    }
+                    Log.d(TAG, "onChanged: " + getPlaylistName.size());
+
+                } else {
+                    Log.d("TAG", "onChanged: no data");
+                }
+
+            }
+        });
+        return getPlaylistName;
+    }
+
+
 }

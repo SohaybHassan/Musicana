@@ -1,4 +1,4 @@
-package com.prography.musicana.feature;
+package com.prography.musicana.feature.home.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.prography.musicana.R;
 import com.prography.musicana.custem.SWInterface.ListItemClick;
+import com.prography.musicana.feature.CreateMediaPlayer;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.model.PhoneModelFragmentList;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
     private ListItemClick listener;
     private int mPosition;
     private CreateMediaPlayer createMediaPlayer;
-    ImageView imageView;
+    private ImageView imageView;
 
 
     public MainAdapter(ListItemClick listener) {
@@ -38,6 +39,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
         return new MyHolder(root);
     }
 
+    public PhoneModelFragmentList getdata(int mPosition) {
+        Log.d("TAG", "onScrolled: " + mPosition);
+        return items.get(mPosition);
+
+    }
 
     @Override
 
@@ -90,7 +96,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
             super(itemView);
             start_stop = itemView.findViewById(R.id.im_stop_start_main);
             repet = itemView.findViewById(R.id.pre_image_main);
-            menu = itemView.findViewById(R.id.menu_List_main);
             seekBar = itemView.findViewById(R.id.seekBar);
             tvStart = itemView.findViewById(R.id.start);
             tvEnd = itemView.findViewById(R.id.end);
@@ -143,9 +148,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyHolder> impl
                         break;
                 }
             });
-            menu.setOnClickListener(v -> {
-                listener.menu(position);
-            });
+//            menu.setOnClickListener(v -> {
+//                listener.menu(position);
+//            });
         }
     }
 

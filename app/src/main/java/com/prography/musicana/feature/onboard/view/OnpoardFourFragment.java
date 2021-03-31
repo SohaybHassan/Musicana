@@ -43,7 +43,7 @@ public class OnpoardFourFragment extends Fragment {
 
             binding.det.setText(sendDtatToActivity.getItems().get(0).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(0).getTitle());
-            Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(0).getImg()).into(binding.imgOnpoardOne);
+         //   Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(0).getImg()).into(binding.imgOnpoardOne);
         }else{
 
         }

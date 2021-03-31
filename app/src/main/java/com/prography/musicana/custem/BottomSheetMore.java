@@ -33,6 +33,7 @@ public class BottomSheetMore {
 
         View root = LayoutInflater.from(application).inflate(R.layout.bottomsheet_more, null);
         mDialog = new BottomSheetDialog(application);
+
         mDialog.setContentView(root);
         mDialog.show();
         find(root);

@@ -36,7 +36,7 @@ public class OnpoardThreeFragment extends Fragment {
         if (sendDtatToActivity.getItems()!=null){
             binding.det.setText(sendDtatToActivity.getItems().get(1).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(1).getTitle());
-            Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(1).getImg()).into(binding.imgOnpoardOne);
+            //Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(1).getImg()).into(binding.imgOnpoardOne);
         }else{
 
         }

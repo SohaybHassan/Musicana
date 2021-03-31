@@ -17,7 +17,7 @@ import com.facebook.ads.AdView;
 import com.google.android.material.tabs.TabLayout;
 import com.prography.musicana.R;
 import com.prography.musicana.databinding.FragmentHomeBinding;
-import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.playListFragment;
+import com.prography.musicana.feature.bottomNavigationViewFragment.home.PlayListFragment.view.playListFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.onlineFragment.OnlineFragment;
 import com.prography.musicana.feature.bottomNavigationViewFragment.home.phoneFragment.PhoneFragment;
 

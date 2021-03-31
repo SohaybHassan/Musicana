@@ -14,8 +14,7 @@ import android.widget.Toast;
 
 import com.prography.musicana.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityVerificationCodeBinding;
-import com.prography.musicana.feature.MainActivity;
-import com.prography.musicana.feature.regester.model.resendverification.ResendVerificationCode;
+import com.prography.musicana.feature.home.MainActivity;
 import com.prography.musicana.feature.regester.model.verification.VerificatioEmail;
 import com.prography.musicana.feature.regester.viewModel.RegesterViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
