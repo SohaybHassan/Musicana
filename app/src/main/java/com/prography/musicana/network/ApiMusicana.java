@@ -17,7 +17,7 @@ import retrofit2.http.Part;
 public interface ApiMusicana {
     //OnBording
     @GET("data/onboarding")
-    Call<DataModel> getOnpordingData();
+    Call<DataModel> getOnBoardingData();
 
     //PrivacyPolicy
     @GET("data/privacypolicy")
