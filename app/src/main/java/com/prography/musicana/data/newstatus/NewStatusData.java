@@ -4,7 +4,7 @@ package com.prography.musicana.data.newstatus;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class NewStatusData {
 
     @SerializedName("status")
     @Expose

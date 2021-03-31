@@ -22,7 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.R;
 import com.prography.musicana.custem.bottomsheet.BottomSheetListView;
-import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.databinding.ActivityRegesterBinding;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;

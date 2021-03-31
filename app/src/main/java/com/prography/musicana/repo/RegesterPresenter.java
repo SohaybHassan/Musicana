@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
-import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.VerificatioEmail;
 import com.prography.musicana.model.DataModel;
@@ -106,11 +105,7 @@ public class RegesterPresenter {
             @Override
             public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
-//                    Gson gson = new Gson();
-//                    Type type = new TypeToken<ResponseRegester>() {
-//                    }.getType();
-//                    ResponseRegester data = gson.fromJson(gson.toJson(response.body().getResponse().getMessage()), type);
-                    Log.d(TAG, "onResponse: " + response.body().getResponse());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
                     newUserModelMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     Log.d(TAG, "onResponse: " + " new data");

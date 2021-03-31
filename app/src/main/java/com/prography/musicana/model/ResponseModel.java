@@ -1,15 +1,16 @@
-package com.prography.musicana.data.registermodel;
+package com.prography.musicana.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseRegester {
+public class ResponseModel {
 
     @SerializedName("message")
     @Expose
     private String message;
-
-    private final static long serialVersionUID = -6997180442959505678L;
+    @SerializedName("data")
+    @Expose
+    private Object data;
 
     public String getMessage() {
         return message;
@@ -18,4 +19,13 @@ public class ResponseRegester {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
 }

@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.changestatus.ChangeStatus;
-import com.prography.musicana.data.closestatus.CloseStatus;
-import com.prography.musicana.data.newstatus.NewStatus;
+import com.prography.musicana.data.changestatus.ChangeStatusData;
+import com.prography.musicana.data.newstatus.NewStatusData;
 import com.prography.musicana.repo.StatusPresenter;
 
 public class StatusViewModel extends AndroidViewModel {
@@ -21,15 +20,15 @@ public class StatusViewModel extends AndroidViewModel {
         statusPresenter = StatusPresenter.getInstenc();
     }
 
-    public LiveData<NewStatus> setnewStatus(String uuid) {
+    public LiveData<NewStatusData> setnewStatus(String uuid) {
         return statusPresenter.setnewStatus(uuid);
     }
 
-    public LiveData<ChangeStatus> setChangeStatus(String change_to) {
+    public LiveData<ChangeStatusData> setChangeStatus(String change_to) {
         return statusPresenter.setChangeStatus(change_to);
     }
 
-    public LiveData<CloseStatus> setCloseStatus() {
+    public LiveData<String> setCloseStatus() {
         return statusPresenter.setCloseStatus();
     }
 

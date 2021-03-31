@@ -20,9 +20,6 @@ import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.VerificatioEmail;
-import com.prography.musicana.data.changestatus.ChangeStatus;
-import com.prography.musicana.data.closestatus.CloseStatus;
-import com.prography.musicana.data.newstatus.NewStatus;
 import com.prography.musicana.model.DataModel;
 
 
@@ -140,19 +137,19 @@ public interface ApiMusicana {
     //userStatus
     @FormUrlEncoded
     @POST("user/status")
-    Call<CloseStatus> colseStatus();
+    Call<DataModel> colseStatus();
 
     @FormUrlEncoded
     @POST("user/status/change")
-    Call<ChangeStatus> changeStatus(@Field("status_to") String Background);
+    Call<DataModel> changeStatus(@Field("status_to") String Background);
 
     @FormUrlEncoded
     @POST("user/status/new")
-    Call<NewStatus> newStatus(@Field("UUID") String uuid);
+    Call<DataModel> newStatus(@Field("UUID") String uuid);
 
     @FormUrlEncoded
     @POST("music/Favorite/add/")
-    Call<AddSongToFavorite> addToFavorite(String songid);
+    Call<DataModel> addToFavorite(String songid);
 
     @FormUrlEncoded
     @POST("music/playlist/add")

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
-import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 import com.prography.musicana.data.termcondtion.TermsAndConditions;
 import com.prography.musicana.repo.OnpordingPresenter;
 

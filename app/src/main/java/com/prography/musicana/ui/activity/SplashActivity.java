@@ -211,7 +211,7 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
 
             if (newStatus != null) {
                 Log.d(TAG, "onCreate true : 000000000000000000000000000000000000");
-                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+                Log.d(TAG, "myStatus: " + newStatus.getStatus().getStatus());
             } else {
                 Log.d(TAG, "myStatus false: no data");
             }

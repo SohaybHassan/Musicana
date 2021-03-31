@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.data.country.Countries;
 import com.prography.musicana.data.gender.Genders;
-import com.prography.musicana.data.registermodel.ResponseRegester;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.VerificatioEmail;
 import com.prography.musicana.repo.RegesterPresenter;
