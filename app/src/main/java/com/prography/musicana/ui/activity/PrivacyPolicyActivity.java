@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
-import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 import com.prography.musicana.databinding.ActivityPrivacyPolicyBinding;
 import com.prography.musicana.viewmodel.OnPoardingViewmodel;
 

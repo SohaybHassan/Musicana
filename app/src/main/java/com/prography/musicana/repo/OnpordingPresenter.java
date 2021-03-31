@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
-import com.prography.musicana.data.privacypolicy.ResponsePrivacyPolicy;
 import com.prography.musicana.data.termcondtion.TermsAndConditions;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;

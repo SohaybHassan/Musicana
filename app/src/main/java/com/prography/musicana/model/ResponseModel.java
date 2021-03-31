@@ -1,9 +1,9 @@
-package com.prography.musicana.data.privacypolicy;
+package com.prography.musicana.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponsePrivacyPolicy {
+public class ResponseModel {
 
     @SerializedName("message")
     @Expose
