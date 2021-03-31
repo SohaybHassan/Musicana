@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.prography.musicana.data.termcondtion.DataTermsAndConditions;
 import com.prography.musicana.databinding.ActivityTermsConditionsBinding;
-import com.prography.musicana.data.termcondtion.TermsAndConditions;
 import com.prography.musicana.viewmodel.OnPoardingViewmodel;
 
 public class TermsConditionsActivity extends AppCompatActivity {
@@ -32,12 +32,12 @@ public class TermsConditionsActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
-        onPoardingViewmodel.gettermandCondtion().observe(this, new Observer<TermsAndConditions>() {
+        onPoardingViewmodel.getTermsAndConditions().observe(this, new Observer<DataTermsAndConditions>() {
             @Override
-            public void onChanged(TermsAndConditions generlClass) {
+            public void onChanged(DataTermsAndConditions generlClass) {
                 if (generlClass != null) {
                     Log.d("TAG", "onChanged: " + "we ahve a data");
-                    String data = generlClass.getResponse().getData().getTerms().getData();
+                    String data = generlClass.getTerms().getData();
                     binding.tvTextData.setText(data);
                 }
             }

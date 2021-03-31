@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.prography.musicana.data.verification.DataVerificationEmail;
 import com.prography.musicana.utils.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityVerificationCodeBinding;
-import com.prography.musicana.data.verification.VerificatioEmail;
 import com.prography.musicana.viewmodel.RegesterViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
@@ -82,15 +82,15 @@ public class VerificationCode extends AppCompatActivity {
 
     public void request(String code, String deciceName, String uuid, String pass, String mEmail) {
 
-        regesterViewModel.verificationResponeLiveData(code, pass, mEmail, "android", uuid, deciceName).observe(this, new Observer<VerificatioEmail>() {
+        regesterViewModel.verificationResponeLiveData(code, pass, mEmail, "android", uuid, deciceName).observe(this, new Observer<DataVerificationEmail>() {
             @Override
-            public void onChanged(VerificatioEmail verificationRespone) {
+            public void onChanged(DataVerificationEmail verificationRespone) {
                 if (verificationRespone != null) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.tvResendCode.setVisibility(View.VISIBLE);
                     binding.btnVerifie.setVisibility(View.VISIBLE);
 
-                    sharedPreferencesHelper.saveData(verificationRespone.getResponse().getData().getUser().getToken());
+                    sharedPreferencesHelper.saveData(verificationRespone.getUser().getToken());
                     Log.d(TAG, "sohaib Token: " + sharedPreferencesHelper.getToken());
                     SWStaticMethods.intentWithoutData(VerificationCode.this, MainActivity.class);
                 } else {

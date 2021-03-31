@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
-import com.prography.musicana.data.termcondtion.TermsAndConditions;
+import com.prography.musicana.data.termcondtion.DataTermsAndConditions;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
@@ -26,7 +26,7 @@ public class OnpordingPresenter {
     private NetworkInit networkInit;
     MutableLiveData<OnpordingModel> getdataMutableLiveData;
     MutableLiveData<DataPrivacyPolicy> getprivacypolicyMutableLiveData;
-    MutableLiveData<TermsAndConditions> termsAndConditionsMutableLiveData;
+    MutableLiveData<DataTermsAndConditions> termsAndConditionsMutableLiveData;
     private static OnpordingPresenter instance;
 
     public OnpordingPresenter() {
@@ -67,8 +67,8 @@ public class OnpordingPresenter {
     }
 
 
-    public LiveData<DataPrivacyPolicy> getprivacypolicy() {
-        networkInit.getRetrofitApis().getprivacypolicy().enqueue(new Callback<DataModel>() {
+    public LiveData<DataPrivacyPolicy> getPrivacyPolicy() {
+        networkInit.getRetrofitApis().getPrivacyPolicy().enqueue(new Callback<DataModel>() {
             @Override
             public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
@@ -92,21 +92,24 @@ public class OnpordingPresenter {
     }
 
 
-    public LiveData<TermsAndConditions> getermsAndConditions() {
-        networkInit.getRetrofitApis().getTermsAndConditions().enqueue(new Callback<TermsAndConditions>() {
+    public LiveData<DataTermsAndConditions> getTermsAndConditions() {
+        networkInit.getRetrofitApis().getTermsAndConditions().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<TermsAndConditions> call, Response<TermsAndConditions> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getTerms().getData());
-                    termsAndConditionsMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataTermsAndConditions>() {
+                    }.getType();
+                    DataTermsAndConditions data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    termsAndConditionsMutableLiveData.setValue(data);
                 } else {
                     termsAndConditionsMutableLiveData.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<TermsAndConditions> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 termsAndConditionsMutableLiveData.setValue(null);
             }

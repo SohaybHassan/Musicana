@@ -8,11 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.prography.musicana.data.country.Countries;
-import com.prography.musicana.data.gender.Genders;
-import com.prography.musicana.data.registermodel.ResponseRegester;
+import com.prography.musicana.data.country.DataCountries;
+import com.prography.musicana.data.gender.DataGenders;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
-import com.prography.musicana.data.verification.VerificatioEmail;
+import com.prography.musicana.data.verification.DataVerificationEmail;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
@@ -28,9 +27,9 @@ public class RegesterPresenter {
     public static final String TAG = RegesterPresenter.class.getSimpleName();
     private NetworkInit networkInit;
     private MutableLiveData<String> newUserModelMutableLiveData;
-    private MutableLiveData<Genders> requesBodyMutableLiveData;
-    private MutableLiveData<Countries> requesBodycountryMutableLiveData;
-    private MutableLiveData<VerificatioEmail> verificationResponeMutableLiveData;
+    private MutableLiveData<DataGenders> requesBodyMutableLiveData;
+    private MutableLiveData<DataCountries> requesBodycountryMutableLiveData;
+    private MutableLiveData<DataVerificationEmail> verificationResponeMutableLiveData;
     private MutableLiveData<ResendVerificationCode> resendVerificationMutableLiveData;
     private static RegesterPresenter instance;
 
@@ -74,15 +73,18 @@ public class RegesterPresenter {
         return resendVerificationMutableLiveData;
     }
 
-    public LiveData<VerificatioEmail> verification(String verify_code, String password, String email, String device
+    public LiveData<DataVerificationEmail> verification(String verify_code, String password, String email, String device
             , String uuis, String devicename) {
 
-        networkInit.getRetrofitApis().verificationCode(verify_code, password, email, device, uuis, devicename).enqueue(new Callback<VerificatioEmail>() {
+        networkInit.getRetrofitApis().verificationCode(verify_code, password, email, device, uuis, devicename).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<VerificatioEmail> call, @NotNull Response<VerificatioEmail> response) {
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getUser().getEmail());
-                    verificationResponeMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataVerificationEmail>() {
+                    }.getType();
+                    DataVerificationEmail data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    verificationResponeMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse:  name data");
                     verificationResponeMutableLiveData.setValue(null);
@@ -90,7 +92,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<VerificatioEmail> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 verificationResponeMutableLiveData.setValue(null);
             }
@@ -129,13 +131,16 @@ public class RegesterPresenter {
     }
 
 
-    public LiveData<Genders> getGender() {
-        networkInit.getRetrofitApis().getGender().enqueue(new Callback<Genders>() {
+    public LiveData<DataGenders> getGender() {
+        networkInit.getRetrofitApis().getGender().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<Genders> call, Response<Genders> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getGenders().get(0).getGender());
-                    requesBodyMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataGenders>() {
+                    }.getType();
+                    DataGenders data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    requesBodyMutableLiveData.setValue(data);
                 } else {
                     requesBodyMutableLiveData.setValue(null);
                     Log.d(TAG, "onResponse: " + "no data");
@@ -143,7 +148,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(Call<Genders> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 requesBodyMutableLiveData.setValue(null);
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
@@ -151,13 +156,16 @@ public class RegesterPresenter {
         return requesBodyMutableLiveData;
     }
 
-    public LiveData<Countries> getCountry() {
-        networkInit.getRetrofitApis().getCuntry().enqueue(new Callback<Countries>() {
+    public LiveData<DataCountries> getCountry() {
+        networkInit.getRetrofitApis().getCountry().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<Countries> call, Response<Countries> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getCountries().get(0).getName());
-                    requesBodycountryMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataCountries>() {
+                    }.getType();
+                    DataCountries data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    requesBodycountryMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse: " + "no have a data");
                     requesBodycountryMutableLiveData.setValue(null);
@@ -165,7 +173,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(Call<Countries> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onResponse: " + t.getMessage());
                 requesBodycountryMutableLiveData.setValue(null);
             }

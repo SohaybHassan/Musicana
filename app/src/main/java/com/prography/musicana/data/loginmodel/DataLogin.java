@@ -2,8 +2,10 @@ package com.prography.musicana.data.loginmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.prography.musicana.data.Settings;
+import com.prography.musicana.data.User;
 
-public class Data {
+public class DataLogin {
 
     @SerializedName("user")
     @Expose

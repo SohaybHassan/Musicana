@@ -22,10 +22,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.prography.musicana.R;
 import com.prography.musicana.custem.bottomsheet.BottomSheetListView;
-import com.prography.musicana.data.registermodel.ResponseRegester;
+import com.prography.musicana.data.country.DataCountries;
+import com.prography.musicana.data.gender.DataGenders;
 import com.prography.musicana.databinding.ActivityRegesterBinding;
-import com.prography.musicana.data.country.Countries;
-import com.prography.musicana.data.gender.Genders;
 import com.prography.musicana.viewmodel.RegesterViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
 
@@ -88,28 +87,28 @@ public class RegesterActivity extends AppCompatActivity {
             startActivity(new Intent(RegesterActivity.this, LoginActivity.class));
         });
 
-        regesterViewModel.getCountry().observe(this, new Observer<Countries>() {
+        regesterViewModel.getCountry().observe(this, new Observer<DataCountries>() {
             @Override
-            public void onChanged(Countries requesBody) {
+            public void onChanged(DataCountries requesBody) {
                 if (requesBody != null) {
-                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().getCountries().get(0).getName());
-                    for (int i = 0; i < requesBody.getResponse().getData().getCountries().size(); i++) {
-                        contryName.add(requesBody.getResponse().getData().getCountries().get(i).getName());
-                        contryId.add(requesBody.getResponse().getData().getCountries().get(i).getId());
+                    Log.d(TAG, "onChanged: " + requesBody.getCountries().get(0).getName());
+                    for (int i = 0; i < requesBody.getCountries().size(); i++) {
+                        contryName.add(requesBody.getCountries().get(i).getName());
+                        contryId.add(requesBody.getCountries().get(i).getId());
                     }
                 } else {
                     Log.d(TAG, "onChanged: " + "no data");
                 }
             }
         });
-        regesterViewModel.getGender().observe(this, new Observer<Genders>() {
+        regesterViewModel.getGender().observe(this, new Observer<DataGenders>() {
             @Override
-            public void onChanged(Genders requesBody) {
+            public void onChanged(DataGenders requesBody) {
                 if (requesBody != null) {
-                    Log.d(TAG, "onChanged: " + requesBody.getResponse().getData().getGenders().get(0).getGender());
+                    Log.d(TAG, "onChanged: " + requesBody.getGenders().get(0).getGender());
 
-                    for (int i = 0; i < requesBody.getResponse().getData().getGenders().size(); i++) {
-                        gendername.add(requesBody.getResponse().getData().getGenders().get(i).getGender());
+                    for (int i = 0; i < requesBody.getGenders().size(); i++) {
+                        gendername.add(requesBody.getGenders().get(i).getGender());
                     }
                 } else {
                     Log.d(TAG, "onChanged: " + "no data");

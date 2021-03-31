@@ -6,10 +6,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.prography.musicana.data.loginmodel.Login;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.prography.musicana.data.country.DataCountries;
+import com.prography.musicana.data.loginmodel.DataLogin;
+import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Type;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +25,7 @@ public class LoginPresenter {
     private static final String TAG = LoginPresenter.class.getSimpleName();
     private static LoginPresenter mInstance;
     private NetworkInit networkInit;
-    private MutableLiveData<Login> loginMutableLiveData;
+    private MutableLiveData<DataLogin> loginMutableLiveData;
 
     public LoginPresenter() {
         networkInit = NetworkInit.getInstance(true);
@@ -34,16 +40,17 @@ public class LoginPresenter {
         return mInstance;
     }
 
-    public LiveData<Login> login(String email, String pass,String device,String uuid,String deviceName) {
+    public LiveData<DataLogin> login(String email, String pass, String device, String uuid, String deviceName) {
 
-        networkInit.getRetrofitApis().login(email,pass,device,uuid,deviceName).enqueue(new Callback<Login>() {
+        networkInit.getRetrofitApis().login(email, pass, device, uuid, deviceName).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<Login> call, @NotNull Response<Login> response) {
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + "isSuccessful");
-                    if (response != null)
-                        Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getUser().getEmail());
-                    loginMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataLogin>() {
+                    }.getType();
+                    DataLogin data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    loginMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse: " + "null");
                     loginMutableLiveData.setValue(null);
@@ -51,7 +58,7 @@ public class LoginPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<Login> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 loginMutableLiveData.setValue(null);
             }

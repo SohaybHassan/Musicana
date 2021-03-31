@@ -17,9 +17,9 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.prography.musicana.data.loginmodel.DataLogin;
 import com.prography.musicana.utils.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
-import com.prography.musicana.data.loginmodel.Login;
 import com.prography.musicana.viewmodel.LoginViewmodel;
 import com.prography.musicana.viewmodel.StatusViewModel;
 import com.prography.musicana.utils.SWStaticMethods;
@@ -144,17 +144,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void reqLogin(String mEmail, String mPass, String uuid, String model) {
-        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, new Observer<Login>() {
+        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, new Observer<DataLogin>() {
             @Override
-            public void onChanged(Login dataLogin) {
+            public void onChanged(DataLogin dataLogin) {
                 if (dataLogin != null) {
                     binding.btnLogin.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.GONE);
                     binding.tvForgotPassword.setVisibility(View.VISIBLE);
                     binding.tvRegesterNow.setVisibility(View.VISIBLE);
                     Log.d(TAG, "onChanged: " + "we have a data");
-                    sharedPreferencesHelper.saveData(dataLogin.getResponse().getData().getUser().getToken());
-                    Log.d(TAG, "onChanged: " + dataLogin.getResponse().getData().getUser().getEmail());
+                    sharedPreferencesHelper.saveData(dataLogin.getUser().getToken());
+                    Log.d(TAG, "onChanged: " + dataLogin.getUser().getEmail());
                     SWStaticMethods.intentWithoutData(LoginActivity.this, MainActivity.class);
                 } else {
                     binding.btnLogin.setVisibility(View.VISIBLE);

@@ -1,9 +1,9 @@
-package com.prography.musicana.data.loginmodel;
+package com.prography.musicana.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Language {
+public class Theme {
 
     @SerializedName("id")
     @Expose
@@ -11,9 +11,6 @@ public class Language {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("full_name")
-    @Expose
-    private Object fullName;
 
     public String getId() {
         return id;
@@ -29,14 +26,6 @@ public class Language {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Object getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(Object fullName) {
-        this.fullName = fullName;
     }
 
 }

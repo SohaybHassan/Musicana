@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
-import com.prography.musicana.data.termcondtion.TermsAndConditions;
+import com.prography.musicana.data.termcondtion.DataTermsAndConditions;
 import com.prography.musicana.repo.OnpordingPresenter;
 
 public class OnPoardingViewmodel extends AndroidViewModel {
@@ -25,11 +25,11 @@ public class OnPoardingViewmodel extends AndroidViewModel {
         return onpordingPresenter.getDataView();
     }
 
-    public LiveData<DataPrivacyPolicy> getprivacypolicy() {
-        return onpordingPresenter.getprivacypolicy();
+    public LiveData<DataPrivacyPolicy> getPrivacyPolicy() {
+        return onpordingPresenter.getPrivacyPolicy();
     }
 
-    public LiveData<TermsAndConditions> gettermandCondtion() {
-        return onpordingPresenter.getermsAndConditions();
+    public LiveData<DataTermsAndConditions> getTermsAndConditions() {
+        return onpordingPresenter.getTermsAndConditions();
     }
 }

@@ -6,11 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.country.Countries;
-import com.prography.musicana.data.gender.Genders;
-import com.prography.musicana.data.registermodel.ResponseRegester;
+import com.prography.musicana.data.country.DataCountries;
+import com.prography.musicana.data.gender.DataGenders;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
-import com.prography.musicana.data.verification.VerificatioEmail;
+import com.prography.musicana.data.verification.DataVerificationEmail;
 import com.prography.musicana.repo.RegesterPresenter;
 
 public class RegesterViewModel extends AndroidViewModel {
@@ -28,16 +27,16 @@ public class RegesterViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<VerificatioEmail> verificationResponeLiveData(String verify_code, String password, String email, String device
+    public LiveData<DataVerificationEmail> verificationResponeLiveData(String verify_code, String password, String email, String device
             , String uuis, String devicename) {
         return regesterPresenter.verification(verify_code, password, email, device, uuis, devicename);
     }
 
-    public LiveData<Countries> getCountry() {
+    public LiveData<DataCountries> getCountry() {
         return regesterPresenter.getCountry();
     }
 
-    public LiveData<Genders> getGender() {
+    public LiveData<DataGenders> getGender() {
         return regesterPresenter.getGender();
     }
 

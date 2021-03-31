@@ -33,7 +33,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
 
-        onPoardingViewmodel.getprivacypolicy().observe(this, new Observer<DataPrivacyPolicy>() {
+        onPoardingViewmodel.getPrivacyPolicy().observe(this, new Observer<DataPrivacyPolicy>() {
             @Override
             public void onChanged(DataPrivacyPolicy dataPoalycey) {
                 if (dataPoalycey != null) {

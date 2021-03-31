@@ -13,13 +13,8 @@ import com.prography.musicana.data.profiledata.ProfileData;
 import com.prography.musicana.data.updataprofile.UpdateProfileResponse;
 import com.prography.musicana.data.home.HomeModel;
 import com.prography.musicana.data.search.SearchMolde;
-import com.prography.musicana.data.loginmodel.Login;
 import com.prography.musicana.data.onPording.OnpordingModel;
-import com.prography.musicana.data.termcondtion.TermsAndConditions;
-import com.prography.musicana.data.country.Countries;
-import com.prography.musicana.data.gender.Genders;
 import com.prography.musicana.data.resendverification.ResendVerificationCode;
-import com.prography.musicana.data.verification.VerificatioEmail;
 import com.prography.musicana.data.changestatus.ChangeStatus;
 import com.prography.musicana.data.closestatus.CloseStatus;
 import com.prography.musicana.data.newstatus.NewStatus;
@@ -41,13 +36,13 @@ public interface ApiMusicana {
     @GET("data/onboarding")
     Call<OnpordingModel> getOnpordingData();
 
-    //privacypolicy
+    //PrivacyPolicy
     @GET("data/privacypolicy")
-    Call<DataModel> getprivacypolicy();
+    Call<DataModel> getPrivacyPolicy();
 
-    //TermAndCondtion
+    //TermAndCondition
     @GET("data/TermsAndConditions")
-    Call<TermsAndConditions> getTermsAndConditions();
+    Call<DataModel> getTermsAndConditions();
 
     //regester
     @FormUrlEncoded
@@ -61,16 +56,16 @@ public interface ApiMusicana {
                                 @Field("gender") String gender);
 
     @GET("data/genders")
-    Call<Genders> getGender();
+    Call<DataModel> getGender();
 
 
     @GET("data/countries")
-    Call<Countries> getCuntry();
+    Call<DataModel> getCountry();
 
-    //logdin
+    //login
     @FormUrlEncoded
     @POST("user/login")
-    Call<Login> login(@Field("email") String email,
+    Call<DataModel> login(@Field("email") String email,
                       @Field("password") String pass,
                       @Field("device") String device,
                       @Field("UUID") String uuid,
@@ -79,7 +74,7 @@ public interface ApiMusicana {
     //verification
     @FormUrlEncoded
     @POST("user/verification")
-    Call<VerificatioEmail> verificationCode(@Field("verify_code") String verify_code,
+    Call<DataModel> verificationCode(@Field("verify_code") String verify_code,
                                             @Field("password") String password,
                                             @Field("email") String email,
                                             @Field("device") String device,
