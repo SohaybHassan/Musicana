@@ -1,13 +1,7 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.model.AddSongToFavorite;
-import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
-import com.prography.musicana.data.createplaylist.CreatePlayList;
-import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
-import com.prography.musicana.data.getallplaylist.GetAllPlayList;
-import com.prography.musicana.data.home.HomeModel;
-import com.prography.musicana.data.search.SearchMolde;
+
 import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.model.DataModel;
 
@@ -93,12 +87,12 @@ public interface ApiMusicana {
     @Multipart
     @POST("user/profile/updatedata")
     Call<DataModel> updateProfile(@Part("firstname") RequestBody first_name,
-                                              @Part("middlename") RequestBody middle_name,
-                                              @Part("lastname") RequestBody last_name,
-                                              @Part("phone") RequestBody phone,
-                                              @Part("gender") RequestBody gender,
-                                              @Part("country") RequestBody country,
-                                              @Part MultipartBody.Part image);
+                                  @Part("middlename") RequestBody middle_name,
+                                  @Part("lastname") RequestBody last_name,
+                                  @Part("phone") RequestBody phone,
+                                  @Part("gender") RequestBody gender,
+                                  @Part("country") RequestBody country,
+                                  @Part MultipartBody.Part image);
 
     // user settings
     @GET("user/settings")
@@ -107,12 +101,12 @@ public interface ApiMusicana {
     @FormUrlEncoded
     @POST("user/settings/change")
     Call<DataModel> changeSettings(@Field("mood") String mood,
-                                          @Field("language") String language,
-                                          @Field("additional_screen") String additional_screen,
-                                          @Field("auto_update") String auto_update,
-                                          @Field("background") String background,
-                                          @Field("audio") String audio,
-                                          @Field("location") String location);
+                                   @Field("language") String language,
+                                   @Field("additional_screen") String additional_screen,
+                                   @Field("auto_update") String auto_update,
+                                   @Field("background") String background,
+                                   @Field("audio") String audio,
+                                   @Field("location") String location);
 
 
     @POST("user/profile/updatedata/email")
@@ -157,15 +151,15 @@ public interface ApiMusicana {
 
     @FormUrlEncoded
     @POST("music/playlist/create")
-    Call<CreatePlayList> createPlaylist(String plsylistName);
+    Call<DataModel> createPlaylist(String plsylistName);
 
     @FormUrlEncoded
     @POST("music/home")
-    Call<HomeModel> homeData(String vPage, String cPage);
+    Call<DataModel> homeData(String vPage, String cPage);
 
     @FormUrlEncoded
     @POST("music/search/")
-    Call<SearchMolde> search(String q, String nextPage);
+    Call<DataModel> search(String q, String nextPage);
 
 
 //

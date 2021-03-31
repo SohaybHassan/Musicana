@@ -10,7 +10,7 @@ public class Response {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private SearchData data;
 
     public String getMessage() {
         return message;
@@ -20,11 +20,11 @@ public class Response {
         this.message = message;
     }
 
-    public Data getData() {
+    public SearchData getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(SearchData data) {
         this.data = data;
     }
 

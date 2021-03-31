@@ -544,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public void createPLayList(String name) {
         playlsitViewModel.creatPlaylist(name).observe(this, createPlayList -> {
             if (createPlayList != null) {
-                Log.d(TAG, "onChanged: " + createPlayList.getResponse().getData().getPlaylist().getName());
+                Log.d(TAG, "onChanged: " + createPlayList.getPlaylist().getName());
                 Log.d(TAG, "onChanged: ");
             } else {
                 Log.d(TAG, "onChanged:  no data");
