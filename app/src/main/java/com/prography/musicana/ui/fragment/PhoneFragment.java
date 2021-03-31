@@ -269,15 +269,12 @@ public class PhoneFragment extends Fragment {
     }
 
     public void addTofavorite(String songid) {
-        favoiteViewModel.addSong(songid).observe(getViewLifecycleOwner(), new Observer<AddSongToFavorite>() {
-            @Override
-            public void onChanged(AddSongToFavorite addSongToFavorite) {
-                if (addSongToFavorite != null) {
-                    Log.d(TAG, "onChanged: " + addSongToFavorite.getResponse());
+        favoiteViewModel.addSong(songid).observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                Log.d(TAG, "onChanged: " + s);
 
-                } else {
-                    Log.d(TAG, "onChanged: no data");
-                }
+            } else {
+                Log.d(TAG, "onChanged: no data");
             }
         });
     }

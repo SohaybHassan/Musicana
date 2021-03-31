@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.prography.musicana.model.AddSongToFavorite;
+import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
 import retrofit2.Call;
@@ -17,7 +18,7 @@ public class FavoritePresenter {
     private static final String TAG = FavoritePresenter.class.getSimpleName();
 
     private NetworkInit networkInit;
-    MutableLiveData<AddSongToFavorite> addSongToFavoriteMutableLiveData;
+    MutableLiveData<String> addSongToFavoriteMutableLiveData;
     private static FavoritePresenter instance;
 
 
@@ -34,13 +35,13 @@ public class FavoritePresenter {
         return instance;
     }
 
-    public LiveData<AddSongToFavorite> addSongToFavorite(String songid) {
-        networkInit.getRetrofitApis().addToFavorite(songid).enqueue(new Callback<AddSongToFavorite>() {
+    public LiveData<String> addSongToFavorite(String songid) {
+        networkInit.getRetrofitApis().addToFavorite(songid).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<AddSongToFavorite> call, Response<AddSongToFavorite> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse());
-                    addSongToFavoriteMutableLiveData.setValue(response.body());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
+                    addSongToFavoriteMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     Log.d(TAG, "onResponse:  no data");
                     addSongToFavoriteMutableLiveData.setValue(null);
@@ -48,7 +49,7 @@ public class FavoritePresenter {
             }
 
             @Override
-            public void onFailure(Call<AddSongToFavorite> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 addSongToFavoriteMutableLiveData.setValue(null);
             }

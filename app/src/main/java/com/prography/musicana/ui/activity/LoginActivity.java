@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
 
             if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getStatus().getStatus());
+                Log.d(TAG, "myStatus: " + newStatus.getStatus().getStatus());
             } else {
                 Log.d(TAG, "myStatus: no data");
             }
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         statusViewModel.setChangeStatus(Change_to).observe(this, newStatus -> {
 
             if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getResponse().getData().getActiveStatus().getStatus());
+                Log.d(TAG, "myStatus: " + newStatus.getActiveStatus().getStatus());
             } else {
                 Log.d(TAG, "myStatus: no data");
             }
@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
         statusViewModel.setCloseStatus().observe(this, newStatus -> {
 
             if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getResponse().getMessage());
+                Log.d(TAG, "myStatus: " + newStatus);
             } else {
                 Log.d(TAG, "myStatus: no data");
             }

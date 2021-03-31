@@ -18,7 +18,7 @@ public class FavoiteViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<AddSongToFavorite> addSong(String songid) {
+    public LiveData<String> addSong(String songid) {
 
         return favoritePresenter.addSongToFavorite(songid);
     }
