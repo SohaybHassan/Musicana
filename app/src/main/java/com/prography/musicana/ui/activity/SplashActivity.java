@@ -25,8 +25,8 @@ import android.widget.VideoView;
 
 import com.prography.musicana.R;
 import com.prography.musicana.custem.CreateMediaPlayer;
+import com.prography.musicana.data.onPording.DataOnBoarding;
 import com.prography.musicana.utils.SharedPreferencesHelper;
-import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.data.onPording.SendDtatToActivity;
 import com.prography.musicana.viewmodel.OnPoardingViewmodel;
 import com.prography.musicana.viewmodel.StatusViewModel;
@@ -188,13 +188,13 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
     public void getData() {
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
         SendDtatToActivity sendDtatToActivity = SendDtatToActivity.getInstance();
-        onPoardingViewmodel.getData().observe(this, new Observer<OnpordingModel>() {
+        onPoardingViewmodel.getData().observe(this, new Observer<DataOnBoarding>() {
             @Override
-            public void onChanged(OnpordingModel onpordingModel) {
+            public void onChanged(DataOnBoarding onpordingModel) {
                 if (onpordingModel != null) {
                     Log.d("TAG", "onChanged: " + " we have data");
                     btn_skip.setEnabled(true);
-                    items = onpordingModel.getResponse().getData().getOnboarding();
+                    items = onpordingModel.getOnboarding();
                     sendDtatToActivity.setItems(items);
                     btn_skip.setVisibility(View.VISIBLE);
                 } else {

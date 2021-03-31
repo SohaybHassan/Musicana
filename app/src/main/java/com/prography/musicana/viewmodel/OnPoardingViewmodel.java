@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.onPording.OnpordingModel;
+import com.prography.musicana.data.onPording.DataOnBoarding;
 import com.prography.musicana.data.privacypolicy.DataPrivacyPolicy;
 import com.prography.musicana.data.termcondtion.DataTermsAndConditions;
 import com.prography.musicana.repo.OnpordingPresenter;
@@ -21,7 +21,7 @@ public class OnPoardingViewmodel extends AndroidViewModel {
         onpordingPresenter = OnpordingPresenter.getInstance();
     }
 
-    public LiveData<OnpordingModel> getData() {
+    public LiveData<DataOnBoarding> getData() {
         return onpordingPresenter.getDataView();
     }
 

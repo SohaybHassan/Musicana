@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.prography.musicana.BuildConfig;
+import com.prography.musicana.R;
 import com.prography.musicana.viewmodel.PlaylsitViewModel;
 
 public class SWStaticMethods {
@@ -64,6 +65,10 @@ public class SWStaticMethods {
         }
     }
 
+//    public static Object<R> GTO(<R> type){
+//
+//
+//    }
 
 }
 

@@ -1,14 +1,9 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.model.AddSongToFavorite;
-import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
 import com.prography.musicana.data.createplaylist.CreatePlayList;
-import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
-import com.prography.musicana.data.getallplaylist.GetAllPlayList;
 import com.prography.musicana.data.home.HomeModel;
 import com.prography.musicana.data.search.SearchMolde;
-import com.prography.musicana.data.onPording.OnpordingModel;
 import com.prography.musicana.model.DataModel;
 
 
@@ -25,7 +20,7 @@ import retrofit2.http.Part;
 public interface ApiMusicana {
     //OnBording
     @GET("data/onboarding")
-    Call<OnpordingModel> getOnpordingData();
+    Call<DataModel> getOnBoardingData();
 
     //PrivacyPolicy
     @GET("data/privacypolicy")
