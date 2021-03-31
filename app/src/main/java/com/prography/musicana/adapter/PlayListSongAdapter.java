@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.prography.musicana.R;
-import com.prography.musicana.data.viewallsongtoplaylist.Datum;
+import com.prography.musicana.data.PlaylistSongData;
 
 import java.util.ArrayList;
 
 public class PlayListSongAdapter extends RecyclerView.Adapter<PlayListSongAdapter.MyHolder> {
-    private ArrayList<Datum> items;
+    private ArrayList<PlaylistSongData> items;
     private ItemsSongClicked listener;
 
-    public PlayListSongAdapter(ArrayList<Datum> items, ItemsSongClicked listener) {
+    public PlayListSongAdapter(ArrayList<PlaylistSongData> items, ItemsSongClicked listener) {
         this.items = items;
         this.listener = listener;
     }
@@ -30,7 +30,7 @@ public class PlayListSongAdapter extends RecyclerView.Adapter<PlayListSongAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        Datum data = items.get(position);
+        PlaylistSongData data = items.get(position);
         holder.bind(listener, position, data);
     }
 
@@ -49,7 +49,7 @@ public class PlayListSongAdapter extends RecyclerView.Adapter<PlayListSongAdapte
             more = itemView.findViewById(R.id.image_favorite);
         }
 
-        public void bind(ItemsSongClicked listener, int position, Datum data) {
+        public void bind(ItemsSongClicked listener, int position, PlaylistSongData data) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,8 +67,8 @@ public class PlayListSongAdapter extends RecyclerView.Adapter<PlayListSongAdapte
     }
 
     public interface ItemsSongClicked {
-        void clickedSongRun(int position, Datum data);
+        void clickedSongRun(int position, PlaylistSongData data);
 
-        void more(Datum data);
+        void more(PlaylistSongData data);
     }
 }

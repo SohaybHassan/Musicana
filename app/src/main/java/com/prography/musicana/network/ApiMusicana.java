@@ -1,12 +1,8 @@
 package com.prography.musicana.network;
 
 
-import com.prography.musicana.model.AddSongToFavorite;
-import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
 import com.prography.musicana.data.createplaylist.CreatePlayList;
-import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
 import com.prography.musicana.data.getallplaylist.GetAllPlayList;
-import com.prography.musicana.data.viewallsongtoplaylist.ViewAllSongToPlaylist;
 import com.prography.musicana.data.allsettings.SettingsResponse;
 import com.prography.musicana.data.logout.Logout;
 import com.prography.musicana.data.profiledata.ProfileData;
@@ -144,22 +140,22 @@ public interface ApiMusicana {
 
     @FormUrlEncoded
     @POST("music/Favorite/add/")
-    Call<AddSongToFavorite> addToFavorite(String songid);
+    Call<DataModel> addToFavorite(String songid);
 
     @FormUrlEncoded
     @POST("music/playlist/add")
-    Call<AddSongToPlayList> addToPlayList(String songID, String playlistID);
+    Call<DataModel> addToPlayList(String songID, String playlistID);
 
     @FormUrlEncoded
     @POST("music/playlist/view")
-    Call<ViewAllSongToPlaylist> ViewPliatListSong(String playlistid);
+    Call<DataModel> ViewPliatListSong(String playlistid);
 
     @FormUrlEncoded
     @POST("music/playlist/delete")
-    Call<DeleteSongFromPLaylsit> deleteSong(String songid, String listid);
+    Call<DataModel> deleteSong(String songid, String listid);
 
     @GET("music/playlist/")
-    Call<GetAllPlayList> getAllPlayList();
+    Call<DataModel> getAllPlayList();
 
     @FormUrlEncoded
     @POST("music/playlist/create")

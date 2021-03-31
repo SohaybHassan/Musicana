@@ -27,12 +27,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.prography.musicana.custem.bottomsheet.BottomSheetAddToPlayList;
 import com.prography.musicana.custem.bottomsheet.BottomSheetMore;
 import com.prography.musicana.custem.dialog.SWDialog;
+import com.prography.musicana.data.getallplaylist.Data;
 import com.prography.musicana.databinding.FragmentPhoneBinding;
 import com.prography.musicana.custem.CreateMediaPlayer;
 import com.prography.musicana.listener.ListItemClick;
-import com.prography.musicana.model.AddSongToFavorite;
 import com.prography.musicana.viewmodel.FavoiteViewModel;
-import com.prography.musicana.data.addsongtoplaylist.AddSongToPlayList;
 import com.prography.musicana.data.getallplaylist.GetAllPlayList;
 import com.prography.musicana.data.getallplaylist.Playlist;
 import com.prography.musicana.viewmodel.PlaylsitViewModel;
@@ -203,15 +202,12 @@ public class PhoneFragment extends Fragment {
 
 
     public void addsong(String songid, String playlistid) {
-        playlsitViewModel.addSong(songid, playlistid).observe(getViewLifecycleOwner(), new Observer<AddSongToPlayList>() {
-            @Override
-            public void onChanged(AddSongToPlayList addSongToPlayList) {
-                if (addSongToPlayList != null) {
-                    Log.d("TAG", "onChanged: " + addSongToPlayList.getResponse().getMessage());
+        playlsitViewModel.addSong(songid, playlistid).observe(getViewLifecycleOwner(), s -> {
+            if (s != null) {
+                Log.d("TAG", "onChanged: " + s);
 
-                } else {
-                    Log.d("TAG", "onChanged: no data");
-                }
+            } else {
+                Log.d("TAG", "onChanged: no data");
             }
         });
     }
@@ -219,14 +215,14 @@ public class PhoneFragment extends Fragment {
 
     public ArrayList<Playlist> getAllplaylist() {
         Log.d(TAG, "getAllplaylist: ");
-        playlsitViewModel.getAllPlayListLiveData().observe(getViewLifecycleOwner(), new Observer<GetAllPlayList>() {
+        playlsitViewModel.getAllPlayListLiveData().observe(getViewLifecycleOwner(), new Observer<Data>() {
             @Override
-            public void onChanged(GetAllPlayList getAllPlayList) {
+            public void onChanged(Data getAllPlayList) {
                 if (getAllPlayList != null) {
                     getPlaylistName.clear();
-                    for (int i = 0; i < getAllPlayList.getResponse().getData().getPlaylists().size(); i++) {
-                        getPlaylistName.add(getAllPlayList.getResponse().getData().getPlaylists().get(i));
-                        Log.d("TAG", "onChanged getAllplaylist: " + getAllPlayList.getResponse().getData().getPlaylists().get(i).getName());
+                    for (int i = 0; i < getAllPlayList.getPlaylists().size(); i++) {
+                        getPlaylistName.add(getAllPlayList.getPlaylists().get(i));
+                        Log.d("TAG", "onChanged getAllplaylist: " + getAllPlayList.getPlaylists().get(i).getName());
                     }
                     Log.d(TAG, "onChanged: " + getPlaylistName.size());
 
@@ -253,17 +249,15 @@ public class PhoneFragment extends Fragment {
 
 
     public void addSong(String songid, String playlsiyid) {
-        playlsitViewModel.addSong(songid, playlsiyid).observe(getViewLifecycleOwner(), new Observer<AddSongToPlayList>() {
-            @Override
-            public void onChanged(AddSongToPlayList addSongToPlayList) {
-                if (addSongToPlayList != null) {
+        playlsitViewModel.addSong(songid, playlsiyid).observe(getViewLifecycleOwner(), s -> {
 
-                    Log.d(TAG, "onChanged: '" + addSongToPlayList.getResponse().getMessage());
+            if (s != null) {
+
+                Log.d(TAG, "onChanged: '" + s);
 
 
-                } else {
-                    Log.d(TAG, "onChanged: no data");
-                }
+            } else {
+                Log.d(TAG, "onChanged: no data");
             }
         });
     }

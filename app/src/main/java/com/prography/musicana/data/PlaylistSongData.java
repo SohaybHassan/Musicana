@@ -1,9 +1,9 @@
-package com.prography.musicana.data.viewallsongtoplaylist;
+package com.prography.musicana.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class PlaylistSongData {
 
     @SerializedName("id")
     @Expose

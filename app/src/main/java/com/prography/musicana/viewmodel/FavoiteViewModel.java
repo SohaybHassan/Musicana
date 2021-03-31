@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.model.AddSongToFavorite;
 import com.prography.musicana.repo.FavoritePresenter;
 
 public class FavoiteViewModel extends AndroidViewModel {
