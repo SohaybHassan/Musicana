@@ -16,9 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.prography.musicana.data.DataProfile;
 import com.prography.musicana.databinding.FragmentEditProfileBinding;
 import com.prography.musicana.listener.OnFragmentInteractionListener;
-import com.prography.musicana.data.profiledata.ProfileData;
 import com.prography.musicana.viewmodel.ProfileViewModel;
 import com.prography.musicana.ui.activity.ForgotPasswordActivity;
 import com.prography.musicana.utils.SWStaticMethods;
@@ -95,7 +95,7 @@ public class EditProfileFragment extends Fragment {
                     profile_image
             );
         });
-        getdata();
+        getData();
     }
 
     @Override
@@ -110,20 +110,20 @@ public class EditProfileFragment extends Fragment {
     }
 
 
-    public void getdata() {
-        profileViewModel.getData().observe(getActivity(), new Observer<ProfileData>() {
+    public void getData() {
+        profileViewModel.getData().observe(getActivity(), new Observer<DataProfile>() {
             @Override
-            public void onChanged(ProfileData profileData) {
+            public void onChanged(DataProfile profileData) {
                 if (profileData != null) {
 
-                    binding.edName.setText(profileData.getResponse().getData().getUser().getFirstname());
-                    binding.edEmail.setText(profileData.getResponse().getData().getUser().getEmail());
-                    binding.edPhone.setText(profileData.getResponse().getData().getUser().getPhone());
-                    binding.edCountry.setText(profileData.getResponse().getData().getUser().getCountry());
-                    binding.edGender.setText(profileData.getResponse().getData().getUser().getGender());
-                    binding.edLastName.setText(profileData.getResponse().getData().getUser().getLastname());
+                    binding.edName.setText(profileData.getUser().getFirstname());
+                    binding.edEmail.setText(profileData.getUser().getEmail());
+                    binding.edPhone.setText(profileData.getUser().getPhone());
+                    binding.edCountry.setText(profileData.getUser().getCountry());
+                    binding.edGender.setText(profileData.getUser().getGender());
+                    binding.edLastName.setText(profileData.getUser().getLastname());
 
-                    Log.d(TAG, "onChanged: " + profileData.getResponse().getData().getUser().getFirstname());
+                    Log.d(TAG, "onChanged: " + profileData.getUser().getFirstname());
                     Log.d(TAG, "onChanged:  we have data here");
                 } else {
                     Log.d(TAG, "onChanged:  we  dont have data here");

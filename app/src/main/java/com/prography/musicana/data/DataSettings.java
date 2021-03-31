@@ -1,12 +1,13 @@
 
-package com.prography.musicana.data.allsettings;
+package com.prography.musicana.data;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.prography.musicana.data.Settings;
 
 
-public class Data implements Serializable
+public class DataSettings implements Serializable
 {
 
     @SerializedName("settings")

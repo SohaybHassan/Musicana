@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.prography.musicana.data.loginmodel.DataLogin;
+import com.prography.musicana.data.DataLogin;
 import com.prography.musicana.repo.LoginPresenter;
 
 public class LoginViewmodel extends AndroidViewModel {

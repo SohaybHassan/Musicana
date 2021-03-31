@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prography.musicana.data.country.DataCountries;
 import com.prography.musicana.data.gender.DataGenders;
-import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.DataVerificationEmail;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
@@ -30,7 +29,7 @@ public class RegesterPresenter {
     private MutableLiveData<DataGenders> requesBodyMutableLiveData;
     private MutableLiveData<DataCountries> requesBodycountryMutableLiveData;
     private MutableLiveData<DataVerificationEmail> verificationResponeMutableLiveData;
-    private MutableLiveData<ResendVerificationCode> resendVerificationMutableLiveData;
+    private MutableLiveData<String> resendVerificationMutableLiveData;
     private static RegesterPresenter instance;
 
     public RegesterPresenter() {
@@ -50,13 +49,13 @@ public class RegesterPresenter {
     }
 
 
-    public LiveData<ResendVerificationCode> resendVerificationLiveData(String email) {
-        networkInit.getRetrofitApis().resendVerificationCode(email).enqueue(new Callback<ResendVerificationCode>() {
+    public LiveData<String> resendVerificationLiveData(String email) {
+        networkInit.getRetrofitApis().resendVerificationCode(email).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<ResendVerificationCode> call, @NotNull Response<ResendVerificationCode> response) {
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    resendVerificationMutableLiveData.setValue(response.body());
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
+                    Log.d(TAG, "onResponse: " + response.body().getResponse());
+                    resendVerificationMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     resendVerificationMutableLiveData.setValue(null);
                     Log.d(TAG, "onResponse:  some thing rounge -_-");
@@ -64,7 +63,7 @@ public class RegesterPresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResendVerificationCode> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                 resendVerificationMutableLiveData.setValue(null);
                 Log.d(TAG, "onResponse:  some thing rounge -_-" + t.getMessage());
             }

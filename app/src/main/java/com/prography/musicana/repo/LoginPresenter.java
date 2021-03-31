@@ -8,8 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.prography.musicana.data.country.DataCountries;
-import com.prography.musicana.data.loginmodel.DataLogin;
+import com.prography.musicana.data.DataLogin;
 import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 

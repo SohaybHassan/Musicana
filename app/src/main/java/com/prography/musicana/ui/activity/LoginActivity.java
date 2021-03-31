@@ -17,7 +17,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jacksonandroidnetworking.JacksonParserFactory;
-import com.prography.musicana.data.loginmodel.DataLogin;
+import com.prography.musicana.data.DataLogin;
 import com.prography.musicana.utils.SharedPreferencesHelper;
 import com.prography.musicana.databinding.ActivityLoginBinding;
 import com.prography.musicana.viewmodel.LoginViewmodel;

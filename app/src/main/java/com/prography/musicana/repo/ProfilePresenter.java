@@ -5,13 +5,17 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.prography.musicana.data.allsettings.SettingsResponse;
-import com.prography.musicana.data.logout.Logout;
-import com.prography.musicana.data.profiledata.ProfileData;
-import com.prography.musicana.data.updataprofile.UpdateProfileResponse;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.prography.musicana.data.DataSettings;
+import com.prography.musicana.data.DataProfile;
+import com.prography.musicana.data.DataUpdateProfile;
+import com.prography.musicana.model.DataModel;
 import com.prography.musicana.network.NetworkInit;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Type;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -23,10 +27,10 @@ public class ProfilePresenter {
 
     private static final String TAG = ProfilePresenter.class.getSimpleName();
     private NetworkInit networkInit;
-    private MutableLiveData<Logout> logoutMutableLiveData;
-    private MutableLiveData<ProfileData> profileDataMutableLiveData;
-    private MutableLiveData<UpdateProfileResponse> updateProfileResponseMutableLiveData;
-    private MutableLiveData<SettingsResponse> settingsResponseMutableLiveData;
+    private MutableLiveData<String> logoutMutableLiveData;
+    private MutableLiveData<DataProfile> profileDataMutableLiveData;
+    private MutableLiveData<DataUpdateProfile> updateProfileResponseMutableLiveData;
+    private MutableLiveData<DataSettings> settingsResponseMutableLiveData;
 
     private static ProfilePresenter instance;
 
@@ -48,14 +52,16 @@ public class ProfilePresenter {
     }
 
 
-    public LiveData<ProfileData> getProfiledata() {
-        networkInit.getRetrofitApis().getProfileData().enqueue(new Callback<ProfileData>() {
+    public LiveData<DataProfile> getProfileData() {
+        networkInit.getRetrofitApis().getProfileData().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getData().getUser().getFirstname());
-                    profileDataMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataProfile>() {
+                    }.getType();
+                    DataProfile data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    profileDataMutableLiveData.setValue(data);
                 } else {
                     Log.d(TAG, "onResponse: nodata");
                     profileDataMutableLiveData.setValue(null);
@@ -63,7 +69,7 @@ public class ProfilePresenter {
             }
 
             @Override
-            public void onFailure(Call<ProfileData> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
                 profileDataMutableLiveData.setValue(null);
             }
@@ -71,16 +77,16 @@ public class ProfilePresenter {
         return profileDataMutableLiveData;
     }
 
-    public LiveData<Logout> logoutUser() {
+    public LiveData<String> logoutUser() {
 
-        networkInit.getRetrofitApis().logout().enqueue(new Callback<Logout>() {
+        networkInit.getRetrofitApis().logout().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(@NotNull Call<Logout> call, @NotNull Response<Logout> response) {
+            public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
 
-                    logoutMutableLiveData.setValue(response.body());
+                    logoutMutableLiveData.setValue(response.body().getResponse().getMessage());
                 } else {
                     logoutMutableLiveData.setValue(null);
                     Log.d(TAG, "onResponse:  some thing wrong");
@@ -88,7 +94,7 @@ public class ProfilePresenter {
             }
 
             @Override
-            public void onFailure(@NotNull Call<Logout> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                 logoutMutableLiveData.setValue(null);
                 Log.d(TAG, "onResponse:  some thing wrong : " + t.getMessage());
             }
@@ -96,17 +102,18 @@ public class ProfilePresenter {
         return logoutMutableLiveData;
     }
 
-    public LiveData<UpdateProfileResponse> updateProfile(RequestBody first_name, RequestBody middle_name, RequestBody last_name, RequestBody phone, RequestBody gender, RequestBody country, MultipartBody.Part image) {
+    public LiveData<DataUpdateProfile> updateProfile(RequestBody first_name, RequestBody middle_name, RequestBody last_name, RequestBody phone, RequestBody gender, RequestBody country, MultipartBody.Part image) {
 
         networkInit.getRetrofitApis().updateProfile(first_name, middle_name, last_name, phone, gender, country, image)
-                .enqueue(new Callback<UpdateProfileResponse>() {
+                .enqueue(new Callback<DataModel>() {
                     @Override
-                    public void onResponse(@NotNull Call<UpdateProfileResponse> call, @NotNull Response<UpdateProfileResponse> response) {
-
+                    public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
-
-                            updateProfileResponseMutableLiveData.setValue(response.body());
+                            Gson gson = new Gson();
+                            Type type = new TypeToken<DataUpdateProfile>() {
+                            }.getType();
+                            DataUpdateProfile data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                            updateProfileResponseMutableLiveData.setValue(data);
                         } else {
                             updateProfileResponseMutableLiveData.setValue(null);
                             Log.d(TAG, "onResponse:  some thing wrong");
@@ -114,7 +121,7 @@ public class ProfilePresenter {
                     }
 
                     @Override
-                    public void onFailure(@NotNull Call<UpdateProfileResponse> call, @NotNull Throwable t) {
+                    public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
                         updateProfileResponseMutableLiveData.setValue(null);
                         Log.d(TAG, "onResponse:  some thing wrong : " + t.getMessage());
                     }
@@ -122,13 +129,16 @@ public class ProfilePresenter {
         return updateProfileResponseMutableLiveData;
     }
 
-    public LiveData<SettingsResponse> getAllSettings() {
-        networkInit.getRetrofitApis().getAllSettings().enqueue(new Callback<SettingsResponse>() {
+    public LiveData<DataSettings> getAllSettings() {
+        networkInit.getRetrofitApis().getAllSettings().enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<SettingsResponse> call, Response<SettingsResponse> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
-                    settingsResponseMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataSettings>() {
+                    }.getType();
+                    DataSettings data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    settingsResponseMutableLiveData.setValue(data);
                 } else {
                     settingsResponseMutableLiveData.setValue(null);
                     Log.d(TAG, "onResponse:  some thing wrong");
@@ -136,20 +146,23 @@ public class ProfilePresenter {
             }
 
             @Override
-            public void onFailure(Call<SettingsResponse> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 settingsResponseMutableLiveData.setValue(null);
             }
         });
         return settingsResponseMutableLiveData;
     }
 
-    public LiveData<SettingsResponse> changeSettings(String mood, String language, String additional_screen, String auto_update, String background, String audio, String location) {
-        networkInit.getRetrofitApis().changeSettings(mood, language, additional_screen, auto_update, background, audio, location).enqueue(new Callback<SettingsResponse>() {
+    public LiveData<DataSettings> changeSettings(String mood, String language, String additional_screen, String auto_update, String background, String audio, String location) {
+        networkInit.getRetrofitApis().changeSettings(mood, language, additional_screen, auto_update, background, audio, location).enqueue(new Callback<DataModel>() {
             @Override
-            public void onResponse(Call<SettingsResponse> call, Response<SettingsResponse> response) {
+            public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.body().getResponse().getMessage());
-                    settingsResponseMutableLiveData.setValue(response.body());
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<DataSettings>() {
+                    }.getType();
+                    DataSettings data = gson.fromJson(gson.toJson(response.body().getResponse().getData()), type);
+                    settingsResponseMutableLiveData.setValue(data);
                 } else {
                     settingsResponseMutableLiveData.setValue(null);
                     Log.d(TAG, "onResponse:  some thing wrong");
@@ -157,7 +170,7 @@ public class ProfilePresenter {
             }
 
             @Override
-            public void onFailure(Call<SettingsResponse> call, Throwable t) {
+            public void onFailure(Call<DataModel> call, Throwable t) {
                 settingsResponseMutableLiveData.setValue(null);
             }
         });

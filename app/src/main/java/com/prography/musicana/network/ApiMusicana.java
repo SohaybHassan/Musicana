@@ -7,14 +7,9 @@ import com.prography.musicana.data.createplaylist.CreatePlayList;
 import com.prography.musicana.data.deletesong.DeleteSongFromPLaylsit;
 import com.prography.musicana.data.getallplaylist.GetAllPlayList;
 import com.prography.musicana.data.viewallsongtoplaylist.ViewAllSongToPlaylist;
-import com.prography.musicana.data.allsettings.SettingsResponse;
-import com.prography.musicana.data.logout.Logout;
-import com.prography.musicana.data.profiledata.ProfileData;
-import com.prography.musicana.data.updataprofile.UpdateProfileResponse;
 import com.prography.musicana.data.home.HomeModel;
 import com.prography.musicana.data.search.SearchMolde;
 import com.prography.musicana.data.onPording.OnpordingModel;
-import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.model.DataModel;
 
 
@@ -81,16 +76,16 @@ public interface ApiMusicana {
     //resend
     @FormUrlEncoded
     @POST("user/verification/resend")
-    Call<ResendVerificationCode> resendVerificationCode(@Field("email") String Email);
+    Call<DataModel> resendVerificationCode(@Field("email") String Email);
 
 
     //logout
     @GET("user/logout")
-    Call<Logout> logout();
+    Call<DataModel> logout();
 
     //user profile
     @GET("user/profile")
-    Call<ProfileData> getProfileData();
+    Call<DataModel> getProfileData();
 
 
     //TODO start here
@@ -98,7 +93,7 @@ public interface ApiMusicana {
 
     @Multipart
     @POST("user/profile/updatedata")
-    Call<UpdateProfileResponse> updateProfile(@Part("firstname") RequestBody first_name,
+    Call<DataModel> updateProfile(@Part("firstname") RequestBody first_name,
                                               @Part("middlename") RequestBody middle_name,
                                               @Part("lastname") RequestBody last_name,
                                               @Part("phone") RequestBody phone,
@@ -108,11 +103,11 @@ public interface ApiMusicana {
 
     // user settings
     @GET("user/settings")
-    Call<SettingsResponse> getAllSettings();
+    Call<DataModel> getAllSettings();
 
     @FormUrlEncoded
     @POST("user/settings/change")
-    Call<SettingsResponse> changeSettings(@Field("mood") String mood,
+    Call<DataModel> changeSettings(@Field("mood") String mood,
                                           @Field("language") String language,
                                           @Field("additional_screen") String additional_screen,
                                           @Field("auto_update") String auto_update,
@@ -122,11 +117,11 @@ public interface ApiMusicana {
 
 
     @POST("user/profile/updatedata/email")
-    Call<UpdateProfileResponse> updateEmail(@Field("email") String email);
+    Call<DataModel> updateEmail(@Field("email") String email);
 
 
     @POST("user/profile/updatedata/password")
-    Call<UpdateProfileResponse> updatePassword(@Field("password") String password);
+    Call<DataModel> updatePassword(@Field("password") String password);
 
 
     //userStatus

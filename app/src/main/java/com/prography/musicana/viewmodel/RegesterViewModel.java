@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.prography.musicana.data.country.DataCountries;
 import com.prography.musicana.data.gender.DataGenders;
-import com.prography.musicana.data.resendverification.ResendVerificationCode;
 import com.prography.musicana.data.verification.DataVerificationEmail;
 import com.prography.musicana.repo.RegesterPresenter;
 
@@ -40,7 +39,7 @@ public class RegesterViewModel extends AndroidViewModel {
         return regesterPresenter.getGender();
     }
 
-    public LiveData<ResendVerificationCode> resendVerificationLiveData(String email) {
+    public LiveData<String> resendVerificationLiveData(String email) {
         return regesterPresenter.resendVerificationLiveData(email);
     }
 }

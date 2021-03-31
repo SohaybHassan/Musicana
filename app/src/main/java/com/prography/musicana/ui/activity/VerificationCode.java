@@ -110,8 +110,8 @@ public class VerificationCode extends AppCompatActivity {
             if (resendVerification != null) {
                 binding.btnVerifie.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onChanged: " + resendVerification.getResponse().getMessage());
-                Toast.makeText(VerificationCode.this, resendVerification.getResponse().getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onChanged: " + resendVerification);
+                Toast.makeText(VerificationCode.this, resendVerification, Toast.LENGTH_SHORT).show();
             } else {
                 binding.btnVerifie.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
