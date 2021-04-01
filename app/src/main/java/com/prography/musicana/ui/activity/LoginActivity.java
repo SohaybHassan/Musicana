@@ -46,24 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
         sharedPreferencesHelper.isFirstTime(false);
         sharedPreferencesHelper.clerData();
-
-        if (sharedPreferencesHelper.getToken().equals("")) {
-            Log.d(TAG, "onCreate:  token null");
-        } else {
-            Log.d(TAG, sharedPreferencesHelper.getToken());
-        }
-
-
-        String str = Build.VERSION.RELEASE;
-        Log.d(TAG, "1997 android :" + str);
-
-        String uuid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d(" 1997 android :", uuid);
-
-        String model = android.os.Build.MODEL;
-        Log.d(TAG, "1997 android :" + model);
-
-
+        checkToken();
+        String uuid = SWStaticMethods.getUUID(this);
+        String model = SWStaticMethods.getMolde();
         loginViewmodel = new ViewModelProvider(this).get(LoginViewmodel.class);
         binding.btnLogin.setOnClickListener(view -> {
 
@@ -78,23 +63,15 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "plese enter all felid", Toast.LENGTH_SHORT).show();
             }
-
-
         });
-
         binding.tvRegesterNow.setOnClickListener(view -> {
-
             SWStaticMethods.intentWithoutData(LoginActivity.this, RegesterActivity.class);
-
         });
-
         binding.tvForgotPassword.setOnClickListener(view -> {
             androidnetwork();
             sharedPreferencesHelper.clerData();
             // SWStaticMethods.intentWithoutData(LoginActivity.this, ForgotPasswordActivity.class);
         });
-
-
     }
 
 
@@ -141,100 +118,34 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
     public void reqLogin(String mEmail, String mPass, String uuid, String model) {
-        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, new Observer<DataLogin>() {
-            @Override
-            public void onChanged(DataLogin dataLogin) {
-                if (dataLogin != null) {
-                    binding.btnLogin.setVisibility(View.VISIBLE);
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.tvForgotPassword.setVisibility(View.VISIBLE);
-                    binding.tvRegesterNow.setVisibility(View.VISIBLE);
-                    Log.d(TAG, "onChanged: " + "we have a data");
-                    sharedPreferencesHelper.saveData(dataLogin.getUser().getToken());
-                    Log.d(TAG, "onChanged: " + dataLogin.getUser().getEmail());
-                    SWStaticMethods.intentWithoutData(LoginActivity.this, MainActivity.class);
-                } else {
-                    binding.btnLogin.setVisibility(View.VISIBLE);
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.tvForgotPassword.setVisibility(View.VISIBLE);
-                    binding.tvRegesterNow.setVisibility(View.VISIBLE);
-                    Toast.makeText(LoginActivity.this, "you must register  in the app before login", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onChanged: " + " you must register  in the app before login");
-                }
-            }
-        });
-    }
+        loginViewmodel.login(mEmail, mPass, "android", uuid, model).observe(this, dataLogin -> {
+            if (dataLogin != null) {
+                binding.btnLogin.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                binding.tvForgotPassword.setVisibility(View.VISIBLE);
+                binding.tvRegesterNow.setVisibility(View.VISIBLE);
+                Log.d(TAG, "onChanged: " + "we have a data");
 
-
-    public void myStatus(String uuid) {
-        statusViewModel.setnewStatus(uuid).observe(this, newStatus -> {
-
-            if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getStatus().getStatus());
+                sharedPreferencesHelper.saveData(dataLogin.getUser().getToken());
+                Log.d(TAG, "onChanged: " + dataLogin.getUser().getEmail());
+                SWStaticMethods.intentWithoutData(LoginActivity.this, MainActivity.class);
             } else {
-                Log.d(TAG, "myStatus: no data");
+                binding.btnLogin.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+                binding.tvForgotPassword.setVisibility(View.VISIBLE);
+                binding.tvRegesterNow.setVisibility(View.VISIBLE);
+                Toast.makeText(LoginActivity.this, "you must register  in the app before login", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onChanged: " + " you must register  in the app before login");
             }
-
-
         });
     }
-
-    public void myChangeStatus(String Change_to) {
-        statusViewModel.setChangeStatus(Change_to).observe(this, newStatus -> {
-
-            if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getActiveStatus().getStatus());
-            } else {
-                Log.d(TAG, "myStatus: no data");
-            }
-
-
-        });
-    }
-
-    public void myCloseStatus() {
-        statusViewModel.setCloseStatus().observe(this, newStatus -> {
-
-            if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus);
-            } else {
-                Log.d(TAG, "myStatus: no data");
-            }
-
-
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myCloseStatus();
+    public void checkToken() {
+        if (sharedPreferencesHelper.getToken().equals("")) {
+            Log.d(TAG, "onCreate:  token null");
+        } else {
+            Log.d(TAG, sharedPreferencesHelper.getToken());
         }
-        Log.d(TAG, "onDestroy: 0000000000000000000000000000000000000000000000000");
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myChangeStatus("Background");
-        }
-        Log.d(TAG, "onPause: 0000000000000000000000000000000000000000000000000");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myChangeStatus("Active");
-        }
-
-        Log.d(TAG, "onResume: 0000000000000000000000000000000000000000000000000");
     }
 
 

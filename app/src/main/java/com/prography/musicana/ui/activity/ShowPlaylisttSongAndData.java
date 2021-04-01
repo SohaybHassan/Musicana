@@ -38,10 +38,16 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
         bottomSheetDialog = new BottomSheetDialog(this);
         playlsitViewModel = new ViewModelProvider(this).get(PlaylsitViewModel.class);
         items = new ArrayList<>();
+        PlayListSongAdapter();
+        binding.rvChannelDataList.setAdapter(playListSongAdapter);
+        binding.rvChannelDataList.setLayoutManager(new LinearLayoutManager(this));
+        getlsitSongtoplaylist(id);
+    }
+
+    public void PlayListSongAdapter() {
         playListSongAdapter = new PlayListSongAdapter(items, new PlayListSongAdapter.ItemsSongClicked() {
             @Override
             public void clickedSongRun(int position, PlaylistSongData data) {
-
 
             }
 
@@ -67,9 +73,7 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
                 bottomSheetplaylistSongMore.openDialog();
             }
         });
-        binding.rvChannelDataList.setAdapter(playListSongAdapter);
-        binding.rvChannelDataList.setLayoutManager(new LinearLayoutManager(this));
-        getlsitSongtoplaylist(id);
+
     }
 
     public String getDataintent() {
@@ -110,14 +114,11 @@ public class ShowPlaylisttSongAndData extends AppCompatActivity {
     }
 
     public void deleteSong(String songid, String listid) {
-        playlsitViewModel.deleteSong(songid, listid).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String deleteSongFromPLaylsit) {
-                if (deleteSongFromPLaylsit != null) {
-                    Log.d(TAG, "onChanged:" + deleteSongFromPLaylsit);
-                } else {
-                    Log.d(TAG, "onChanged:  no data");
-                }
+        playlsitViewModel.deleteSong(songid, listid).observe(this, deleteSongFromPLaylsit -> {
+            if (deleteSongFromPLaylsit != null) {
+                Log.d(TAG, "onChanged:" + deleteSongFromPLaylsit);
+            } else {
+                Log.d(TAG, "onChanged:  no data");
             }
         });
     }

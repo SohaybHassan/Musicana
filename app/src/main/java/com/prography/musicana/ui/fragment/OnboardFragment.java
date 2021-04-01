@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,9 @@ public class OnboardFragment extends Fragment {
             binding.detels.setText(sendDtatToActivity.getItems().get(3).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(3).getTitle());
 
-       //    Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(3).getImg()).into(binding.imgOnpoardOne);
-        } else {
 
+        } else {
+            Log.d(TAG, "onViewCreated:  No Data");
         }
 
     }

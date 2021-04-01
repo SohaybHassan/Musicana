@@ -98,7 +98,7 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
         takePermission();
         videoView = findViewById(R.id.video_view);
         mRun();
-        //   CreateMediaPlayer.getInstance().getplayListMusicFomDivice();
+
 
     }
 
@@ -129,27 +129,7 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     }
 
-    public void nextPage() {
-        Thread background = new Thread() {
-            public void run() {
-                try {
-                    // Thread will sleep for 5 seconds
-                    sleep(The_time_of_the_start_activity);
 
-                    // After 5 seconds redirect to another intent
-                    Intent i = new Intent(SplashActivity.this, Onboarding.class);
-                    startActivity(i);
-
-                    //Remove activity
-                    finish();
-                } catch (Exception e) {
-                }
-            }
-        };
-        // start thread
-        background.start();
-
-    }
 
     //hideTheStatusBar
     public void hideTheStatusBar() {
@@ -188,18 +168,15 @@ public class SplashActivity extends AppCompatActivity implements MediaPlayer.OnC
     public void getData() {
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
         SendDtatToActivity sendDtatToActivity = SendDtatToActivity.getInstance();
-        onPoardingViewmodel.getData().observe(this, new Observer<DataOnBoarding>() {
-            @Override
-            public void onChanged(DataOnBoarding onpordingModel) {
-                if (onpordingModel != null) {
-                    Log.d("TAG", "onChanged: " + " we have data");
-                    btn_skip.setEnabled(true);
-                    items = onpordingModel.getOnboarding();
-                    sendDtatToActivity.setItems(items);
-                    btn_skip.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("TAG", "onChanged: " + "no data");
-                }
+        onPoardingViewmodel.getData().observe(this, onpordingModel -> {
+            if (onpordingModel != null) {
+                Log.d("TAG", "onChanged: " + " we have data");
+                btn_skip.setEnabled(true);
+                items = onpordingModel.getOnboarding();
+                sendDtatToActivity.setItems(items);
+                btn_skip.setVisibility(View.VISIBLE);
+            } else {
+                Log.d("TAG", "onChanged: " + "no data");
             }
         });
     }

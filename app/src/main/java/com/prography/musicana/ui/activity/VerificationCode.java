@@ -35,52 +35,49 @@ public class VerificationCode extends AppCompatActivity {
         regesterViewModel = new ViewModelProvider(this).get(RegesterViewModel.class);
 
         sharedPreferencesHelper = new SharedPreferencesHelper();
-
-        String sdk = Build.VERSION.RELEASE;
-        Log.d(TAG, "1997 android :" + sdk);
-
-        String uuid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d(" 1997 android :", uuid);
-
-        String name = android.os.Build.MODEL;
-        Log.d(TAG, "1997 android :" + name);
-
-        if (getIntent() != null) {
-            Bundle bundle = getIntent().getBundleExtra("data");
-            pass = bundle.getString("password");
-            mEmail = bundle.getString("email");
-            Log.d(TAG, "1997 android :" + pass + "_" + mEmail);
-        }
-
-        binding.tvResendCode.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(mEmail)) {
-                binding.btnVerifie.setVisibility(View.GONE);
-                binding.progressBar.setVisibility(View.VISIBLE);
-
-                request(mEmail);
-            }
-
-        });
+        getdataIntent();
+        resendCode();
+        verification();
 
 
+    }
+
+    public void verification() {
         binding.btnVerifie.setOnClickListener(v -> {
             String code = binding.pinView.getText().toString();
             if (!TextUtils.isEmpty(binding.pinView.getText()) && binding.pinView.getText().toString().length() == 6) {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 binding.btnVerifie.setVisibility(View.GONE);
                 binding.tvResendCode.setVisibility(View.GONE);
-                request(code, name, uuid, pass, mEmail);
+                verificationRequest(code, SWStaticMethods.getMolde(), SWStaticMethods.getUUID(this), pass, mEmail);
             } else {
                 Toast.makeText(this, "Plese Enter The  Full Code ", Toast.LENGTH_SHORT).show();
             }
 
         });
+    }
 
+    private void resendCode() {
+        binding.tvResendCode.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(mEmail)) {
+                binding.btnVerifie.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.VISIBLE);
+                resendVerification(mEmail);
+            }
+        });
+    }
 
+    private void getdataIntent() {
+        if (getIntent() != null) {
+            Bundle bundle = getIntent().getBundleExtra("data");
+            pass = bundle.getString("password");
+            mEmail = bundle.getString("email");
+            Log.d(TAG, "1997 android :" + pass + "_" + mEmail);
+        }
     }
 
 
-    public void request(String code, String deciceName, String uuid, String pass, String mEmail) {
+    public void verificationRequest(String code, String deciceName, String uuid, String pass, String mEmail) {
 
         regesterViewModel.verificationResponeLiveData(code, pass, mEmail, "android", uuid, deciceName).observe(this, new Observer<DataVerificationEmail>() {
             @Override
@@ -104,7 +101,7 @@ public class VerificationCode extends AppCompatActivity {
     }
 
 
-    public void request(String email) {
+    public void resendVerification(String email) {
 
         regesterViewModel.resendVerificationLiveData(email).observe(this, resendVerification -> {
             if (resendVerification != null) {

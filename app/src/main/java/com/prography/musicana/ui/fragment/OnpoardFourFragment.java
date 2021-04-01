@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class OnpoardFourFragment extends Fragment {
 
     private FragmentOnpoardFourBinding binding;
     private SendDtatToActivity sendDtatToActivity;
+    private static final String TAG = "OnpoardFourFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,9 +46,9 @@ public class OnpoardFourFragment extends Fragment {
 
             binding.det.setText(sendDtatToActivity.getItems().get(0).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(0).getTitle());
-         //   Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(0).getImg()).into(binding.imgOnpoardOne);
-        }else{
 
+        }else{
+            Log.d(TAG, "onViewCreated:  No Data");
         }
 
         SpannableStringBuilder spannableString = new SpannableStringBuilder("By clicking on Get started button you accept Our terms and conditions and privacy policy of Musicana");

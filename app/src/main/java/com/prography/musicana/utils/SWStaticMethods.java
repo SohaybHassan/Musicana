@@ -2,7 +2,10 @@ package com.prography.musicana.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -65,10 +68,23 @@ public class SWStaticMethods {
         }
     }
 
-//    public static Object<R> GTO(<R> type){
-//
-//
-//    }
+    public static String getUUID(Activity activity) {
+        String uuid = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d(" 1997 android :", uuid);
+        return uuid;
+    }
+
+    public static String getMolde() {
+        String model = android.os.Build.MODEL;
+        Log.d("1997 android :", model);
+        return model;
+    }
+
+    public static String getVersionRelease() {
+        String str = Build.VERSION.RELEASE;
+        Log.d("1997 android :", str);
+        return str;
+    }
 
 }
 

@@ -46,12 +46,6 @@ public class OnlineFragment extends Fragment {
         binding.recyclerViewMusic.setAdapter(new MusicAdapter());
 
 
-        binding.tvMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SWStaticMethods.intentWithOutDataAndFinish(getActivity(), ChannelsActivity.class);
-            }
-        });
+        binding.tvMore.setOnClickListener(v -> SWStaticMethods.intentWithOutDataAndFinish(getActivity(), ChannelsActivity.class));
     }
 }

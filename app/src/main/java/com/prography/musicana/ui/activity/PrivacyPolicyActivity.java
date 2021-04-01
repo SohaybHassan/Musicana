@@ -33,16 +33,13 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
 
-        onPoardingViewmodel.getPrivacyPolicy().observe(this, new Observer<DataPrivacyPolicy>() {
-            @Override
-            public void onChanged(DataPrivacyPolicy dataPoalycey) {
-                if (dataPoalycey != null) {
+        onPoardingViewmodel.getPrivacyPolicy().observe(this, dataPoalycey -> {
+            if (dataPoalycey != null) {
 
-                    Log.d("TAG", "onChanged: " + "we have a data");
-                    String text = dataPoalycey.getPrivacy().getData();
-                    Log.d(TAG, "onChanged: "+text);
-                    binding.tvTextPlacy.setText(text);
-                }
+                Log.d("TAG", "onChanged: " + "we have a data");
+                String text = dataPoalycey.getPrivacy().getData();
+                Log.d(TAG, "onChanged: "+text);
+                binding.tvTextPlacy.setText(text);
             }
         });
 

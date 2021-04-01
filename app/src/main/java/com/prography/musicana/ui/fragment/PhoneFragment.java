@@ -48,7 +48,7 @@ public class PhoneFragment extends Fragment {
     public static final String TAG = PhoneFragment.class.getSimpleName();
     private FragmentPhoneBinding binding;
     private ArrayList<PhoneModelFragmentList> items;
-    private MediaPlayer mediaPlayer;
+
     private ListItemClick listener;
     private CreateMediaPlayer createMediaPlayer;
     private FavoiteViewModel favoiteViewModel;
@@ -68,7 +68,6 @@ public class PhoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPhoneBinding.inflate(getLayoutInflater());
-        mediaPlayer = new MediaPlayer();
         createMediaPlayer = CreateMediaPlayer.getInstance();
         items = createMediaPlayer.getLsi();
         playlsitViewModel = new ViewModelProvider(this).get(PlaylsitViewModel.class);
@@ -88,6 +87,12 @@ public class PhoneFragment extends Fragment {
 
         getPlaylistName = getAllplaylist();
         binding.rvPhoneFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
+        phoneFragmentAdapter();
+        Log.d(TAG, "onViewCreated: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
+
+    }
+
+    public void phoneFragmentAdapter() {
         binding.rvPhoneFragment.setAdapter(new PhoneFragmentAdapter(items, new PhoneFragmentAdapter.ClickItems() {
             @Override
             public void onClickItem(int position, PhoneModelFragmentList phoneModel) {
@@ -148,10 +153,6 @@ public class PhoneFragment extends Fragment {
                 bottomSheetMore.openDialog();
             }
         }));
-
-
-        Log.d(TAG, "onViewCreated: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
-
     }
 
 

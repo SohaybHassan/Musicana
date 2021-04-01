@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class OnpoardThreeFragment extends Fragment {
 
     private FragmentOnpoardThreeBinding binding;
     private SendDtatToActivity sendDtatToActivity;
+    private static final String TAG = "OnpoardThreeFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,9 +37,9 @@ public class OnpoardThreeFragment extends Fragment {
         if (sendDtatToActivity.getItems()!=null){
             binding.det.setText(sendDtatToActivity.getItems().get(1).getDetails());
             binding.txt1.setText(sendDtatToActivity.getItems().get(1).getTitle());
-            //Glide.with(getActivity()).load(sendDtatToActivity.getItems().get(1).getImg()).into(binding.imgOnpoardOne);
-        }else{
 
+        }else{
+            Log.d(TAG, "onViewCreated:  No Data");
         }
 
     }

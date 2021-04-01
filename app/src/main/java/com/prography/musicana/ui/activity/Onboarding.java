@@ -64,7 +64,7 @@ public class Onboarding extends AppCompatActivity {
         binding.btnStart.setOnClickListener(view2 -> {
 
             SWStaticMethods.intentWithoutData(Onboarding.this, LoginActivity.class);
-            finish();
+            
         });
     }
 

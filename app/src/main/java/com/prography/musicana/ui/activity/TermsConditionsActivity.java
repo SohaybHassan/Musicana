@@ -32,14 +32,15 @@ public class TermsConditionsActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         onPoardingViewmodel = new ViewModelProvider(this).get(OnPoardingViewmodel.class);
-        onPoardingViewmodel.getTermsAndConditions().observe(this, new Observer<DataTermsAndConditions>() {
-            @Override
-            public void onChanged(DataTermsAndConditions generlClass) {
-                if (generlClass != null) {
-                    Log.d("TAG", "onChanged: " + "we ahve a data");
-                    String data = generlClass.getTerms().getData();
-                    binding.tvTextData.setText(data);
-                }
+        getTermsAndConditions();
+    }
+
+    public void getTermsAndConditions() {
+        onPoardingViewmodel.getTermsAndConditions().observe(this, generlClass -> {
+            if (generlClass != null) {
+                Log.d("TAG", "onChanged: " + "we ahve a data");
+                String data = generlClass.getTerms().getData();
+                binding.tvTextData.setText(data);
             }
         });
     }

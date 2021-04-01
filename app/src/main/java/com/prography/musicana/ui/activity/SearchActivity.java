@@ -28,7 +28,7 @@ import com.prography.musicana.viewmodel.StatusViewModel;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class SearchActivity extends AppCompatActivity {
 
 
     private ActivitySearchBinding binding;
@@ -37,6 +37,7 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
     private static final String TAG = SearchActivity.class.getSimpleName();
     private HomeViewModel homeViewModel;
     private SearchAdapter searchAdapter;
+    private LinearLayoutManager linearLayoutManager;
     private ArrayList<Result> items = new ArrayList<>();
 
     private boolean isLastPage = false;
@@ -51,25 +52,28 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        Log.d(TAG, "onScrolled nextpage start: " + nextpage);
-        Log.d(TAG, "onScrolled oldpage start: " + oldpage);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        linearLayoutManager = new LinearLayoutManager(this);
         binding.recyclerViewSearch.setLayoutManager(linearLayoutManager);
         searchAdapter = new SearchAdapter(items, this);
         binding.recyclerViewSearch.setAdapter(searchAdapter);
 
-        binding.edSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    search(binding.edSearch.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
+        editorActionListener();
+        onScroll();
+    }
 
+    public void editorActionListener() {
+        binding.edSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                search(binding.edSearch.getText().toString());
+                return true;
+            }
+            return false;
+        });
+    }
+
+    public void onScroll() {
         binding.recyclerViewSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -106,107 +110,39 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
         statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
     }
 
-    public void myChangeStatus(String Change_to) {
-        statusViewModel.setChangeStatus(Change_to).observe(this, newStatus -> {
-
-            if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus.getActiveStatus().getStatus());
-            } else {
-                Log.d(TAG, "myStatus: no data");
-            }
-
-
-        });
-    }
-
-    public void myCloseStatus() {
-        statusViewModel.setCloseStatus().observe(this, newStatus -> {
-
-            if (newStatus != null) {
-                Log.d(TAG, "myStatus: " + newStatus);
-            } else {
-                Log.d(TAG, "myStatus: no data");
-            }
-
-
-        });
-    }
-
     public void search(String text) {
-        homeViewModel.getResule(text, nextpage).observe(SearchActivity.this, new Observer<SearchData>() {
-            @Override
-            public void onChanged(SearchData searchMolde) {
-                if (searchMolde != null) {
+        homeViewModel.getResule(text, nextpage).observe(SearchActivity.this, searchMolde -> {
+            if (searchMolde != null) {
 
-                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
+                Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
 
-                    Log.d(TAG, "onScrolled nextpage search: " + nextpage);
-                    Log.d(TAG, "onScrolled oldpage search: " + oldpage);
+                Log.d(TAG, "onScrolled nextpage search: " + nextpage);
+                Log.d(TAG, "onScrolled oldpage search: " + oldpage);
 
-                    oldpage = nextpage;
-                    nextpage = null;
-                    nextpage = searchMolde.getNextPage();
-                    searchMolde.setNextPage(null);
-                    Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
-                    Log.d(TAG, "onScrolled nextpage search: " + nextpage);
-                    Log.d(TAG, "onScrolled oldpage search: " + oldpage);
+                oldpage = nextpage;
+                nextpage = null;
+                nextpage = searchMolde.getNextPage();
+                searchMolde.setNextPage(null);
+                Log.d(TAG, "onScrolled getNextPage search: " + searchMolde.getNextPage());
+                Log.d(TAG, "onScrolled nextpage search: " + nextpage);
+                Log.d(TAG, "onScrolled oldpage search: " + oldpage);
 
-                    binding.progressBar.setVisibility(View.GONE);
-                    for (int i = 0; i < searchMolde.getResults().size(); i++) {
-                        items.add(searchMolde.getResults().get(i));
-                    }
-                    Toast.makeText(SearchActivity.this, "size: " + items.size(), Toast.LENGTH_SHORT).show();
-                    searchAdapter.notifyDataSetChanged();
-                } else {
-
-                    Log.d(TAG, "search: no data");
-                    binding.progressBar.setVisibility(View.GONE);
-
+                binding.progressBar.setVisibility(View.GONE);
+                for (int i = 0; i < searchMolde.getResults().size(); i++) {
+                    items.add(searchMolde.getResults().get(i));
                 }
+                Toast.makeText(SearchActivity.this, "size: " + items.size(), Toast.LENGTH_SHORT).show();
+                searchAdapter.notifyDataSetChanged();
+            } else {
+
+                Log.d(TAG, "search: no data");
+                binding.progressBar.setVisibility(View.GONE);
+
             }
         });
 
 
     }
-/*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myChangeStatus("Background");
-        }
-        Log.d(TAG, "onPause: 0000000000000000000000000000000000000000000000000");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myChangeStatus("Active");
-        }
-
-        Log.d(TAG, "onResume: 0000000000000000000000000000000000000000000000000");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!sharedPreferencesHelper.getToken().equals("")) {
-            myCloseStatus();
-        }
-
-        Log.d(TAG, "onDestroy: 0000000000000000000000000000000000000000000000000");
-    }
-*/
 
 
-    @Override
-    public void onRefresh() {
-//        itemCount = 0;
-//        nextpage = START_PAGE;
-//        isLatPagr = false;
-//        searchAdapter.clear();
-//        search(binding.edSearch.getText().toString());
-
-    }
 }

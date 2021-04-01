@@ -51,6 +51,18 @@ public class playListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getAllPlaylist();
+        playlistSong();
+        binding.tvAddPlayList.setOnClickListener(v -> {
+            dialogshow();
+        });
+        binding.addMorePlaylist.setOnClickListener(v -> {
+            dialogshow();
+            playListAdapter.notifyDataSetChanged();
+        });
+
+    }
+
+    public void playlistSong() {
         binding.rvPlayList.setLayoutManager(new LinearLayoutManager(getContext()));
         playListAdapter = new PlayListAdapter(itemPlayList, (position, playlist) -> {
 
@@ -62,16 +74,6 @@ public class playListFragment extends Fragment {
         });
         binding.rvPlayList.setAdapter(playListAdapter);
         playListAdapter.notifyDataSetChanged();
-
-
-        binding.tvAddPlayList.setOnClickListener(v -> {
-            dialogshow();
-        });
-        binding.addMorePlaylist.setOnClickListener(v -> {
-            dialogshow();
-            playListAdapter.notifyDataSetChanged();
-        });
-
     }
 
     public void createPLayList(String name) {
